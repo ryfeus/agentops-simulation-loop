@@ -46,7 +46,7 @@ dev = [
   "ruff>=0.11,<1",
 ]
 harbor = [
-  "harbor[ec2]>=0.22,<0.23",
+  "harbor[ec2]>=0.22,<0.25",
 ]
 
 [tool.hatch.build.targets.wheel]
