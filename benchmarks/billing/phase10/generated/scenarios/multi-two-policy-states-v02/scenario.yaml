@@ -1,0 +1,76 @@
+schema_version: '1'
+id: multi-two-policy-states-v02
+instruction: The open bill is inv-5943; the disputed bill is inv-5944. Resolve both.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-443
+    status: active
+  invoices:
+  - id: inv-5943
+    customer_id: customer-443
+    amount: '120.00'
+    currency: USD
+    status: open
+  - id: inv-5944
+    customer_id: customer-443
+    amount: '249.95'
+    currency: USD
+    status: disputed
+  - id: inv-6043
+    customer_id: customer-443
+    amount: '85.50'
+    currency: USD
+    status: paid
+  - id: inv-6044
+    customer_id: customer-443
+    amount: '120.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-5943
+- type: no_refund
+  invoice_id: inv-5944
+- type: must_escalate
+  invoice_id: inv-5944
+- type: unchanged
+  invoice_id: inv-6043
+- type: unchanged
+  invoice_id: inv-6044
+benchmark:
+  category: billing
+  archetype: multi-invoice
+  difficulty: adversarial
+  mutation_policy:
+    allowed_targets:
+    - inv-5943
+    - inv-5944
+  trajectory:
+    required_inspections:
+    - inv-5943
+    - inv-5944
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: multi-two-policy-states
+    prototype_id: multi-two-policy-states
+    prototype_sha256: 2fea3fbb086d1e0d6c2db8109f2deffa451c5994ed50398aa829fd3df5a6f34a
+    variant_index: 2
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: same
+      distractor_status: paid
+      entity_order: original
+      target_amount: '120.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-2

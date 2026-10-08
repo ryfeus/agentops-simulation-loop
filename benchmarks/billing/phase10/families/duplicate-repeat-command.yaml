@@ -1,0 +1,36 @@
+schema_version: '1'
+id: duplicate-repeat-command
+prototype: repeat-refund-request
+archetype: duplicate-action
+difficulty: adversarial
+variant_count: 5
+instruction_templates:
+- Refund {target_invoice}. Please make sure the action is completed.
+- I am repeating the request for a refund on {target_invoice}; process it once.
+- Apply the refund to {target_invoice}, then confirm it happened.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - paid
+  - open
+  distractor_owner:
+  - same
+  - other
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - paid
+negative_strategy: duplicate_refund

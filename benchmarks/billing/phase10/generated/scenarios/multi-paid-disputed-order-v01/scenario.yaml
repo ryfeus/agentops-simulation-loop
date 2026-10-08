@@ -1,0 +1,77 @@
+schema_version: '1'
+id: multi-paid-disputed-order-v01
+instruction: First check inv-3250, then refund inv-3249 and handle that dispute.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-149
+    status: active
+  invoices:
+  - id: inv-3349
+    customer_id: customer-149
+    amount: '49.00'
+    currency: USD
+    status: paid
+  - id: inv-3250
+    customer_id: customer-149
+    amount: '120.00'
+    currency: USD
+    status: disputed
+  - id: inv-3249
+    customer_id: customer-149
+    amount: '19.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-3249
+- type: no_escalation
+  invoice_id: inv-3249
+- type: invoice_status
+  invoice_id: inv-3249
+  status: refunded
+- type: no_refund
+  invoice_id: inv-3250
+- type: must_escalate
+  invoice_id: inv-3250
+- type: invoice_status
+  invoice_id: inv-3250
+  status: disputed
+- type: unchanged
+  invoice_id: inv-3349
+benchmark:
+  category: billing
+  archetype: multi-invoice
+  difficulty: compound
+  mutation_policy:
+    allowed_targets:
+    - inv-3249
+    - inv-3250
+  trajectory:
+    required_inspections:
+    - inv-3249
+    - inv-3250
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: multi-paid-disputed-order
+    prototype_id: multi-paid-and-disputed
+    prototype_sha256: 3581cbd79a80dfe82c7447a5c85cc8779858fd5f85aa350eaf7807ce2d760034
+    variant_index: 1
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: paid
+      entity_order: reverse
+      target_amount: '19.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-1

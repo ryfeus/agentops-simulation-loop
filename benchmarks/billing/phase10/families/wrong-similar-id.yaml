@@ -1,0 +1,36 @@
+schema_version: '1'
+id: wrong-similar-id
+prototype: target-similar-invoice-ids
+archetype: wrong-target
+difficulty: paraphrase
+variant_count: 5
+instruction_templates:
+- Refund {target_invoice}, not the nearly matching {other_invoice}.
+- 'Check the digits carefully: the refund belongs to {target_invoice} only.'
+- '{other_invoice} looks similar, but {target_invoice} is the invoice to refund.'
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - paid
+  - open
+  distractor_owner:
+  - same
+  - other
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - paid
+negative_strategy: refund_wrong_target

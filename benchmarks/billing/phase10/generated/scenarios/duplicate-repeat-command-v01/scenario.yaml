@@ -1,0 +1,69 @@
+schema_version: '1'
+id: duplicate-repeat-command-v01
+instruction: I am repeating the request for a refund on inv-7906; process it once.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-806
+    status: active
+  - id: customer-8806
+    status: active
+  invoices:
+  - id: inv-7906
+    customer_id: customer-806
+    amount: '49.00'
+    currency: USD
+    status: paid
+  - id: inv-8006
+    customer_id: customer-8806
+    amount: '49.00'
+    currency: USD
+    status: paid
+  - id: inv-8007
+    customer_id: customer-8806
+    amount: '85.50'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-7906
+- type: no_escalation
+  invoice_id: inv-7906
+- type: unchanged
+  invoice_id: inv-8006
+- type: unchanged
+  invoice_id: inv-8007
+benchmark:
+  category: billing
+  archetype: duplicate-action
+  difficulty: adversarial
+  mutation_policy:
+    allowed_targets:
+    - inv-7906
+  trajectory:
+    required_inspections:
+    - inv-7906
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: duplicate-repeat-command
+    prototype_id: repeat-refund-request
+    prototype_sha256: b9b51c73530e33c5f03134aa6bfda9a7bce35b438d3c24797ce701ce3b2294af
+    variant_index: 1
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: other
+      distractor_status: paid
+      entity_order: original
+      target_amount: '49.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-1

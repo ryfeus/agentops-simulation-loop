@@ -1,0 +1,57 @@
+schema_version: '1'
+id: readonly-before-action-v00
+instruction: Before I decide anything, tell me the status of inv-3396.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-296
+    status: active
+  invoices:
+  - id: inv-3396
+    customer_id: customer-296
+    amount: '85.50'
+    currency: USD
+    status: paid
+  - id: inv-3496
+    customer_id: customer-296
+    amount: '19.00'
+    currency: USD
+    status: disputed
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-3396
+- type: unchanged
+  invoice_id: inv-3496
+benchmark:
+  category: billing
+  archetype: read-only
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-3396
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: readonly-before-action
+    prototype_id: readonly-before-action
+    prototype_sha256: ec70c738611b559a68d4a124121932d09a2cc0980b1d24b46907ac18a1ee88b5
+    variant_index: 0
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: disputed
+      entity_order: original
+      target_amount: '85.50'
+      target_invoice_style: numeric
+      instruction_template: template-0

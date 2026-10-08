@@ -1,0 +1,25 @@
+[project]
+name = "agentops-rl-smoke"
+version = "0.0.0"
+description = "Isolated Phase 8A TRL/vLLM GPU smoke environment"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  # Needed by the source-backed catalog/config gate; remote sandboxes use the clean wheel.
+  "aiosqlite==0.22.1",
+  "datasets",
+  "trl[peft]==1.13.0",
+]
+
+[project.optional-dependencies]
+vllm = [
+  "trl[vllm]==1.13.0",
+  # TRL 1.13.0 currently declares vLLM <=0.28.0; do not float past its metadata.
+  "vllm==0.28.0",
+]
+harbor = [
+  "trl[harbor]==1.13.0",
+  "harbor>=0.22,<0.23",
+]
+
+[tool.uv]
+package = false

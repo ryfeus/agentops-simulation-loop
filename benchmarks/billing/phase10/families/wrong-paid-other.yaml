@@ -1,0 +1,36 @@
+schema_version: '1'
+id: wrong-paid-other
+prototype: target-refund-not-other
+archetype: wrong-target
+difficulty: easy
+variant_count: 5
+instruction_templates:
+- Please refund {target_invoice} and leave {other_invoice} unchanged.
+- The incorrect charge is {target_invoice}; the other bill is correct.
+- Only {target_invoice} needs a refund, while {other_invoice} remains paid.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - paid
+  - open
+  distractor_owner:
+  - same
+  - other
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - paid
+negative_strategy: refund_wrong_target

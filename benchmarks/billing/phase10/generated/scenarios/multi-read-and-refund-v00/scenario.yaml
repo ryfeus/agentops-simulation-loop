@@ -1,0 +1,70 @@
+schema_version: '1'
+id: multi-read-and-refund-v00
+instruction: Refund inv-8372, and tell me the status of inv-8373.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-472
+    status: active
+  - id: customer-9272
+    status: active
+  invoices:
+  - id: inv-8472
+    customer_id: customer-9272
+    amount: '19.00'
+    currency: USD
+    status: paid
+  - id: inv-8372
+    customer_id: customer-472
+    amount: '120.00'
+    currency: USD
+    status: paid
+  - id: inv-8373
+    customer_id: customer-9272
+    amount: '49.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-8373
+- type: must_refund
+  invoice_id: inv-8372
+- type: no_escalation
+  invoice_id: inv-8372
+- type: unchanged
+  invoice_id: inv-8472
+benchmark:
+  category: billing
+  archetype: multi-invoice
+  difficulty: compound
+  mutation_policy:
+    allowed_targets:
+    - inv-8372
+  trajectory:
+    required_inspections:
+    - inv-8373
+    - inv-8372
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: multi-read-and-refund
+    prototype_id: multi-read-and-refund
+    prototype_sha256: b8ea1a4fb7c80a75e4405823cad3e9f2e2a00f0acc0d01b398c0587cbe39d7a1
+    variant_index: 0
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: other
+      distractor_status: paid
+      entity_order: reverse
+      target_amount: '120.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-0

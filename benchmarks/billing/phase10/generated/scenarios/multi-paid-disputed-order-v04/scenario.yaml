@@ -1,0 +1,84 @@
+schema_version: '1'
+id: multi-paid-disputed-order-v04
+instruction: First check inv-4082, then refund inv-4081 and handle that dispute.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-181
+    status: active
+  invoices:
+  - id: inv-4081
+    customer_id: customer-181
+    amount: '120.00'
+    currency: USD
+    status: paid
+  - id: inv-4082
+    customer_id: customer-181
+    amount: '19.00'
+    currency: USD
+    status: disputed
+  - id: inv-4181
+    customer_id: customer-181
+    amount: '249.95'
+    currency: USD
+    status: open
+  - id: inv-4182
+    customer_id: customer-181
+    amount: '9.99'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-4081
+- type: no_escalation
+  invoice_id: inv-4081
+- type: invoice_status
+  invoice_id: inv-4081
+  status: refunded
+- type: no_refund
+  invoice_id: inv-4082
+- type: must_escalate
+  invoice_id: inv-4082
+- type: invoice_status
+  invoice_id: inv-4082
+  status: disputed
+- type: unchanged
+  invoice_id: inv-4181
+- type: unchanged
+  invoice_id: inv-4182
+benchmark:
+  category: billing
+  archetype: multi-invoice
+  difficulty: compound
+  mutation_policy:
+    allowed_targets:
+    - inv-4081
+    - inv-4082
+  trajectory:
+    required_inspections:
+    - inv-4081
+    - inv-4082
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: multi-paid-disputed-order
+    prototype_id: multi-paid-and-disputed
+    prototype_sha256: 3581cbd79a80dfe82c7447a5c85cc8779858fd5f85aa350eaf7807ce2d760034
+    variant_index: 4
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: same
+      distractor_status: open
+      entity_order: original
+      target_amount: '120.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-1

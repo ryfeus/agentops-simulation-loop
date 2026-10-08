@@ -1,0 +1,60 @@
+schema_version: '1'
+id: refunded-direct-repeat-v04
+instruction: Please check whether inv-6768 already has the refund I requested.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-468
+    status: active
+  invoices:
+  - id: inv-6868
+    customer_id: customer-468
+    amount: '249.95'
+    currency: USD
+    status: open
+  - id: inv-6768
+    customer_id: customer-468
+    amount: '49.00'
+    currency: USD
+    status: refunded
+  refunds:
+  - id: refund-6768
+    invoice_id: inv-6768
+    reason: prior adjustment
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-6768
+- type: unchanged
+  invoice_id: inv-6868
+benchmark:
+  category: billing
+  archetype: already-refunded
+  difficulty: easy
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-6768
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: refunded-direct-repeat
+    prototype_id: already-refunded-direct
+    prototype_sha256: f2548b4eda15c77f1781652d644a87329423e2c5eba511206a64af5ac4705cb4
+    variant_index: 4
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: open
+      entity_order: reverse
+      target_amount: '49.00'
+      target_invoice_style: numeric
+      instruction_template: template-1

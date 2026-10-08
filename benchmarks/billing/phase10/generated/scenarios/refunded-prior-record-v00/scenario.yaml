@@ -1,0 +1,69 @@
+schema_version: '1'
+id: refunded-prior-record-v00
+instruction: Did the earlier refund for inv-5021 go through?
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-321
+    status: active
+  - id: customer-5921
+    status: active
+  invoices:
+  - id: inv-5122
+    customer_id: customer-5921
+    amount: '49.00'
+    currency: USD
+    status: paid
+  - id: inv-5121
+    customer_id: customer-5921
+    amount: '19.00'
+    currency: USD
+    status: open
+  - id: inv-5021
+    customer_id: customer-321
+    amount: '85.50'
+    currency: USD
+    status: refunded
+  refunds:
+  - id: refund-5021
+    invoice_id: inv-5021
+    reason: prior adjustment
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-5021
+- type: unchanged
+  invoice_id: inv-5121
+- type: unchanged
+  invoice_id: inv-5122
+benchmark:
+  category: billing
+  archetype: already-refunded
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-5021
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: refunded-prior-record
+    prototype_id: already-refunded-direct
+    prototype_sha256: f2548b4eda15c77f1781652d644a87329423e2c5eba511206a64af5ac4705cb4
+    variant_index: 0
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: other
+      distractor_status: open
+      entity_order: reverse
+      target_amount: '85.50'
+      target_invoice_style: numeric
+      instruction_template: template-0

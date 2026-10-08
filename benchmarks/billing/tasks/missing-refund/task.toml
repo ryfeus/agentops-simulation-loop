@@ -1,0 +1,35 @@
+schema_version = "1.4"
+artifacts = ["/app/data/billing.db", "/app/data/agent-run.json"]
+
+[task]
+name = "agentops-taskify/missing-refund"
+version = "0.1.0"
+description = "Taskified billing policy regression"
+keywords = ["billing", "policy", "taskify"]
+
+[metadata]
+scenario_id = 'missing-refund'
+category = 'billing'
+failure_type = 'static_benchmark'
+source_kind = 'synthetic'
+source_trace_id = ''
+source_session_id = ''
+source_evaluator = ''
+source_candidate_fingerprint = ''
+
+[agent]
+timeout_sec = 120
+network_mode = "no-network"
+user = "root"
+
+[verifier]
+timeout_sec = 60
+environment_mode = "separate"
+network_mode = "no-network"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[environment]
+network_mode = "no-network"
+build_timeout_sec = 600

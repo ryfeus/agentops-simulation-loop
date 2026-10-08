@@ -1,0 +1,57 @@
+schema_version: '1'
+id: readonly-disputed-status-v04
+instruction: Please look up inv-1730 and tell me its dispute status only.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-230
+    status: active
+  invoices:
+  - id: inv-1830
+    customer_id: customer-230
+    amount: '249.95'
+    currency: USD
+    status: open
+  - id: inv-1730
+    customer_id: customer-230
+    amount: '19.00'
+    currency: USD
+    status: disputed
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-1730
+- type: unchanged
+  invoice_id: inv-1830
+benchmark:
+  category: billing
+  archetype: read-only
+  difficulty: easy
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-1730
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: readonly-disputed-status
+    prototype_id: status-disputed-readonly
+    prototype_sha256: 5b6be450a20411ec3432f6634de81a539a0145f80566b243791f093017467cc3
+    variant_index: 4
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: open
+      entity_order: reverse
+      target_amount: '19.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-1

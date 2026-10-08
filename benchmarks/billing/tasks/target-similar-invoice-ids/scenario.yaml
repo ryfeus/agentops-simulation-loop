@@ -1,0 +1,44 @@
+schema_version: '1'
+id: target-similar-invoice-ids
+instruction: Refund inv-201, not inv-2010.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-1
+    status: active
+  invoices:
+  - id: inv-201
+    customer_id: customer-1
+    amount: '49.00'
+    currency: USD
+    status: paid
+  - id: inv-2010
+    customer_id: customer-1
+    amount: '49.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-201
+- type: unchanged
+  invoice_id: inv-2010
+benchmark:
+  category: billing
+  archetype: wrong-target
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets:
+    - inv-201
+  trajectory:
+    required_inspections:
+    - inv-201
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1

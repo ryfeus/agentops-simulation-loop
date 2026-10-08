@@ -1,0 +1,72 @@
+schema_version: '1'
+id: normal-paid-direct-v01
+instruction: Please reverse the charge on inv-4690 and leave inv-4790 alone.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-790
+    status: active
+  - id: customer-5590
+    status: active
+  invoices:
+  - id: inv-4791
+    customer_id: customer-5590
+    amount: '85.50'
+    currency: USD
+    status: paid
+  - id: inv-4790
+    customer_id: customer-5590
+    amount: '49.00'
+    currency: USD
+    status: paid
+  - id: inv-4690
+    customer_id: customer-790
+    amount: '49.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-4690
+- type: no_escalation
+  invoice_id: inv-4690
+- type: invoice_status
+  invoice_id: inv-4690
+  status: refunded
+- type: unchanged
+  invoice_id: inv-4790
+- type: unchanged
+  invoice_id: inv-4791
+benchmark:
+  category: billing
+  archetype: normal-refund
+  difficulty: easy
+  mutation_policy:
+    allowed_targets:
+    - inv-4690
+  trajectory:
+    required_inspections:
+    - inv-4690
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: normal-paid-direct
+    prototype_id: paid-refund-direct
+    prototype_sha256: 473a6fce37376046fdb9aba136ae269fdaf8044d2d4f982af8fbb3fdcf4b57b0
+    variant_index: 1
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: other
+      distractor_status: paid
+      entity_order: reverse
+      target_amount: '49.00'
+      target_invoice_style: numeric
+      instruction_template: template-1

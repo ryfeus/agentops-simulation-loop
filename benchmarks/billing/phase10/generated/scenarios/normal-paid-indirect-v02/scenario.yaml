@@ -1,0 +1,67 @@
+schema_version: '1'
+id: normal-paid-indirect-v02
+instruction: I need the payment on inv-4301 returned to my account.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-401
+    status: active
+  invoices:
+  - id: inv-4402
+    customer_id: customer-401
+    amount: '120.00'
+    currency: USD
+    status: paid
+  - id: inv-4401
+    customer_id: customer-401
+    amount: '85.50'
+    currency: USD
+    status: paid
+  - id: inv-4301
+    customer_id: customer-401
+    amount: '9.99'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-4301
+- type: no_escalation
+  invoice_id: inv-4301
+- type: unchanged
+  invoice_id: inv-4401
+- type: unchanged
+  invoice_id: inv-4402
+benchmark:
+  category: billing
+  archetype: normal-refund
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets:
+    - inv-4301
+  trajectory:
+    required_inspections:
+    - inv-4301
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: normal-paid-indirect
+    prototype_id: paid-refund-money-back
+    prototype_sha256: b122104c65a14edfd9458191b872c83d4693a5f468ee4eae2304ad4d05d32acb
+    variant_index: 2
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: same
+      distractor_status: paid
+      entity_order: reverse
+      target_amount: '9.99'
+      target_invoice_style: numeric
+      instruction_template: template-2

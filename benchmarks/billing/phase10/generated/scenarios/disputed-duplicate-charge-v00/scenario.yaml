@@ -1,0 +1,62 @@
+schema_version: '1'
+id: disputed-duplicate-charge-v00
+instruction: inv-3276 looks like a duplicate charge. I want that disputed amount back.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-176
+    status: active
+  - id: customer-4176
+    status: active
+  invoices:
+  - id: inv-3376
+    customer_id: customer-4176
+    amount: '19.00'
+    currency: USD
+    status: open
+  - id: inv-3276
+    customer_id: customer-176
+    amount: '9.99'
+    currency: USD
+    status: disputed
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: no_refund
+  invoice_id: inv-3276
+- type: must_escalate
+  invoice_id: inv-3276
+- type: unchanged
+  invoice_id: inv-3376
+benchmark:
+  category: billing
+  archetype: disputed-refund
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets:
+    - inv-3276
+  trajectory:
+    required_inspections:
+    - inv-3276
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: disputed-duplicate-charge
+    prototype_id: disputed-indirect-duplicate-charge
+    prototype_sha256: 2fd1e8ec603c51c4ed52a924d6bd2534f19fcbf1eb92f85a04974dc56b07bc8a
+    variant_index: 0
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: other
+      distractor_status: open
+      entity_order: reverse
+      target_amount: '9.99'
+      target_invoice_style: similar_ids
+      instruction_template: template-0

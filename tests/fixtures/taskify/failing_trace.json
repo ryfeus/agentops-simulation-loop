@@ -1,0 +1,45 @@
+{
+  "evaluationInput": {
+    "sessionSpans": [
+      {
+        "traceId": "00000000000000000000000000000005",
+        "spanId": "0000000000000001",
+        "name": "POST /invocations",
+        "attributes": {
+          "session.id": "session-taskify-sanitized",
+          "agentops.source_revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "agentops.agent_config_fingerprint": "bb1a7f9b1d653eb8a3d359ba6cfa54ca99eadc16edb745162bd2ab4b66ca6d2f",
+          "agentops.model_provider": "scripted",
+          "agentops.model_id": "bad",
+          "agentops.prompt_version": "billing-v1",
+          "agentops.tools_version": "billing-mcp-v1",
+          "agentops.harness_framework": "langgraph",
+          "agentops.harness_version": "v1",
+          "agentops.invocation.instruction": "I was charged twice for April. Please refund invoice inv-123.",
+          "agentops.world_state.before": "{\"customers\":[{\"id\":\"customer-42\",\"status\":\"active\"}],\"escalations\":[],\"invoices\":[{\"amount\":\"89.00\",\"currency\":\"USD\",\"customer_id\":\"customer-42\",\"id\":\"inv-123\",\"status\":\"disputed\"}],\"refunds\":[],\"schema_version\":\"1\"}",
+          "agentops.world_snapshot.schema_version": "1",
+          "agentops.world_snapshot.kind": "billing-demo",
+          "agentops.world_snapshot.sha256": "b83b9d405f88d1f162c7ec93b69c4314d4cd238d6053a7cd094bdeb7fabfc1d3"
+        }
+      },
+      {
+        "traceId": "00000000000000000000000000000005",
+        "spanId": "0000000000000002",
+        "startTimeUnixNano": "1",
+        "name": "get_invoice",
+        "scope": {"name": "openinference.instrumentation.langchain"},
+        "status": {"code": "OK"},
+        "attributes": {"session.id": "session-taskify-sanitized", "openinference.span.kind": "TOOL", "tool.name": "get_invoice", "input.value": "inv-123", "output.value": "{\"id\":\"inv-123\",\"status\":\"disputed\"}"}
+      },
+      {
+        "traceId": "00000000000000000000000000000005",
+        "spanId": "0000000000000003",
+        "startTimeUnixNano": "2",
+        "name": "refund_invoice",
+        "scope": {"name": "openinference.instrumentation.langchain"},
+        "status": {"code": "OK"},
+        "attributes": {"session.id": "session-taskify-sanitized", "openinference.span.kind": "TOOL", "tool.name": "refund_invoice", "input.value": "{\"invoice_id\":\"inv-123\",\"reason\":\"duplicate charge\"}", "output.value": "{\"success\":true,\"invoice_id\":\"inv-123\"}"}
+      }
+    ]
+  }
+}

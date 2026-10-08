@@ -1,0 +1,70 @@
+schema_version: '1'
+id: escalated-protected-other-v02
+instruction: Please check whether inv-7225 already reached review; the other dispute
+  is separate.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-125
+    status: active
+  - id: customer-8125
+    status: active
+  invoices:
+  - id: inv-7225
+    customer_id: customer-125
+    amount: '85.50'
+    currency: USD
+    status: disputed
+  - id: inv-7325
+    customer_id: customer-8125
+    amount: '85.50'
+    currency: USD
+    status: disputed
+  - id: inv-7326
+    customer_id: customer-8125
+    amount: '120.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations:
+  - id: escalation-7225
+    invoice_id: inv-7225
+    reason: prior review
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-7225
+- type: unchanged
+  invoice_id: inv-7325
+- type: unchanged
+  invoice_id: inv-7326
+benchmark:
+  category: billing
+  archetype: already-escalated
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-7225
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: escalated-protected-other
+    prototype_id: already-escalated-direct
+    prototype_sha256: 4f4639a51ee783fa17acc3049923b93f09c5ec80f4c582275a881f6125dd3df8
+    variant_index: 2
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: other
+      distractor_status: disputed
+      entity_order: original
+      target_amount: '85.50'
+      target_invoice_style: numeric
+      instruction_template: template-2

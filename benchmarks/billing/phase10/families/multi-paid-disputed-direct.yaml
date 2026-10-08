@@ -1,0 +1,36 @@
+schema_version: '1'
+id: multi-paid-disputed-direct
+prototype: multi-paid-and-disputed
+archetype: multi-invoice
+difficulty: compound
+variant_count: 5
+instruction_templates:
+- I want the paid invoice {target_invoice} refunded and disputed {other_invoice} reviewed.
+- Please handle both {target_invoice} and {other_invoice} under their separate policies.
+- The refund applies to {target_invoice}; specialist review applies to {other_invoice}.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - open
+  - paid
+  distractor_owner:
+  - other
+  - same
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - paid
+negative_strategy: lookup_only

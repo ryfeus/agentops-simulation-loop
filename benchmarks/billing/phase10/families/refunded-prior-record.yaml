@@ -1,0 +1,36 @@
+schema_version: '1'
+id: refunded-prior-record
+prototype: already-refunded-direct
+archetype: already-refunded
+difficulty: paraphrase
+variant_count: 5
+instruction_templates:
+- Did the earlier refund for {target_invoice} go through?
+- Please confirm whether {target_invoice} was already refunded.
+- I see a prior adjustment on {target_invoice}; verify it for me.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - paid
+  - open
+  distractor_owner:
+  - other
+  - same
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - refunded
+negative_strategy: refund_target

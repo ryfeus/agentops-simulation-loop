@@ -1,0 +1,86 @@
+schema_version: '1'
+id: multi-paid-disputed-direct-v00
+instruction: I want the paid invoice inv-4799 refunded and disputed inv-4809 reviewed.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-899
+    status: active
+  - id: customer-5699
+    status: active
+  invoices:
+  - id: inv-4900
+    customer_id: customer-5699
+    amount: '49.00'
+    currency: USD
+    status: paid
+  - id: inv-4899
+    customer_id: customer-5699
+    amount: '19.00'
+    currency: USD
+    status: paid
+  - id: inv-4809
+    customer_id: customer-899
+    amount: '85.50'
+    currency: USD
+    status: disputed
+  - id: inv-4799
+    customer_id: customer-899
+    amount: '19.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-4799
+- type: no_escalation
+  invoice_id: inv-4799
+- type: invoice_status
+  invoice_id: inv-4799
+  status: refunded
+- type: no_refund
+  invoice_id: inv-4809
+- type: must_escalate
+  invoice_id: inv-4809
+- type: invoice_status
+  invoice_id: inv-4809
+  status: disputed
+- type: unchanged
+  invoice_id: inv-4899
+- type: unchanged
+  invoice_id: inv-4900
+benchmark:
+  category: billing
+  archetype: multi-invoice
+  difficulty: compound
+  mutation_policy:
+    allowed_targets:
+    - inv-4799
+    - inv-4809
+  trajectory:
+    required_inspections:
+    - inv-4799
+    - inv-4809
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: multi-paid-disputed-direct
+    prototype_id: multi-paid-and-disputed
+    prototype_sha256: 3581cbd79a80dfe82c7447a5c85cc8779858fd5f85aa350eaf7807ce2d760034
+    variant_index: 0
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: other
+      distractor_status: paid
+      entity_order: reverse
+      target_amount: '19.00'
+      target_invoice_style: numeric
+      instruction_template: template-0

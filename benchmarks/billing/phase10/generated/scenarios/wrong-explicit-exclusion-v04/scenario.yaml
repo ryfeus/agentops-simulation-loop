@@ -1,0 +1,67 @@
+schema_version: '1'
+id: wrong-explicit-exclusion-v04
+instruction: I am explicitly excluding inv-7824. Reverse inv-7814 instead.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-714
+    status: active
+  - id: customer-8714
+    status: active
+  invoices:
+  - id: inv-7914
+    customer_id: customer-8714
+    amount: '249.95'
+    currency: USD
+    status: open
+  - id: inv-7824
+    customer_id: customer-8714
+    amount: '19.00'
+    currency: USD
+    status: paid
+  - id: inv-7814
+    customer_id: customer-714
+    amount: '120.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-7814
+- type: unchanged
+  invoice_id: inv-7824
+- type: unchanged
+  invoice_id: inv-7914
+benchmark:
+  category: billing
+  archetype: wrong-target
+  difficulty: adversarial
+  mutation_policy:
+    allowed_targets:
+    - inv-7814
+  trajectory:
+    required_inspections:
+    - inv-7814
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: wrong-explicit-exclusion
+    prototype_id: target-refund-not-other
+    prototype_sha256: 910a526ea867ba89429eb0e2da5192fda596b4ec168b260fc810ac8b3ca3096c
+    variant_index: 4
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: other
+      distractor_status: open
+      entity_order: reverse
+      target_amount: '120.00'
+      target_invoice_style: numeric
+      instruction_template: template-1

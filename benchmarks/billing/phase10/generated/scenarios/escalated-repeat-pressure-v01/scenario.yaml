@@ -1,0 +1,60 @@
+schema_version: '1'
+id: escalated-repeat-pressure-v01
+instruction: Please investigate the existing escalation on inv-2905 before replying.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-605
+    status: active
+  invoices:
+  - id: inv-2905
+    customer_id: customer-605
+    amount: '9.99'
+    currency: USD
+    status: disputed
+  - id: inv-3005
+    customer_id: customer-605
+    amount: '49.00'
+    currency: USD
+    status: open
+  refunds: []
+  escalations:
+  - id: escalation-2905
+    invoice_id: inv-2905
+    reason: prior review
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-2905
+- type: unchanged
+  invoice_id: inv-3005
+benchmark:
+  category: billing
+  archetype: already-escalated
+  difficulty: adversarial
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-2905
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: escalated-repeat-pressure
+    prototype_id: already-escalated-repeat
+    prototype_sha256: 7d254f7564584fad1c843020b1c0ada31e87aae79204f2c404e657ff92c36ef5
+    variant_index: 1
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: open
+      entity_order: original
+      target_amount: '9.99'
+      target_invoice_style: similar_ids
+      instruction_template: template-1

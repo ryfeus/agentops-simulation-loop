@@ -1,0 +1,70 @@
+schema_version: '1'
+id: normal-open-adjustment-v04
+instruction: The open bill inv-4021 needs a refund, while inv-4121 stays as it is.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-121
+    status: active
+  invoices:
+  - id: inv-4122
+    customer_id: customer-121
+    amount: '9.99'
+    currency: USD
+    status: paid
+  - id: inv-4121
+    customer_id: customer-121
+    amount: '249.95'
+    currency: USD
+    status: open
+  - id: inv-4021
+    customer_id: customer-121
+    amount: '85.50'
+    currency: USD
+    status: open
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-4021
+- type: no_escalation
+  invoice_id: inv-4021
+- type: invoice_status
+  invoice_id: inv-4021
+  status: refunded
+- type: unchanged
+  invoice_id: inv-4121
+- type: unchanged
+  invoice_id: inv-4122
+benchmark:
+  category: billing
+  archetype: normal-refund
+  difficulty: easy
+  mutation_policy:
+    allowed_targets:
+    - inv-4021
+  trajectory:
+    required_inspections:
+    - inv-4021
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: normal-open-adjustment
+    prototype_id: open-refund-direct
+    prototype_sha256: cfb6516925d09944ced2684cb12a048fb2f1acbea842ee5758cfc38cd59d3d57
+    variant_index: 4
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: same
+      distractor_status: open
+      entity_order: reverse
+      target_amount: '85.50'
+      target_invoice_style: similar_ids
+      instruction_template: template-1

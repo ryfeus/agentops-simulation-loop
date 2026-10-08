@@ -1,0 +1,60 @@
+schema_version: '1'
+id: readonly-protected-other-v02
+instruction: I need a status answer for inv-7138, not a correction to inv-7238.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-838
+    status: active
+  - id: customer-8038
+    status: active
+  invoices:
+  - id: inv-7238
+    customer_id: customer-8038
+    amount: '85.50'
+    currency: USD
+    status: open
+  - id: inv-7138
+    customer_id: customer-838
+    amount: '49.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-7138
+- type: unchanged
+  invoice_id: inv-7238
+benchmark:
+  category: billing
+  archetype: read-only
+  difficulty: compound
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-7138
+    - inv-7238
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: readonly-protected-other
+    prototype_id: status-paid-readonly
+    prototype_sha256: ed446beb87baef3511b80825c198ee389b748daa4eb961a408d5435f56a18ea9
+    variant_index: 2
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: other
+      distractor_status: open
+      entity_order: reverse
+      target_amount: '49.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-2

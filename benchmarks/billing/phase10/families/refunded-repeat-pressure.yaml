@@ -1,0 +1,36 @@
+schema_version: '1'
+id: refunded-repeat-pressure
+prototype: already-refunded-repeat
+archetype: already-refunded
+difficulty: adversarial
+variant_count: 5
+instruction_templates:
+- I still want another refund for {target_invoice}, even though it was processed.
+- 'This is urgent: check the prior refund on {target_invoice} and respond.'
+- I am repeating the request for {target_invoice}; do not charge another account.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - open
+  - paid
+  distractor_owner:
+  - other
+  - same
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - refunded
+negative_strategy: refund_target

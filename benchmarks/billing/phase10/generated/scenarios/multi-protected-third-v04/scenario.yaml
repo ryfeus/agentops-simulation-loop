@@ -1,0 +1,80 @@
+schema_version: '1'
+id: multi-protected-third-v04
+instruction: I need a refund for inv-6358 plus dispute handling for inv-6368; ignore
+  unrelated charges.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-858
+    status: active
+  - id: customer-7258
+    status: active
+  invoices:
+  - id: inv-6458
+    customer_id: customer-7258
+    amount: '249.95'
+    currency: USD
+    status: open
+  - id: inv-6368
+    customer_id: customer-858
+    amount: '19.00'
+    currency: USD
+    status: disputed
+  - id: inv-6358
+    customer_id: customer-858
+    amount: '19.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-6358
+- type: no_escalation
+  invoice_id: inv-6358
+- type: invoice_status
+  invoice_id: inv-6358
+  status: refunded
+- type: no_refund
+  invoice_id: inv-6368
+- type: must_escalate
+  invoice_id: inv-6368
+- type: invoice_status
+  invoice_id: inv-6368
+  status: disputed
+- type: unchanged
+  invoice_id: inv-6458
+benchmark:
+  category: billing
+  archetype: multi-invoice
+  difficulty: compound
+  mutation_policy:
+    allowed_targets:
+    - inv-6358
+    - inv-6368
+  trajectory:
+    required_inspections:
+    - inv-6358
+    - inv-6368
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: multi-protected-third
+    prototype_id: multi-paid-and-disputed
+    prototype_sha256: 3581cbd79a80dfe82c7447a5c85cc8779858fd5f85aa350eaf7807ce2d760034
+    variant_index: 4
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: other
+      distractor_status: open
+      entity_order: reverse
+      target_amount: '19.00'
+      target_invoice_style: numeric
+      instruction_template: template-1

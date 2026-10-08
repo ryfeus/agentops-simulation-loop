@@ -1,0 +1,36 @@
+schema_version: '1'
+id: multi-read-and-refund
+prototype: multi-read-and-refund
+archetype: multi-invoice
+difficulty: compound
+variant_count: 5
+instruction_templates:
+- Refund {target_invoice}, and tell me the status of {other_invoice}.
+- For {other_invoice} I only need a status check; for {target_invoice} I need a refund.
+- 'Please inspect these two bills: leave {other_invoice} alone and refund {target_invoice}.'
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - paid
+  - open
+  distractor_owner:
+  - same
+  - other
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - paid
+negative_strategy: lookup_only

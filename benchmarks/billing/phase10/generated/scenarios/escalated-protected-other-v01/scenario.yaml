@@ -1,0 +1,62 @@
+schema_version: '1'
+id: escalated-protected-other-v01
+instruction: Confirm the prior specialist case on inv-6953 and leave inv-7053 alone.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-653
+    status: active
+  - id: customer-7853
+    status: active
+  invoices:
+  - id: inv-7053
+    customer_id: customer-7853
+    amount: '49.00'
+    currency: USD
+    status: disputed
+  - id: inv-6953
+    customer_id: customer-653
+    amount: '49.00'
+    currency: USD
+    status: disputed
+  refunds: []
+  escalations:
+  - id: escalation-6953
+    invoice_id: inv-6953
+    reason: prior review
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-6953
+- type: unchanged
+  invoice_id: inv-7053
+benchmark:
+  category: billing
+  archetype: already-escalated
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-6953
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: escalated-protected-other
+    prototype_id: already-escalated-direct
+    prototype_sha256: 4f4639a51ee783fa17acc3049923b93f09c5ec80f4c582275a881f6125dd3df8
+    variant_index: 1
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: other
+      distractor_status: disputed
+      entity_order: reverse
+      target_amount: '49.00'
+      target_invoice_style: numeric
+      instruction_template: template-1

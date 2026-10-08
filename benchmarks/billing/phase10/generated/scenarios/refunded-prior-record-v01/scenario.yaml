@@ -1,0 +1,69 @@
+schema_version: '1'
+id: refunded-prior-record-v01
+instruction: Please confirm whether inv-7158 was already refunded.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-858
+    status: active
+  - id: customer-8058
+    status: active
+  invoices:
+  - id: inv-7158
+    customer_id: customer-858
+    amount: '120.00'
+    currency: USD
+    status: refunded
+  - id: inv-7258
+    customer_id: customer-8058
+    amount: '49.00'
+    currency: USD
+    status: paid
+  - id: inv-7259
+    customer_id: customer-8058
+    amount: '85.50'
+    currency: USD
+    status: paid
+  refunds:
+  - id: refund-7158
+    invoice_id: inv-7158
+    reason: prior adjustment
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-7158
+- type: unchanged
+  invoice_id: inv-7258
+- type: unchanged
+  invoice_id: inv-7259
+benchmark:
+  category: billing
+  archetype: already-refunded
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-7158
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: refunded-prior-record
+    prototype_id: already-refunded-direct
+    prototype_sha256: f2548b4eda15c77f1781652d644a87329423e2c5eba511206a64af5ac4705cb4
+    variant_index: 1
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: other
+      distractor_status: paid
+      entity_order: original
+      target_amount: '120.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-1

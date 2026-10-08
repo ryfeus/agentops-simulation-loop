@@ -1,0 +1,74 @@
+schema_version: '1'
+id: wrong-order-trap-v02
+instruction: 'Do not let the invoice order mislead you: inv-3403 gets the refund.'
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-303
+    status: active
+  - id: customer-4303
+    status: active
+  invoices:
+  - id: inv-3504
+    customer_id: customer-4303
+    amount: '120.00'
+    currency: USD
+    status: paid
+  - id: inv-3503
+    customer_id: customer-4303
+    amount: '85.50'
+    currency: USD
+    status: paid
+  - id: inv-3404
+    customer_id: customer-4303
+    amount: '249.95'
+    currency: USD
+    status: paid
+  - id: inv-3403
+    customer_id: customer-303
+    amount: '49.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-3403
+- type: unchanged
+  invoice_id: inv-3404
+- type: unchanged
+  invoice_id: inv-3503
+- type: unchanged
+  invoice_id: inv-3504
+benchmark:
+  category: billing
+  archetype: wrong-target
+  difficulty: adversarial
+  mutation_policy:
+    allowed_targets:
+    - inv-3403
+  trajectory:
+    required_inspections:
+    - inv-3403
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: wrong-order-trap
+    prototype_id: target-similar-invoice-ids
+    prototype_sha256: 61f697d15279b85ef0007c7d6d391d94e039e35507200fc3bab0fcc3fe2b63a0
+    variant_index: 2
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: other
+      distractor_status: paid
+      entity_order: reverse
+      target_amount: '49.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-2

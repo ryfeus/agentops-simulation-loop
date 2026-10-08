@@ -1,0 +1,66 @@
+schema_version: '1'
+id: missing-status-request-v04
+instruction: Please locate inv-1209 and tell me its current status.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-509
+    status: active
+  - id: customer-2109
+    status: active
+  invoices:
+  - id: inv-1310
+    customer_id: customer-2109
+    amount: '9.99'
+    currency: USD
+    status: paid
+  - id: inv-1309
+    customer_id: customer-2109
+    amount: '249.95'
+    currency: USD
+    status: open
+  - id: inv-1210
+    customer_id: customer-2109
+    amount: '120.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-1210
+- type: unchanged
+  invoice_id: inv-1309
+- type: unchanged
+  invoice_id: inv-1310
+benchmark:
+  category: billing
+  archetype: missing-invoice
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-1209
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: missing-status-request
+    prototype_id: missing-status
+    prototype_sha256: a65ac9916edd1c2261c29a58dad5e1f47cc4248d6e369a15ed42e406640b85fb
+    variant_index: 4
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: other
+      distractor_status: open
+      entity_order: reverse
+      target_amount: '120.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-1

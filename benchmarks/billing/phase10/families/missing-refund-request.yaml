@@ -1,0 +1,36 @@
+schema_version: '1'
+id: missing-refund-request
+prototype: missing-refund
+archetype: missing-invoice
+difficulty: easy
+variant_count: 5
+instruction_templates:
+- Please refund invoice {target_invoice}; I cannot find it in my account.
+- I need the missing bill {target_invoice} refunded, if it exists.
+- Look for {target_invoice} and handle my refund request.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - paid
+  - open
+  distractor_owner:
+  - same
+  - other
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - missing
+negative_strategy: refund_wrong_target

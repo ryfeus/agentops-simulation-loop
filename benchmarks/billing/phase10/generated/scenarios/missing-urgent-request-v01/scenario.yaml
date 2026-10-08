@@ -1,0 +1,65 @@
+schema_version: '1'
+id: missing-urgent-request-v01
+instruction: I need help right away with missing invoice inv-3662; please verify it
+  first.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-562
+    status: active
+  invoices:
+  - id: inv-3672
+    customer_id: customer-562
+    amount: '120.00'
+    currency: USD
+    status: paid
+  - id: inv-3762
+    customer_id: customer-562
+    amount: '49.00'
+    currency: USD
+    status: paid
+  - id: inv-3763
+    customer_id: customer-562
+    amount: '85.50'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-3672
+- type: unchanged
+  invoice_id: inv-3762
+- type: unchanged
+  invoice_id: inv-3763
+benchmark:
+  category: billing
+  archetype: missing-invoice
+  difficulty: adversarial
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-3662
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: missing-urgent-request
+    prototype_id: missing-refund
+    prototype_sha256: 19885c22daa22256a0c2c6b19a7fd579811bb280a186d8c195384d5cb8ce7a0e
+    variant_index: 1
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: same
+      distractor_status: paid
+      entity_order: original
+      target_amount: '120.00'
+      target_invoice_style: numeric
+      instruction_template: template-1

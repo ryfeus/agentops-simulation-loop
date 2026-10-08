@@ -1,0 +1,39 @@
+schema_version: '1'
+id: normal-paid-multiclause
+prototype: paid-refund-direct
+archetype: normal-refund
+difficulty: compound
+variant_count: 5
+instruction_templates:
+- The amount on {target_invoice} is {target_amount}; refund that invoice and keep
+  {other_invoice} unchanged.
+- After checking {target_invoice}, reverse its incorrect charge. {other_invoice} is
+  a separate bill.
+- Please correct the payment on {target_invoice}; the other invoice {other_invoice}
+  is only context.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - paid
+  - open
+  distractor_owner:
+  - other
+  - same
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - paid
+negative_strategy: lookup_only

@@ -1,0 +1,38 @@
+schema_version: '1'
+id: multi-protected-third
+prototype: multi-paid-and-disputed
+archetype: multi-invoice
+difficulty: compound
+variant_count: 5
+instruction_templates:
+- Act on {target_invoice} and {other_invoice}, but keep every other invoice untouched.
+- I need a refund for {target_invoice} plus dispute handling for {other_invoice};
+  ignore unrelated charges.
+- Please process these two specified bills, {target_invoice} and {other_invoice},
+  only.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - paid
+  - open
+  distractor_owner:
+  - other
+  - same
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - paid
+negative_strategy: lookup_only

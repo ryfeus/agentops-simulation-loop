@@ -1,0 +1,9 @@
+schema_version: '1'
+generator_version: billing-phase10-v1
+global_seed: 20260925
+family_count: 40
+task_count: 200
+split_counts:
+  train: 160
+  dev: 20
+  holdout: 20

@@ -1,0 +1,37 @@
+schema_version: '1'
+id: wrong-multi-clause
+prototype: target-refund-not-other
+archetype: wrong-target
+difficulty: compound
+variant_count: 5
+instruction_templates:
+- I reviewed {other_invoice} too, but only {target_invoice} has the wrong charge.
+- Please inspect both invoices and refund {target_invoice} while protecting {other_invoice}.
+- The amount on {target_invoice} is {target_amount}; correct that bill alone.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - paid
+  - open
+  distractor_owner:
+  - other
+  - same
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - paid
+negative_strategy: refund_wrong_target
+inspection_scope: both

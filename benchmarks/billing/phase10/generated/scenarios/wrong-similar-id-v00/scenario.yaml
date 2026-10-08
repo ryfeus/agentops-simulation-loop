@@ -1,0 +1,65 @@
+schema_version: '1'
+id: wrong-similar-id-v00
+instruction: Refund inv-1614, not the nearly matching inv-1624.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-114
+    status: active
+  invoices:
+  - id: inv-1614
+    customer_id: customer-114
+    amount: '9.99'
+    currency: USD
+    status: paid
+  - id: inv-1624
+    customer_id: customer-114
+    amount: '85.50'
+    currency: USD
+    status: paid
+  - id: inv-1714
+    customer_id: customer-114
+    amount: '19.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-1614
+- type: unchanged
+  invoice_id: inv-1624
+- type: unchanged
+  invoice_id: inv-1714
+benchmark:
+  category: billing
+  archetype: wrong-target
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets:
+    - inv-1614
+  trajectory:
+    required_inspections:
+    - inv-1614
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: wrong-similar-id
+    prototype_id: target-similar-invoice-ids
+    prototype_sha256: 61f697d15279b85ef0007c7d6d391d94e039e35507200fc3bab0fcc3fe2b63a0
+    variant_index: 0
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: paid
+      entity_order: original
+      target_amount: '9.99'
+      target_invoice_style: numeric
+      instruction_template: template-0

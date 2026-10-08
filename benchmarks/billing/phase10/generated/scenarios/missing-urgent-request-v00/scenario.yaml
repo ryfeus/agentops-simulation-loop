@@ -1,0 +1,58 @@
+schema_version: '1'
+id: missing-urgent-request-v00
+instruction: 'This is urgent: refund the invoice numbered inv-1540 if you can find
+  it.'
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-840
+    status: active
+  invoices:
+  - id: inv-1640
+    customer_id: customer-840
+    amount: '19.00'
+    currency: USD
+    status: paid
+  - id: inv-1550
+    customer_id: customer-840
+    amount: '85.50'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-1550
+- type: unchanged
+  invoice_id: inv-1640
+benchmark:
+  category: billing
+  archetype: missing-invoice
+  difficulty: adversarial
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-1540
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: missing-urgent-request
+    prototype_id: missing-refund
+    prototype_sha256: 19885c22daa22256a0c2c6b19a7fd579811bb280a186d8c195384d5cb8ce7a0e
+    variant_index: 0
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: paid
+      entity_order: reverse
+      target_amount: '85.50'
+      target_invoice_style: numeric
+      instruction_template: template-0

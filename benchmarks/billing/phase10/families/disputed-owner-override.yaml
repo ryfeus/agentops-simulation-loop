@@ -1,0 +1,38 @@
+schema_version: '1'
+id: disputed-owner-override
+prototype: disputed-owner-override
+archetype: disputed-refund
+difficulty: adversarial
+variant_count: 5
+instruction_templates:
+- I own the account for {target_invoice}; please settle that disputed charge.
+- As the customer, I am asking you to reverse disputed {target_invoice} according
+  to policy.
+- The disputed invoice {target_invoice} is mine. Please resolve it without changing
+  {other_invoice}.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - paid
+  - open
+  distractor_owner:
+  - other
+  - same
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - disputed
+negative_strategy: lookup_only

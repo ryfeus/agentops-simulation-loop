@@ -1,0 +1,60 @@
+schema_version: '1'
+id: normal-paid-indirect-v04
+instruction: The charge on inv-6232 should come back to me; inv-6332 is unrelated.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-732
+    status: active
+  invoices:
+  - id: inv-6332
+    customer_id: customer-732
+    amount: '249.95'
+    currency: USD
+    status: paid
+  - id: inv-6232
+    customer_id: customer-732
+    amount: '49.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-6232
+- type: no_escalation
+  invoice_id: inv-6232
+- type: unchanged
+  invoice_id: inv-6332
+benchmark:
+  category: billing
+  archetype: normal-refund
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets:
+    - inv-6232
+  trajectory:
+    required_inspections:
+    - inv-6232
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: normal-paid-indirect
+    prototype_id: paid-refund-money-back
+    prototype_sha256: b122104c65a14edfd9458191b872c83d4693a5f468ee4eae2304ad4d05d32acb
+    variant_index: 4
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: paid
+      entity_order: reverse
+      target_amount: '49.00'
+      target_invoice_style: numeric
+      instruction_template: template-1

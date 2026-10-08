@@ -1,0 +1,58 @@
+schema_version: '1'
+id: readonly-protected-other-v03
+instruction: Report the status of inv-5811; inv-5911 is only another bill on the account.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-311
+    status: active
+  invoices:
+  - id: inv-5811
+    customer_id: customer-311
+    amount: '85.50'
+    currency: USD
+    status: paid
+  - id: inv-5911
+    customer_id: customer-311
+    amount: '120.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-5811
+- type: unchanged
+  invoice_id: inv-5911
+benchmark:
+  category: billing
+  archetype: read-only
+  difficulty: compound
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-5811
+    - inv-5911
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: readonly-protected-other
+    prototype_id: status-paid-readonly
+    prototype_sha256: ed446beb87baef3511b80825c198ee389b748daa4eb961a408d5435f56a18ea9
+    variant_index: 3
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: paid
+      entity_order: original
+      target_amount: '85.50'
+      target_invoice_style: similar_ids
+      instruction_template: template-0

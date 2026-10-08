@@ -1,0 +1,59 @@
+schema_version: '1'
+id: readonly-paid-status-v03
+instruction: What is the status of inv-6899?
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-599
+    status: active
+  - id: customer-7799
+    status: active
+  invoices:
+  - id: inv-6999
+    customer_id: customer-7799
+    amount: '120.00'
+    currency: USD
+    status: paid
+  - id: inv-6899
+    customer_id: customer-599
+    amount: '49.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-6899
+- type: unchanged
+  invoice_id: inv-6999
+benchmark:
+  category: billing
+  archetype: read-only
+  difficulty: easy
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-6899
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: readonly-paid-status
+    prototype_id: status-paid-readonly
+    prototype_sha256: ed446beb87baef3511b80825c198ee389b748daa4eb961a408d5435f56a18ea9
+    variant_index: 3
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: other
+      distractor_status: paid
+      entity_order: reverse
+      target_amount: '49.00'
+      target_invoice_style: numeric
+      instruction_template: template-0

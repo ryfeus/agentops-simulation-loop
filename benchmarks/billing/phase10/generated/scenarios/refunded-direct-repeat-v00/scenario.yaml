@@ -1,0 +1,60 @@
+schema_version: '1'
+id: refunded-direct-repeat-v00
+instruction: I am asking again for a refund on inv-4300.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-400
+    status: active
+  invoices:
+  - id: inv-4400
+    customer_id: customer-400
+    amount: '19.00'
+    currency: USD
+    status: paid
+  - id: inv-4300
+    customer_id: customer-400
+    amount: '85.50'
+    currency: USD
+    status: refunded
+  refunds:
+  - id: refund-4300
+    invoice_id: inv-4300
+    reason: prior adjustment
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-4300
+- type: unchanged
+  invoice_id: inv-4400
+benchmark:
+  category: billing
+  archetype: already-refunded
+  difficulty: easy
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-4300
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: refunded-direct-repeat
+    prototype_id: already-refunded-direct
+    prototype_sha256: f2548b4eda15c77f1781652d644a87329423e2c5eba511206a64af5ac4705cb4
+    variant_index: 0
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: paid
+      entity_order: reverse
+      target_amount: '85.50'
+      target_invoice_style: numeric
+      instruction_template: template-0

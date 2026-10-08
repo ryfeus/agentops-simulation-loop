@@ -1,0 +1,63 @@
+schema_version: '1'
+id: refunded-cross-invoice-v01
+instruction: I need confirmation about the prior refund on inv-4589, not action on
+  inv-4689.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-689
+    status: active
+  - id: customer-5489
+    status: active
+  invoices:
+  - id: inv-4589
+    customer_id: customer-689
+    amount: '9.99'
+    currency: USD
+    status: refunded
+  - id: inv-4689
+    customer_id: customer-5489
+    amount: '49.00'
+    currency: USD
+    status: open
+  refunds:
+  - id: refund-4589
+    invoice_id: inv-4589
+    reason: prior adjustment
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-4589
+- type: unchanged
+  invoice_id: inv-4689
+benchmark:
+  category: billing
+  archetype: already-refunded
+  difficulty: compound
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-4589
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: refunded-cross-invoice
+    prototype_id: already-refunded-repeat
+    prototype_sha256: 4a700acade3420d9355aa523804b4f8e424efa2e2eff4d22f9c032a9e35c1ba5
+    variant_index: 1
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: other
+      distractor_status: open
+      entity_order: original
+      target_amount: '9.99'
+      target_invoice_style: similar_ids
+      instruction_template: template-1

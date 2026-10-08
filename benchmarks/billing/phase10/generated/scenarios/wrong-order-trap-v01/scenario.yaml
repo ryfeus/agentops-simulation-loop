@@ -1,0 +1,67 @@
+schema_version: '1'
+id: wrong-order-trap-v01
+instruction: Compare inv-3575 with inv-3565; the latter is my target.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-465
+    status: active
+  - id: customer-4465
+    status: active
+  invoices:
+  - id: inv-3665
+    customer_id: customer-4465
+    amount: '49.00'
+    currency: USD
+    status: disputed
+  - id: inv-3575
+    customer_id: customer-4465
+    amount: '120.00'
+    currency: USD
+    status: paid
+  - id: inv-3565
+    customer_id: customer-465
+    amount: '19.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-3565
+- type: unchanged
+  invoice_id: inv-3575
+- type: unchanged
+  invoice_id: inv-3665
+benchmark:
+  category: billing
+  archetype: wrong-target
+  difficulty: adversarial
+  mutation_policy:
+    allowed_targets:
+    - inv-3565
+  trajectory:
+    required_inspections:
+    - inv-3565
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: wrong-order-trap
+    prototype_id: target-similar-invoice-ids
+    prototype_sha256: 61f697d15279b85ef0007c7d6d391d94e039e35507200fc3bab0fcc3fe2b63a0
+    variant_index: 1
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: other
+      distractor_status: disputed
+      entity_order: reverse
+      target_amount: '19.00'
+      target_invoice_style: numeric
+      instruction_template: template-1

@@ -1,0 +1,57 @@
+schema_version: '1'
+id: readonly-paid-status-v04
+instruction: Tell me whether paid invoice inv-2440 has changed status.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-140
+    status: active
+  invoices:
+  - id: inv-2540
+    customer_id: customer-140
+    amount: '249.95'
+    currency: USD
+    status: open
+  - id: inv-2440
+    customer_id: customer-140
+    amount: '85.50'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-2440
+- type: unchanged
+  invoice_id: inv-2540
+benchmark:
+  category: billing
+  archetype: read-only
+  difficulty: easy
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-2440
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: readonly-paid-status
+    prototype_id: status-paid-readonly
+    prototype_sha256: ed446beb87baef3511b80825c198ee389b748daa4eb961a408d5435f56a18ea9
+    variant_index: 4
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: open
+      entity_order: reverse
+      target_amount: '85.50'
+      target_invoice_style: numeric
+      instruction_template: template-1

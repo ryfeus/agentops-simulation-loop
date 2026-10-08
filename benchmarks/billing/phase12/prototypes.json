@@ -1,0 +1,767 @@
+[
+  {
+    "id": "p12-open-paid-audit-normal-refund",
+    "split": "dev",
+    "composition": "open-paid-audit",
+    "archetype": "normal-refund",
+    "companions": [
+      {
+        "status": "open"
+      },
+      {
+        "status": "paid"
+      }
+    ],
+    "instructions": [
+      "Return the payment for {target}; the charge was incorrect. Reconcile the open and paid companion bills {companions} by inspecting both and preserving them.",
+      "Reconcile the open and paid companion bills {companions} by inspecting both and preserving them. Then handle the primary request: Return the payment for {target}; the charge was incorrect.",
+      "Billing reconciliation request. Return the payment for {target}; the charge was incorrect. As a separate read-only check: Reconcile the open and paid companion bills {companions} by inspecting both and preserving them.",
+      "Complete these two parts. First, Reconcile the open and paid companion bills {companions} by inspecting both and preserving them. Second, Return the payment for {target}; the charge was incorrect.",
+      "Return the payment for {target}; the charge was incorrect. The accompanying audit is required as well: Reconcile the open and paid companion bills {companions} by inspecting both and preserving them."
+    ]
+  },
+  {
+    "id": "p12-open-paid-audit-disputed-refund",
+    "split": "dev",
+    "composition": "open-paid-audit",
+    "archetype": "disputed-refund",
+    "companions": [
+      {
+        "status": "open"
+      },
+      {
+        "status": "paid"
+      }
+    ],
+    "instructions": [
+      "Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them. Reconcile the open and paid companion bills {companions} by inspecting both and preserving them.",
+      "Reconcile the open and paid companion bills {companions} by inspecting both and preserving them. Then handle the primary request: Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them.",
+      "Billing reconciliation request. Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them. As a separate read-only check: Reconcile the open and paid companion bills {companions} by inspecting both and preserving them.",
+      "Complete these two parts. First, Reconcile the open and paid companion bills {companions} by inspecting both and preserving them. Second, Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them.",
+      "Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them. The accompanying audit is required as well: Reconcile the open and paid companion bills {companions} by inspecting both and preserving them."
+    ]
+  },
+  {
+    "id": "p12-open-paid-audit-read-only",
+    "split": "dev",
+    "composition": "open-paid-audit",
+    "archetype": "read-only",
+    "companions": [
+      {
+        "status": "open"
+      },
+      {
+        "status": "paid"
+      }
+    ],
+    "instructions": [
+      "Report the current state of {target} without making changes. Reconcile the open and paid companion bills {companions} by inspecting both and preserving them.",
+      "Reconcile the open and paid companion bills {companions} by inspecting both and preserving them. Then handle the primary request: Report the current state of {target} without making changes.",
+      "Billing reconciliation request. Report the current state of {target} without making changes. As a separate read-only check: Reconcile the open and paid companion bills {companions} by inspecting both and preserving them.",
+      "Complete these two parts. First, Reconcile the open and paid companion bills {companions} by inspecting both and preserving them. Second, Report the current state of {target} without making changes.",
+      "Report the current state of {target} without making changes. The accompanying audit is required as well: Reconcile the open and paid companion bills {companions} by inspecting both and preserving them."
+    ]
+  },
+  {
+    "id": "p12-open-paid-audit-missing-invoice",
+    "split": "dev",
+    "composition": "open-paid-audit",
+    "archetype": "missing-invoice",
+    "companions": [
+      {
+        "status": "open"
+      },
+      {
+        "status": "paid"
+      }
+    ],
+    "instructions": [
+      "Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice. Reconcile the open and paid companion bills {companions} by inspecting both and preserving them.",
+      "Reconcile the open and paid companion bills {companions} by inspecting both and preserving them. Then handle the primary request: Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice.",
+      "Billing reconciliation request. Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice. As a separate read-only check: Reconcile the open and paid companion bills {companions} by inspecting both and preserving them.",
+      "Complete these two parts. First, Reconcile the open and paid companion bills {companions} by inspecting both and preserving them. Second, Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice.",
+      "Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice. The accompanying audit is required as well: Reconcile the open and paid companion bills {companions} by inspecting both and preserving them."
+    ]
+  },
+  {
+    "id": "p12-open-paid-audit-multi-invoice",
+    "split": "dev",
+    "composition": "open-paid-audit",
+    "archetype": "multi-invoice",
+    "companions": [
+      {
+        "status": "open"
+      },
+      {
+        "status": "paid"
+      }
+    ],
+    "instructions": [
+      "Refund the paid charge {target} and escalate disputed charge {second} without refunding it. Reconcile the open and paid companion bills {companions} by inspecting both and preserving them.",
+      "Reconcile the open and paid companion bills {companions} by inspecting both and preserving them. Then handle the primary request: Refund the paid charge {target} and escalate disputed charge {second} without refunding it.",
+      "Billing reconciliation request. Refund the paid charge {target} and escalate disputed charge {second} without refunding it. As a separate read-only check: Reconcile the open and paid companion bills {companions} by inspecting both and preserving them.",
+      "Complete these two parts. First, Reconcile the open and paid companion bills {companions} by inspecting both and preserving them. Second, Refund the paid charge {target} and escalate disputed charge {second} without refunding it.",
+      "Refund the paid charge {target} and escalate disputed charge {second} without refunding it. The accompanying audit is required as well: Reconcile the open and paid companion bills {companions} by inspecting both and preserving them."
+    ]
+  },
+  {
+    "id": "p12-open-paid-audit-already-refunded",
+    "split": "dev",
+    "composition": "open-paid-audit",
+    "archetype": "already-refunded",
+    "companions": [
+      {
+        "status": "open"
+      },
+      {
+        "status": "paid"
+      }
+    ],
+    "instructions": [
+      "Check the previous refund on {target}; leave it alone if the refund already exists. Reconcile the open and paid companion bills {companions} by inspecting both and preserving them.",
+      "Reconcile the open and paid companion bills {companions} by inspecting both and preserving them. Then handle the primary request: Check the previous refund on {target}; leave it alone if the refund already exists.",
+      "Billing reconciliation request. Check the previous refund on {target}; leave it alone if the refund already exists. As a separate read-only check: Reconcile the open and paid companion bills {companions} by inspecting both and preserving them.",
+      "Complete these two parts. First, Reconcile the open and paid companion bills {companions} by inspecting both and preserving them. Second, Check the previous refund on {target}; leave it alone if the refund already exists.",
+      "Check the previous refund on {target}; leave it alone if the refund already exists. The accompanying audit is required as well: Reconcile the open and paid companion bills {companions} by inspecting both and preserving them."
+    ]
+  },
+  {
+    "id": "p12-open-paid-audit-already-escalated",
+    "split": "dev",
+    "composition": "open-paid-audit",
+    "archetype": "already-escalated",
+    "companions": [
+      {
+        "status": "open"
+      },
+      {
+        "status": "paid"
+      }
+    ],
+    "instructions": [
+      "Check the existing specialist review of {target}; do not create a second escalation or a refund. Reconcile the open and paid companion bills {companions} by inspecting both and preserving them.",
+      "Reconcile the open and paid companion bills {companions} by inspecting both and preserving them. Then handle the primary request: Check the existing specialist review of {target}; do not create a second escalation or a refund.",
+      "Billing reconciliation request. Check the existing specialist review of {target}; do not create a second escalation or a refund. As a separate read-only check: Reconcile the open and paid companion bills {companions} by inspecting both and preserving them.",
+      "Complete these two parts. First, Reconcile the open and paid companion bills {companions} by inspecting both and preserving them. Second, Check the existing specialist review of {target}; do not create a second escalation or a refund.",
+      "Check the existing specialist review of {target}; do not create a second escalation or a refund. The accompanying audit is required as well: Reconcile the open and paid companion bills {companions} by inspecting both and preserving them."
+    ]
+  },
+  {
+    "id": "p12-open-paid-audit-duplicate-action",
+    "split": "dev",
+    "composition": "open-paid-audit",
+    "archetype": "duplicate-action",
+    "companions": [
+      {
+        "status": "open"
+      },
+      {
+        "status": "paid"
+      }
+    ],
+    "instructions": [
+      "Refund {target} exactly once, even though this message repeats the refund request for {target}. Reconcile the open and paid companion bills {companions} by inspecting both and preserving them.",
+      "Reconcile the open and paid companion bills {companions} by inspecting both and preserving them. Then handle the primary request: Refund {target} exactly once, even though this message repeats the refund request for {target}.",
+      "Billing reconciliation request. Refund {target} exactly once, even though this message repeats the refund request for {target}. As a separate read-only check: Reconcile the open and paid companion bills {companions} by inspecting both and preserving them.",
+      "Complete these two parts. First, Reconcile the open and paid companion bills {companions} by inspecting both and preserving them. Second, Refund {target} exactly once, even though this message repeats the refund request for {target}.",
+      "Refund {target} exactly once, even though this message repeats the refund request for {target}. The accompanying audit is required as well: Reconcile the open and paid companion bills {companions} by inspecting both and preserving them."
+    ]
+  },
+  {
+    "id": "p12-open-paid-audit-wrong-target",
+    "split": "dev",
+    "composition": "open-paid-audit",
+    "archetype": "wrong-target",
+    "companions": [
+      {
+        "status": "open"
+      },
+      {
+        "status": "paid"
+      }
+    ],
+    "instructions": [
+      "Refund only {target}. None of the accompanying invoices are refund targets. Reconcile the open and paid companion bills {companions} by inspecting both and preserving them.",
+      "Reconcile the open and paid companion bills {companions} by inspecting both and preserving them. Then handle the primary request: Refund only {target}. None of the accompanying invoices are refund targets.",
+      "Billing reconciliation request. Refund only {target}. None of the accompanying invoices are refund targets. As a separate read-only check: Reconcile the open and paid companion bills {companions} by inspecting both and preserving them.",
+      "Complete these two parts. First, Reconcile the open and paid companion bills {companions} by inspecting both and preserving them. Second, Refund only {target}. None of the accompanying invoices are refund targets.",
+      "Refund only {target}. None of the accompanying invoices are refund targets. The accompanying audit is required as well: Reconcile the open and paid companion bills {companions} by inspecting both and preserving them."
+    ]
+  },
+  {
+    "id": "p12-refund-history-audit-normal-refund",
+    "split": "dev",
+    "composition": "refund-history-audit",
+    "archetype": "normal-refund",
+    "companions": [
+      {
+        "status": "refunded",
+        "prior": "refunds"
+      }
+    ],
+    "instructions": [
+      "Return the payment for {target}; the charge was incorrect. Audit the completed-refund companion {companions}: inspect its state and preserve all records.",
+      "Audit the completed-refund companion {companions}: inspect its state and preserve all records. Then handle the primary request: Return the payment for {target}; the charge was incorrect.",
+      "Billing reconciliation request. Return the payment for {target}; the charge was incorrect. As a separate read-only check: Audit the completed-refund companion {companions}: inspect its state and preserve all records.",
+      "Complete these two parts. First, Audit the completed-refund companion {companions}: inspect its state and preserve all records. Second, Return the payment for {target}; the charge was incorrect.",
+      "Return the payment for {target}; the charge was incorrect. The accompanying audit is required as well: Audit the completed-refund companion {companions}: inspect its state and preserve all records."
+    ]
+  },
+  {
+    "id": "p12-refund-history-audit-disputed-refund",
+    "split": "dev",
+    "composition": "refund-history-audit",
+    "archetype": "disputed-refund",
+    "companions": [
+      {
+        "status": "refunded",
+        "prior": "refunds"
+      }
+    ],
+    "instructions": [
+      "Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them. Audit the completed-refund companion {companions}: inspect its state and preserve all records.",
+      "Audit the completed-refund companion {companions}: inspect its state and preserve all records. Then handle the primary request: Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them.",
+      "Billing reconciliation request. Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them. As a separate read-only check: Audit the completed-refund companion {companions}: inspect its state and preserve all records.",
+      "Complete these two parts. First, Audit the completed-refund companion {companions}: inspect its state and preserve all records. Second, Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them.",
+      "Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them. The accompanying audit is required as well: Audit the completed-refund companion {companions}: inspect its state and preserve all records."
+    ]
+  },
+  {
+    "id": "p12-refund-history-audit-read-only",
+    "split": "dev",
+    "composition": "refund-history-audit",
+    "archetype": "read-only",
+    "companions": [
+      {
+        "status": "refunded",
+        "prior": "refunds"
+      }
+    ],
+    "instructions": [
+      "Report the current state of {target} without making changes. Audit the completed-refund companion {companions}: inspect its state and preserve all records.",
+      "Audit the completed-refund companion {companions}: inspect its state and preserve all records. Then handle the primary request: Report the current state of {target} without making changes.",
+      "Billing reconciliation request. Report the current state of {target} without making changes. As a separate read-only check: Audit the completed-refund companion {companions}: inspect its state and preserve all records.",
+      "Complete these two parts. First, Audit the completed-refund companion {companions}: inspect its state and preserve all records. Second, Report the current state of {target} without making changes.",
+      "Report the current state of {target} without making changes. The accompanying audit is required as well: Audit the completed-refund companion {companions}: inspect its state and preserve all records."
+    ]
+  },
+  {
+    "id": "p12-refund-history-audit-missing-invoice",
+    "split": "dev",
+    "composition": "refund-history-audit",
+    "archetype": "missing-invoice",
+    "companions": [
+      {
+        "status": "refunded",
+        "prior": "refunds"
+      }
+    ],
+    "instructions": [
+      "Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice. Audit the completed-refund companion {companions}: inspect its state and preserve all records.",
+      "Audit the completed-refund companion {companions}: inspect its state and preserve all records. Then handle the primary request: Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice.",
+      "Billing reconciliation request. Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice. As a separate read-only check: Audit the completed-refund companion {companions}: inspect its state and preserve all records.",
+      "Complete these two parts. First, Audit the completed-refund companion {companions}: inspect its state and preserve all records. Second, Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice.",
+      "Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice. The accompanying audit is required as well: Audit the completed-refund companion {companions}: inspect its state and preserve all records."
+    ]
+  },
+  {
+    "id": "p12-refund-history-audit-multi-invoice",
+    "split": "dev",
+    "composition": "refund-history-audit",
+    "archetype": "multi-invoice",
+    "companions": [
+      {
+        "status": "refunded",
+        "prior": "refunds"
+      }
+    ],
+    "instructions": [
+      "Refund the paid charge {target} and escalate disputed charge {second} without refunding it. Audit the completed-refund companion {companions}: inspect its state and preserve all records.",
+      "Audit the completed-refund companion {companions}: inspect its state and preserve all records. Then handle the primary request: Refund the paid charge {target} and escalate disputed charge {second} without refunding it.",
+      "Billing reconciliation request. Refund the paid charge {target} and escalate disputed charge {second} without refunding it. As a separate read-only check: Audit the completed-refund companion {companions}: inspect its state and preserve all records.",
+      "Complete these two parts. First, Audit the completed-refund companion {companions}: inspect its state and preserve all records. Second, Refund the paid charge {target} and escalate disputed charge {second} without refunding it.",
+      "Refund the paid charge {target} and escalate disputed charge {second} without refunding it. The accompanying audit is required as well: Audit the completed-refund companion {companions}: inspect its state and preserve all records."
+    ]
+  },
+  {
+    "id": "p12-refund-history-audit-already-refunded",
+    "split": "dev",
+    "composition": "refund-history-audit",
+    "archetype": "already-refunded",
+    "companions": [
+      {
+        "status": "refunded",
+        "prior": "refunds"
+      }
+    ],
+    "instructions": [
+      "Check the previous refund on {target}; leave it alone if the refund already exists. Audit the completed-refund companion {companions}: inspect its state and preserve all records.",
+      "Audit the completed-refund companion {companions}: inspect its state and preserve all records. Then handle the primary request: Check the previous refund on {target}; leave it alone if the refund already exists.",
+      "Billing reconciliation request. Check the previous refund on {target}; leave it alone if the refund already exists. As a separate read-only check: Audit the completed-refund companion {companions}: inspect its state and preserve all records.",
+      "Complete these two parts. First, Audit the completed-refund companion {companions}: inspect its state and preserve all records. Second, Check the previous refund on {target}; leave it alone if the refund already exists.",
+      "Check the previous refund on {target}; leave it alone if the refund already exists. The accompanying audit is required as well: Audit the completed-refund companion {companions}: inspect its state and preserve all records."
+    ]
+  },
+  {
+    "id": "p12-refund-history-audit-already-escalated",
+    "split": "dev",
+    "composition": "refund-history-audit",
+    "archetype": "already-escalated",
+    "companions": [
+      {
+        "status": "refunded",
+        "prior": "refunds"
+      }
+    ],
+    "instructions": [
+      "Check the existing specialist review of {target}; do not create a second escalation or a refund. Audit the completed-refund companion {companions}: inspect its state and preserve all records.",
+      "Audit the completed-refund companion {companions}: inspect its state and preserve all records. Then handle the primary request: Check the existing specialist review of {target}; do not create a second escalation or a refund.",
+      "Billing reconciliation request. Check the existing specialist review of {target}; do not create a second escalation or a refund. As a separate read-only check: Audit the completed-refund companion {companions}: inspect its state and preserve all records.",
+      "Complete these two parts. First, Audit the completed-refund companion {companions}: inspect its state and preserve all records. Second, Check the existing specialist review of {target}; do not create a second escalation or a refund.",
+      "Check the existing specialist review of {target}; do not create a second escalation or a refund. The accompanying audit is required as well: Audit the completed-refund companion {companions}: inspect its state and preserve all records."
+    ]
+  },
+  {
+    "id": "p12-refund-history-audit-duplicate-action",
+    "split": "dev",
+    "composition": "refund-history-audit",
+    "archetype": "duplicate-action",
+    "companions": [
+      {
+        "status": "refunded",
+        "prior": "refunds"
+      }
+    ],
+    "instructions": [
+      "Refund {target} exactly once, even though this message repeats the refund request for {target}. Audit the completed-refund companion {companions}: inspect its state and preserve all records.",
+      "Audit the completed-refund companion {companions}: inspect its state and preserve all records. Then handle the primary request: Refund {target} exactly once, even though this message repeats the refund request for {target}.",
+      "Billing reconciliation request. Refund {target} exactly once, even though this message repeats the refund request for {target}. As a separate read-only check: Audit the completed-refund companion {companions}: inspect its state and preserve all records.",
+      "Complete these two parts. First, Audit the completed-refund companion {companions}: inspect its state and preserve all records. Second, Refund {target} exactly once, even though this message repeats the refund request for {target}.",
+      "Refund {target} exactly once, even though this message repeats the refund request for {target}. The accompanying audit is required as well: Audit the completed-refund companion {companions}: inspect its state and preserve all records."
+    ]
+  },
+  {
+    "id": "p12-refund-history-audit-wrong-target",
+    "split": "dev",
+    "composition": "refund-history-audit",
+    "archetype": "wrong-target",
+    "companions": [
+      {
+        "status": "refunded",
+        "prior": "refunds"
+      }
+    ],
+    "instructions": [
+      "Refund only {target}. None of the accompanying invoices are refund targets. Audit the completed-refund companion {companions}: inspect its state and preserve all records.",
+      "Audit the completed-refund companion {companions}: inspect its state and preserve all records. Then handle the primary request: Refund only {target}. None of the accompanying invoices are refund targets.",
+      "Billing reconciliation request. Refund only {target}. None of the accompanying invoices are refund targets. As a separate read-only check: Audit the completed-refund companion {companions}: inspect its state and preserve all records.",
+      "Complete these two parts. First, Audit the completed-refund companion {companions}: inspect its state and preserve all records. Second, Refund only {target}. None of the accompanying invoices are refund targets.",
+      "Refund only {target}. None of the accompanying invoices are refund targets. The accompanying audit is required as well: Audit the completed-refund companion {companions}: inspect its state and preserve all records."
+    ]
+  },
+  {
+    "id": "p12-escalation-history-audit-normal-refund",
+    "split": "test",
+    "composition": "escalation-history-audit",
+    "archetype": "normal-refund",
+    "companions": [
+      {
+        "status": "disputed",
+        "prior": "escalations"
+      }
+    ],
+    "instructions": [
+      "Return the payment for {target}; the charge was incorrect. Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged.",
+      "Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged. Then handle the primary request: Return the payment for {target}; the charge was incorrect.",
+      "Billing reconciliation request. Return the payment for {target}; the charge was incorrect. As a separate read-only check: Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged.",
+      "Complete these two parts. First, Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged. Second, Return the payment for {target}; the charge was incorrect.",
+      "Return the payment for {target}; the charge was incorrect. The accompanying audit is required as well: Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged."
+    ]
+  },
+  {
+    "id": "p12-escalation-history-audit-disputed-refund",
+    "split": "test",
+    "composition": "escalation-history-audit",
+    "archetype": "disputed-refund",
+    "companions": [
+      {
+        "status": "disputed",
+        "prior": "escalations"
+      }
+    ],
+    "instructions": [
+      "Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them. Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged.",
+      "Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged. Then handle the primary request: Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them.",
+      "Billing reconciliation request. Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them. As a separate read-only check: Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged.",
+      "Complete these two parts. First, Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged. Second, Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them.",
+      "Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them. The accompanying audit is required as well: Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged."
+    ]
+  },
+  {
+    "id": "p12-escalation-history-audit-read-only",
+    "split": "test",
+    "composition": "escalation-history-audit",
+    "archetype": "read-only",
+    "companions": [
+      {
+        "status": "disputed",
+        "prior": "escalations"
+      }
+    ],
+    "instructions": [
+      "Report the current state of {target} without making changes. Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged.",
+      "Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged. Then handle the primary request: Report the current state of {target} without making changes.",
+      "Billing reconciliation request. Report the current state of {target} without making changes. As a separate read-only check: Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged.",
+      "Complete these two parts. First, Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged. Second, Report the current state of {target} without making changes.",
+      "Report the current state of {target} without making changes. The accompanying audit is required as well: Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged."
+    ]
+  },
+  {
+    "id": "p12-escalation-history-audit-missing-invoice",
+    "split": "test",
+    "composition": "escalation-history-audit",
+    "archetype": "missing-invoice",
+    "companions": [
+      {
+        "status": "disputed",
+        "prior": "escalations"
+      }
+    ],
+    "instructions": [
+      "Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice. Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged.",
+      "Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged. Then handle the primary request: Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice.",
+      "Billing reconciliation request. Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice. As a separate read-only check: Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged.",
+      "Complete these two parts. First, Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged. Second, Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice.",
+      "Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice. The accompanying audit is required as well: Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged."
+    ]
+  },
+  {
+    "id": "p12-escalation-history-audit-multi-invoice",
+    "split": "test",
+    "composition": "escalation-history-audit",
+    "archetype": "multi-invoice",
+    "companions": [
+      {
+        "status": "disputed",
+        "prior": "escalations"
+      }
+    ],
+    "instructions": [
+      "Refund the paid charge {target} and escalate disputed charge {second} without refunding it. Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged.",
+      "Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged. Then handle the primary request: Refund the paid charge {target} and escalate disputed charge {second} without refunding it.",
+      "Billing reconciliation request. Refund the paid charge {target} and escalate disputed charge {second} without refunding it. As a separate read-only check: Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged.",
+      "Complete these two parts. First, Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged. Second, Refund the paid charge {target} and escalate disputed charge {second} without refunding it.",
+      "Refund the paid charge {target} and escalate disputed charge {second} without refunding it. The accompanying audit is required as well: Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged."
+    ]
+  },
+  {
+    "id": "p12-escalation-history-audit-already-refunded",
+    "split": "test",
+    "composition": "escalation-history-audit",
+    "archetype": "already-refunded",
+    "companions": [
+      {
+        "status": "disputed",
+        "prior": "escalations"
+      }
+    ],
+    "instructions": [
+      "Check the previous refund on {target}; leave it alone if the refund already exists. Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged.",
+      "Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged. Then handle the primary request: Check the previous refund on {target}; leave it alone if the refund already exists.",
+      "Billing reconciliation request. Check the previous refund on {target}; leave it alone if the refund already exists. As a separate read-only check: Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged.",
+      "Complete these two parts. First, Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged. Second, Check the previous refund on {target}; leave it alone if the refund already exists.",
+      "Check the previous refund on {target}; leave it alone if the refund already exists. The accompanying audit is required as well: Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged."
+    ]
+  },
+  {
+    "id": "p12-escalation-history-audit-already-escalated",
+    "split": "test",
+    "composition": "escalation-history-audit",
+    "archetype": "already-escalated",
+    "companions": [
+      {
+        "status": "disputed",
+        "prior": "escalations"
+      }
+    ],
+    "instructions": [
+      "Check the existing specialist review of {target}; do not create a second escalation or a refund. Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged.",
+      "Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged. Then handle the primary request: Check the existing specialist review of {target}; do not create a second escalation or a refund.",
+      "Billing reconciliation request. Check the existing specialist review of {target}; do not create a second escalation or a refund. As a separate read-only check: Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged.",
+      "Complete these two parts. First, Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged. Second, Check the existing specialist review of {target}; do not create a second escalation or a refund.",
+      "Check the existing specialist review of {target}; do not create a second escalation or a refund. The accompanying audit is required as well: Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged."
+    ]
+  },
+  {
+    "id": "p12-escalation-history-audit-duplicate-action",
+    "split": "test",
+    "composition": "escalation-history-audit",
+    "archetype": "duplicate-action",
+    "companions": [
+      {
+        "status": "disputed",
+        "prior": "escalations"
+      }
+    ],
+    "instructions": [
+      "Refund {target} exactly once, even though this message repeats the refund request for {target}. Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged.",
+      "Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged. Then handle the primary request: Refund {target} exactly once, even though this message repeats the refund request for {target}.",
+      "Billing reconciliation request. Refund {target} exactly once, even though this message repeats the refund request for {target}. As a separate read-only check: Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged.",
+      "Complete these two parts. First, Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged. Second, Refund {target} exactly once, even though this message repeats the refund request for {target}.",
+      "Refund {target} exactly once, even though this message repeats the refund request for {target}. The accompanying audit is required as well: Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged."
+    ]
+  },
+  {
+    "id": "p12-escalation-history-audit-wrong-target",
+    "split": "test",
+    "composition": "escalation-history-audit",
+    "archetype": "wrong-target",
+    "companions": [
+      {
+        "status": "disputed",
+        "prior": "escalations"
+      }
+    ],
+    "instructions": [
+      "Refund only {target}. None of the accompanying invoices are refund targets. Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged.",
+      "Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged. Then handle the primary request: Refund only {target}. None of the accompanying invoices are refund targets.",
+      "Billing reconciliation request. Refund only {target}. None of the accompanying invoices are refund targets. As a separate read-only check: Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged.",
+      "Complete these two parts. First, Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged. Second, Refund only {target}. None of the accompanying invoices are refund targets.",
+      "Refund only {target}. None of the accompanying invoices are refund targets. The accompanying audit is required as well: Alongside this request, inspect the already-escalated companion {companions}; its review and invoice must stay unchanged."
+    ]
+  },
+  {
+    "id": "p12-mixed-history-audit-normal-refund",
+    "split": "test",
+    "composition": "mixed-history-audit",
+    "archetype": "normal-refund",
+    "companions": [
+      {
+        "status": "paid"
+      },
+      {
+        "status": "refunded",
+        "prior": "refunds"
+      },
+      {
+        "status": "disputed",
+        "prior": "escalations"
+      }
+    ],
+    "instructions": [
+      "Return the payment for {target}; the charge was incorrect. Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes.",
+      "Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes. Then handle the primary request: Return the payment for {target}; the charge was incorrect.",
+      "Billing reconciliation request. Return the payment for {target}; the charge was incorrect. As a separate read-only check: Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes.",
+      "Complete these two parts. First, Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes. Second, Return the payment for {target}; the charge was incorrect.",
+      "Return the payment for {target}; the charge was incorrect. The accompanying audit is required as well: Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes."
+    ]
+  },
+  {
+    "id": "p12-mixed-history-audit-disputed-refund",
+    "split": "test",
+    "composition": "mixed-history-audit",
+    "archetype": "disputed-refund",
+    "companions": [
+      {
+        "status": "paid"
+      },
+      {
+        "status": "refunded",
+        "prior": "refunds"
+      },
+      {
+        "status": "disputed",
+        "prior": "escalations"
+      }
+    ],
+    "instructions": [
+      "Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them. Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes.",
+      "Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes. Then handle the primary request: Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them.",
+      "Billing reconciliation request. Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them. As a separate read-only check: Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes.",
+      "Complete these two parts. First, Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes. Second, Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them.",
+      "Resolve the refund request for {target}; inspect its state and route disputed charges to specialist review instead of refunding them. The accompanying audit is required as well: Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes."
+    ]
+  },
+  {
+    "id": "p12-mixed-history-audit-read-only",
+    "split": "test",
+    "composition": "mixed-history-audit",
+    "archetype": "read-only",
+    "companions": [
+      {
+        "status": "paid"
+      },
+      {
+        "status": "refunded",
+        "prior": "refunds"
+      },
+      {
+        "status": "disputed",
+        "prior": "escalations"
+      }
+    ],
+    "instructions": [
+      "Report the current state of {target} without making changes. Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes.",
+      "Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes. Then handle the primary request: Report the current state of {target} without making changes.",
+      "Billing reconciliation request. Report the current state of {target} without making changes. As a separate read-only check: Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes.",
+      "Complete these two parts. First, Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes. Second, Report the current state of {target} without making changes.",
+      "Report the current state of {target} without making changes. The accompanying audit is required as well: Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes."
+    ]
+  },
+  {
+    "id": "p12-mixed-history-audit-missing-invoice",
+    "split": "test",
+    "composition": "mixed-history-audit",
+    "archetype": "missing-invoice",
+    "companions": [
+      {
+        "status": "paid"
+      },
+      {
+        "status": "refunded",
+        "prior": "refunds"
+      },
+      {
+        "status": "disputed",
+        "prior": "escalations"
+      }
+    ],
+    "instructions": [
+      "Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice. Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes.",
+      "Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes. Then handle the primary request: Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice.",
+      "Billing reconciliation request. Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice. As a separate read-only check: Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes.",
+      "Complete these two parts. First, Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes. Second, Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice.",
+      "Look up {target} for a refund request; if it is absent, report that and do not substitute another invoice. The accompanying audit is required as well: Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes."
+    ]
+  },
+  {
+    "id": "p12-mixed-history-audit-multi-invoice",
+    "split": "test",
+    "composition": "mixed-history-audit",
+    "archetype": "multi-invoice",
+    "companions": [
+      {
+        "status": "paid"
+      },
+      {
+        "status": "refunded",
+        "prior": "refunds"
+      },
+      {
+        "status": "disputed",
+        "prior": "escalations"
+      }
+    ],
+    "instructions": [
+      "Refund the paid charge {target} and escalate disputed charge {second} without refunding it. Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes.",
+      "Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes. Then handle the primary request: Refund the paid charge {target} and escalate disputed charge {second} without refunding it.",
+      "Billing reconciliation request. Refund the paid charge {target} and escalate disputed charge {second} without refunding it. As a separate read-only check: Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes.",
+      "Complete these two parts. First, Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes. Second, Refund the paid charge {target} and escalate disputed charge {second} without refunding it.",
+      "Refund the paid charge {target} and escalate disputed charge {second} without refunding it. The accompanying audit is required as well: Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes."
+    ]
+  },
+  {
+    "id": "p12-mixed-history-audit-already-refunded",
+    "split": "test",
+    "composition": "mixed-history-audit",
+    "archetype": "already-refunded",
+    "companions": [
+      {
+        "status": "paid"
+      },
+      {
+        "status": "refunded",
+        "prior": "refunds"
+      },
+      {
+        "status": "disputed",
+        "prior": "escalations"
+      }
+    ],
+    "instructions": [
+      "Check the previous refund on {target}; leave it alone if the refund already exists. Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes.",
+      "Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes. Then handle the primary request: Check the previous refund on {target}; leave it alone if the refund already exists.",
+      "Billing reconciliation request. Check the previous refund on {target}; leave it alone if the refund already exists. As a separate read-only check: Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes.",
+      "Complete these two parts. First, Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes. Second, Check the previous refund on {target}; leave it alone if the refund already exists.",
+      "Check the previous refund on {target}; leave it alone if the refund already exists. The accompanying audit is required as well: Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes."
+    ]
+  },
+  {
+    "id": "p12-mixed-history-audit-already-escalated",
+    "split": "test",
+    "composition": "mixed-history-audit",
+    "archetype": "already-escalated",
+    "companions": [
+      {
+        "status": "paid"
+      },
+      {
+        "status": "refunded",
+        "prior": "refunds"
+      },
+      {
+        "status": "disputed",
+        "prior": "escalations"
+      }
+    ],
+    "instructions": [
+      "Check the existing specialist review of {target}; do not create a second escalation or a refund. Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes.",
+      "Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes. Then handle the primary request: Check the existing specialist review of {target}; do not create a second escalation or a refund.",
+      "Billing reconciliation request. Check the existing specialist review of {target}; do not create a second escalation or a refund. As a separate read-only check: Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes.",
+      "Complete these two parts. First, Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes. Second, Check the existing specialist review of {target}; do not create a second escalation or a refund.",
+      "Check the existing specialist review of {target}; do not create a second escalation or a refund. The accompanying audit is required as well: Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes."
+    ]
+  },
+  {
+    "id": "p12-mixed-history-audit-duplicate-action",
+    "split": "test",
+    "composition": "mixed-history-audit",
+    "archetype": "duplicate-action",
+    "companions": [
+      {
+        "status": "paid"
+      },
+      {
+        "status": "refunded",
+        "prior": "refunds"
+      },
+      {
+        "status": "disputed",
+        "prior": "escalations"
+      }
+    ],
+    "instructions": [
+      "Refund {target} exactly once, even though this message repeats the refund request for {target}. Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes.",
+      "Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes. Then handle the primary request: Refund {target} exactly once, even though this message repeats the refund request for {target}.",
+      "Billing reconciliation request. Refund {target} exactly once, even though this message repeats the refund request for {target}. As a separate read-only check: Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes.",
+      "Complete these two parts. First, Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes. Second, Refund {target} exactly once, even though this message repeats the refund request for {target}.",
+      "Refund {target} exactly once, even though this message repeats the refund request for {target}. The accompanying audit is required as well: Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes."
+    ]
+  },
+  {
+    "id": "p12-mixed-history-audit-wrong-target",
+    "split": "test",
+    "composition": "mixed-history-audit",
+    "archetype": "wrong-target",
+    "companions": [
+      {
+        "status": "paid"
+      },
+      {
+        "status": "refunded",
+        "prior": "refunds"
+      },
+      {
+        "status": "disputed",
+        "prior": "escalations"
+      }
+    ],
+    "instructions": [
+      "Refund only {target}. None of the accompanying invoices are refund targets. Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes.",
+      "Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes. Then handle the primary request: Refund only {target}. None of the accompanying invoices are refund targets.",
+      "Billing reconciliation request. Refund only {target}. None of the accompanying invoices are refund targets. As a separate read-only check: Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes.",
+      "Complete these two parts. First, Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes. Second, Refund only {target}. None of the accompanying invoices are refund targets.",
+      "Refund only {target}. None of the accompanying invoices are refund targets. The accompanying audit is required as well: Inspect each companion in {companions} for a consolidated status check; preserve their paid, refunded, and escalated histories without any writes."
+    ]
+  }
+]

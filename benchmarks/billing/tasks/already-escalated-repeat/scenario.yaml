@@ -1,0 +1,39 @@
+schema_version: '1'
+id: already-escalated-repeat
+instruction: Escalate inv-401 again for me.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-1
+    status: active
+  invoices:
+  - id: inv-401
+    customer_id: customer-1
+    amount: '49.00'
+    currency: USD
+    status: disputed
+  refunds: []
+  escalations:
+  - id: escalation-inv-401
+    invoice_id: inv-401
+    reason: prior review
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-401
+benchmark:
+  category: billing
+  archetype: already-escalated
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-401
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1

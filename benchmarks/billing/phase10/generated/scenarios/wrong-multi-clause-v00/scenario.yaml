@@ -1,0 +1,68 @@
+schema_version: '1'
+id: wrong-multi-clause-v00
+instruction: I reviewed inv-7893 too, but only inv-7892 has the wrong charge.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-792
+    status: active
+  - id: customer-8792
+    status: active
+  invoices:
+  - id: inv-7892
+    customer_id: customer-792
+    amount: '49.00'
+    currency: USD
+    status: paid
+  - id: inv-7893
+    customer_id: customer-8792
+    amount: '85.50'
+    currency: USD
+    status: paid
+  - id: inv-7992
+    customer_id: customer-8792
+    amount: '19.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-7892
+- type: unchanged
+  invoice_id: inv-7893
+- type: unchanged
+  invoice_id: inv-7992
+benchmark:
+  category: billing
+  archetype: wrong-target
+  difficulty: compound
+  mutation_policy:
+    allowed_targets:
+    - inv-7892
+  trajectory:
+    required_inspections:
+    - inv-7892
+    - inv-7893
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: wrong-multi-clause
+    prototype_id: target-refund-not-other
+    prototype_sha256: 910a526ea867ba89429eb0e2da5192fda596b4ec168b260fc810ac8b3ca3096c
+    variant_index: 0
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: other
+      distractor_status: paid
+      entity_order: original
+      target_amount: '49.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-0

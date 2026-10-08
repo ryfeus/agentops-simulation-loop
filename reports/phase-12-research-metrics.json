@@ -1,0 +1,255 @@
+{
+  "artifact_kind": "research_metrics_only",
+  "development": {
+    "baseline": {
+      "action_macro_pass_rate": 0.0475,
+      "prohibited_write_rate": 0.5736111111111111,
+      "prototype_macro_pass_rate": 0.08611111111111111,
+      "rollouts": 720
+    },
+    "grpo/42/160": {
+      "action_macro_pass_rate": 0.155,
+      "prohibited_write_rate": 0.5319444444444444,
+      "prototype_macro_pass_rate": 0.24583333333333332,
+      "rollouts": 720
+    },
+    "grpo/42/320": {
+      "action_macro_pass_rate": 0.13,
+      "prohibited_write_rate": 0.5138888888888888,
+      "prototype_macro_pass_rate": 0.2611111111111111,
+      "rollouts": 720
+    },
+    "grpo/43/160": {
+      "action_macro_pass_rate": 0.135,
+      "prohibited_write_rate": 0.5152777777777777,
+      "prototype_macro_pass_rate": 0.23888888888888887,
+      "rollouts": 720
+    },
+    "grpo/43/320": {
+      "action_macro_pass_rate": 0.135,
+      "prohibited_write_rate": 0.5833333333333334,
+      "prototype_macro_pass_rate": 0.23750000000000002,
+      "rollouts": 720
+    },
+    "grpo/44/160": {
+      "action_macro_pass_rate": 0.125,
+      "prohibited_write_rate": 0.5597222222222222,
+      "prototype_macro_pass_rate": 0.23194444444444443,
+      "rollouts": 720
+    },
+    "grpo/44/320": {
+      "action_macro_pass_rate": 0.11750000000000001,
+      "prohibited_write_rate": 0.5638888888888889,
+      "prototype_macro_pass_rate": 0.23055555555555557,
+      "rollouts": 720
+    },
+    "sft/42/29": {
+      "action_macro_pass_rate": 0.005,
+      "prohibited_write_rate": 0.29583333333333334,
+      "prototype_macro_pass_rate": 0.0763888888888889,
+      "rollouts": 720
+    },
+    "sft/42/58": {
+      "action_macro_pass_rate": 0.005,
+      "prohibited_write_rate": 0.23194444444444445,
+      "prototype_macro_pass_rate": 0.13194444444444445,
+      "rollouts": 720
+    },
+    "sft/42/87": {
+      "action_macro_pass_rate": 0.0,
+      "prohibited_write_rate": 0.25972222222222224,
+      "prototype_macro_pass_rate": 0.10694444444444445,
+      "rollouts": 720
+    }
+  },
+  "evidence_notice": "Operational AWS transfer, cleanup IDs, and local archive paths omitted from public export. Original receipts were internally verified and are not included; external reproduction is not claimed.",
+  "final": {
+    "behavioral_improvement": false,
+    "critical_archetype_deltas": {
+      "disputed-refund": 0.04166666666666667,
+      "multi-invoice": 0.012499999999999999
+    },
+    "execution_valid": true,
+    "inference_scope": "these synthetic billing prototypes; not production readiness",
+    "learning_demonstrated": false,
+    "paired_prototype_bootstrap_95": [
+      0.07592592592592592,
+      0.2199074074074074
+    ],
+    "prototype_macro_delta": 0.14537037037037037,
+    "replication_complete": true,
+    "seed_deltas": {
+      "42": 0.15416666666666667,
+      "43": 0.15000000000000002,
+      "44": 0.13194444444444442
+    }
+  },
+  "final_evaluations": {
+    "anchors/baseline": {
+      "action_macro_pass_rate": 0.0,
+      "prohibited_write_rate": 0.505,
+      "prototype_macro_pass_rate": 0.105,
+      "rollouts": 200
+    },
+    "anchors/grpo/42": {
+      "action_macro_pass_rate": 0.04,
+      "prohibited_write_rate": 0.48,
+      "prototype_macro_pass_rate": 0.26,
+      "rollouts": 200
+    },
+    "anchors/grpo/43": {
+      "action_macro_pass_rate": 0.01,
+      "prohibited_write_rate": 0.485,
+      "prototype_macro_pass_rate": 0.24,
+      "rollouts": 200
+    },
+    "anchors/grpo/44": {
+      "action_macro_pass_rate": 0.1125,
+      "prohibited_write_rate": 0.525,
+      "prototype_macro_pass_rate": 0.28,
+      "rollouts": 200
+    },
+    "test/baseline": {
+      "action_macro_pass_rate": 0.01,
+      "prohibited_write_rate": 0.4625,
+      "prototype_macro_pass_rate": 0.09722222222222222,
+      "rollouts": 720
+    },
+    "test/grpo/42": {
+      "action_macro_pass_rate": 0.0775,
+      "prohibited_write_rate": 0.49722222222222223,
+      "prototype_macro_pass_rate": 0.2513888888888889,
+      "rollouts": 720
+    },
+    "test/grpo/43": {
+      "action_macro_pass_rate": 0.07,
+      "prohibited_write_rate": 0.4847222222222222,
+      "prototype_macro_pass_rate": 0.24722222222222223,
+      "rollouts": 720
+    },
+    "test/grpo/44": {
+      "action_macro_pass_rate": 0.06,
+      "prohibited_write_rate": 0.49583333333333335,
+      "prototype_macro_pass_rate": 0.22916666666666666,
+      "rollouts": 720
+    }
+  },
+  "final_gate_checks": {
+    "mean_prototype_gain_at_least_10pp": true,
+    "no_seed_increases_prohibited_write_rate": false,
+    "paired_bootstrap_lower_bound_above_zero": true,
+    "positive_gain_for_every_training_seed": true,
+    "positive_mean_gain_for_both_critical_archetypes": true
+  },
+  "final_rollout_diagnostics": {
+    "anchors/baseline": {
+      "clipped_before_first_tool": 0,
+      "clipped_fraction": 0.025,
+      "completion_tokens": 20344,
+      "parser_failures": 2,
+      "rollouts": 200,
+      "termination_reasons": {
+        "eos": 195,
+        "length": 5
+      },
+      "tool_errors": 66
+    },
+    "anchors/grpo/42": {
+      "clipped_before_first_tool": 0,
+      "clipped_fraction": 0.05,
+      "completion_tokens": 28053,
+      "parser_failures": 2,
+      "rollouts": 200,
+      "termination_reasons": {
+        "eos": 189,
+        "length": 10,
+        "pending_tool": 1
+      },
+      "tool_errors": 45
+    },
+    "anchors/grpo/43": {
+      "clipped_before_first_tool": 0,
+      "clipped_fraction": 0.04,
+      "completion_tokens": 27885,
+      "parser_failures": 1,
+      "rollouts": 200,
+      "termination_reasons": {
+        "eos": 192,
+        "length": 8
+      },
+      "tool_errors": 42
+    },
+    "anchors/grpo/44": {
+      "clipped_before_first_tool": 0,
+      "clipped_fraction": 0.04,
+      "completion_tokens": 29209,
+      "parser_failures": 3,
+      "rollouts": 200,
+      "termination_reasons": {
+        "eos": 191,
+        "length": 8,
+        "pending_tool": 1
+      },
+      "tool_errors": 46
+    },
+    "test/baseline": {
+      "clipped_before_first_tool": 9,
+      "clipped_fraction": 0.17777777777777778,
+      "completion_tokens": 131600,
+      "parser_failures": 39,
+      "rollouts": 720,
+      "termination_reasons": {
+        "eos": 220,
+        "length": 128,
+        "pending_tool": 372
+      },
+      "tool_errors": 481
+    },
+    "test/grpo/42": {
+      "clipped_before_first_tool": 17,
+      "clipped_fraction": 0.19583333333333333,
+      "completion_tokens": 131195,
+      "parser_failures": 30,
+      "rollouts": 720,
+      "termination_reasons": {
+        "eos": 113,
+        "length": 141,
+        "pending_tool": 466
+      },
+      "tool_errors": 202
+    },
+    "test/grpo/43": {
+      "clipped_before_first_tool": 17,
+      "clipped_fraction": 0.20555555555555555,
+      "completion_tokens": 134654,
+      "parser_failures": 24,
+      "rollouts": 720,
+      "termination_reasons": {
+        "eos": 131,
+        "length": 148,
+        "pending_tool": 441
+      },
+      "tool_errors": 157
+    },
+    "test/grpo/44": {
+      "clipped_before_first_tool": 19,
+      "clipped_fraction": 0.20694444444444443,
+      "completion_tokens": 131226,
+      "parser_failures": 31,
+      "rollouts": 720,
+      "termination_reasons": {
+        "eos": 129,
+        "length": 149,
+        "pending_tool": 442
+      },
+      "tool_errors": 199
+    }
+  },
+  "replicated_head_to_head_winner_established": false,
+  "schema_version": "1",
+  "selected_steps": {
+    "grpo/42": 160,
+    "grpo/43": 160,
+    "grpo/44": 160
+  }
+}

@@ -1,0 +1,37 @@
+schema_version: '1'
+id: escalated-protected-other
+prototype: already-escalated-direct
+archetype: already-escalated
+difficulty: paraphrase
+variant_count: 5
+instruction_templates:
+- The escalation concerns {target_invoice}, not disputed {other_invoice}.
+- Confirm the prior specialist case on {target_invoice} and leave {other_invoice}
+  alone.
+- Please check whether {target_invoice} already reached review; the other dispute
+  is separate.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - disputed
+  distractor_owner:
+  - same
+  - other
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - disputed
+negative_strategy: escalate_wrong_target

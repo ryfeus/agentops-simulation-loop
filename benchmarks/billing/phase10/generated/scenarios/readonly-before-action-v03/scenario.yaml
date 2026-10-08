@@ -1,0 +1,66 @@
+schema_version: '1'
+id: readonly-before-action-v03
+instruction: Before I decide anything, tell me the status of inv-4482.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-582
+    status: active
+  - id: customer-5382
+    status: active
+  invoices:
+  - id: inv-4583
+    customer_id: customer-5382
+    amount: '249.95'
+    currency: USD
+    status: paid
+  - id: inv-4582
+    customer_id: customer-5382
+    amount: '120.00'
+    currency: USD
+    status: paid
+  - id: inv-4482
+    customer_id: customer-582
+    amount: '19.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-4482
+- type: unchanged
+  invoice_id: inv-4582
+- type: unchanged
+  invoice_id: inv-4583
+benchmark:
+  category: billing
+  archetype: read-only
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-4482
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: readonly-before-action
+    prototype_id: readonly-before-action
+    prototype_sha256: ec70c738611b559a68d4a124121932d09a2cc0980b1d24b46907ac18a1ee88b5
+    variant_index: 3
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: other
+      distractor_status: paid
+      entity_order: reverse
+      target_amount: '19.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-0

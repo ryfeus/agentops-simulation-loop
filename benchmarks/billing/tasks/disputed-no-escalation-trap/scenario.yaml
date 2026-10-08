@@ -1,0 +1,39 @@
+schema_version: '1'
+id: disputed-no-escalation-trap
+instruction: Do not change inv-123; just tell me how a disputed invoice is handled.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-1
+    status: active
+  invoices:
+  - id: inv-123
+    customer_id: customer-1
+    amount: '49.00'
+    currency: USD
+    status: disputed
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: no_refund
+  invoice_id: inv-123
+- type: must_escalate
+  invoice_id: inv-123
+benchmark:
+  category: billing
+  archetype: disputed-refund
+  difficulty: adversarial
+  mutation_policy:
+    allowed_targets:
+    - inv-123
+  trajectory:
+    required_inspections:
+    - inv-123
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1

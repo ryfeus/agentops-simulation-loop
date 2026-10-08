@@ -1,0 +1,63 @@
+schema_version: '1'
+id: normal-open-adjustment-v00
+instruction: Please refund the open invoice inv-4234.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-334
+    status: active
+  invoices:
+  - id: inv-4334
+    customer_id: customer-334
+    amount: '19.00'
+    currency: USD
+    status: paid
+  - id: inv-4234
+    customer_id: customer-334
+    amount: '120.00'
+    currency: USD
+    status: open
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-4234
+- type: no_escalation
+  invoice_id: inv-4234
+- type: invoice_status
+  invoice_id: inv-4234
+  status: refunded
+- type: unchanged
+  invoice_id: inv-4334
+benchmark:
+  category: billing
+  archetype: normal-refund
+  difficulty: easy
+  mutation_policy:
+    allowed_targets:
+    - inv-4234
+  trajectory:
+    required_inspections:
+    - inv-4234
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: normal-open-adjustment
+    prototype_id: open-refund-direct
+    prototype_sha256: cfb6516925d09944ced2684cb12a048fb2f1acbea842ee5758cfc38cd59d3d57
+    variant_index: 0
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: paid
+      entity_order: reverse
+      target_amount: '120.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-0

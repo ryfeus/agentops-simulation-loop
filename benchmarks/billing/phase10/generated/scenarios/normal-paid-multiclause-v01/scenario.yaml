@@ -1,0 +1,73 @@
+schema_version: '1'
+id: normal-paid-multiclause-v01
+instruction: After checking inv-3794, reverse its incorrect charge. inv-3894 is a
+  separate bill.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-694
+    status: active
+  - id: customer-4694
+    status: active
+  invoices:
+  - id: inv-3794
+    customer_id: customer-694
+    amount: '49.00'
+    currency: USD
+    status: paid
+  - id: inv-3894
+    customer_id: customer-4694
+    amount: '49.00'
+    currency: USD
+    status: paid
+  - id: inv-3895
+    customer_id: customer-4694
+    amount: '85.50'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-3794
+- type: no_escalation
+  invoice_id: inv-3794
+- type: invoice_status
+  invoice_id: inv-3794
+  status: refunded
+- type: unchanged
+  invoice_id: inv-3894
+- type: unchanged
+  invoice_id: inv-3895
+benchmark:
+  category: billing
+  archetype: normal-refund
+  difficulty: compound
+  mutation_policy:
+    allowed_targets:
+    - inv-3794
+  trajectory:
+    required_inspections:
+    - inv-3794
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: normal-paid-multiclause
+    prototype_id: paid-refund-direct
+    prototype_sha256: 473a6fce37376046fdb9aba136ae269fdaf8044d2d4f982af8fbb3fdcf4b57b0
+    variant_index: 1
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: other
+      distractor_status: paid
+      entity_order: original
+      target_amount: '49.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-1

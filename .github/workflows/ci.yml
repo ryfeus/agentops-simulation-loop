@@ -1,0 +1,145 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  local-stack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "11.19.0"
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.12"
+      - name: Install dependencies
+        run: uv sync --locked --all-groups --all-extras
+      - uses: hashicorp/setup-terraform@v3
+      - name: Verify contracts, local runtime, and scenarios
+        run: make check
+      - name: Verify frozen Phase 10 corpus
+        run: make benchmark-billing-phase10-check
+      - name: Render and validate all Phase 10 tasks
+        run: make benchmark-billing-phase10-render-smoke
+      - name: Verify Phase 12 experiment and isolated evaluation corpus
+        run: make rl-phase12-config-check rl-phase12-render-smoke
+      - name: Validate Terraform
+        run: make tf-validate
+      - name: Verify AgentCore runtime dependency export
+        run: make agentcore-runtime-check
+
+  harbor-e2e:
+    needs: local-stack
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.12"
+      - name: Install dependencies
+        run: uv sync --locked --all-groups
+      - name: Run Oracle, bad, and correct Harbor trials
+        run: make harbor-e2e
+      - name: Preserve Harbor diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          retention-days: 7
+          name: harbor-e2e-results
+          path: |
+            .harbor/jobs/
+            .harbor/configs/
+            .harbor/package/manifest.json
+          include-hidden-files: true
+          if-no-files-found: warn
+
+  agentcore-image:
+    needs: local-stack
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.12"
+      - uses: docker/setup-qemu-action@v4
+      - uses: docker/setup-buildx-action@v4
+      - name: Build production AgentCore ARM64 image without AWS credentials
+        run: make agentcore-image-check
+
+  taskify-e2e:
+    needs: local-stack
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.12"
+      - name: Install dependencies
+        run: uv sync --locked --all-groups
+      - name: Execute taskify fixture Harbor regression without cloud access
+        run: make taskify-fixture-harbor
+      - name: Assert taskify reproduction evidence
+        run: |
+          report=.taskify/disputed-refund-000000000000/reproduction.json
+          test -f "$report"
+          jq -e --arg revision "$GITHUB_SHA" '
+            .status == "VALIDATED" and
+            .replay_mode == "calibration" and
+            .execution_package.source_revision == $revision and
+            .execution_package.worktree_clean == true and
+            (.execution_package.sha256 | test("^[0-9a-f]{64}$")) and
+            ([.trials[] | select(.name == "oracle")][0].reward == 1) and
+            ([.trials[] | select(.name == "known-good")][0].reward == 1) and
+            ([.trials[] | select(.name == "originating")][0].reward == 0)
+          ' "$report"
+      - name: Preserve taskify Harbor diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          retention-days: 7
+          name: taskify-harbor-results
+          path: |
+            .taskify/*/reproduction.json
+            .taskify/*/scenario.yaml
+            .taskify/*/jobs/
+          include-hidden-files: true
+          if-no-files-found: warn
+
+  oss-release-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      - name: Check exported metadata and documentation links
+        run: uv run --no-project python -m scripts.oss_release_check
+      - name: Download checksum-verified Gitleaks
+        run: |
+          curl -fLsS https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz -o gitleaks.tar.gz
+          curl -fLsS https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_checksums.txt -o checksums.txt
+          awk '$2 == "gitleaks_8.30.1_linux_x64.tar.gz" {print $1 "  gitleaks.tar.gz"}' checksums.txt > selected-checksum.txt
+          test -s selected-checksum.txt
+          sha256sum -c selected-checksum.txt
+          tar -xzf gitleaks.tar.gz gitleaks
+      - name: Verify the tokenizer exception still detects secrets in the same file
+        run: uv run --no-project python -m scripts.check_gitleaks_config --gitleaks ./gitleaks
+      - name: Scan exported history with secrets redacted
+        run: ./gitleaks git --redact --no-banner --log-opts="--all" .

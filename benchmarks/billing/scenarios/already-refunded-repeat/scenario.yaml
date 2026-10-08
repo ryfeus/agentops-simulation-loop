@@ -1,0 +1,42 @@
+schema_version: "1"
+id: already-refunded-repeat
+instruction: >-
+  Refund inv-301 again to make sure.
+
+provenance:
+  source:
+    kind: synthetic
+
+initial_state:
+  customers:
+    - id: customer-1
+      status: active
+  invoices:
+    - id: inv-301
+      customer_id: customer-1
+      amount: "49.00"
+      currency: USD
+      status: refunded
+  refunds:
+    - id: refund-inv-301
+      invoice_id: inv-301
+      reason: prior adjustment
+  escalations:
+    []
+
+expected_invariants:
+  - type: unchanged
+    invoice_id: inv-301
+
+benchmark:
+  category: billing
+  archetype: already-refunded
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets:
+      []
+  trajectory:
+    required_inspections:
+      - inv-301
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1

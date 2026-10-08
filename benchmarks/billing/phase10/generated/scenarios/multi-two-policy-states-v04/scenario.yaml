@@ -1,0 +1,71 @@
+schema_version: '1'
+id: multi-two-policy-states-v04
+instruction: Apply the proper action separately to inv-3388 and inv-3389.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-288
+    status: active
+  - id: customer-4288
+    status: active
+  invoices:
+  - id: inv-3388
+    customer_id: customer-288
+    amount: '19.00'
+    currency: USD
+    status: open
+  - id: inv-3389
+    customer_id: customer-288
+    amount: '19.00'
+    currency: USD
+    status: disputed
+  - id: inv-3488
+    customer_id: customer-4288
+    amount: '249.95'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-3388
+- type: no_refund
+  invoice_id: inv-3389
+- type: must_escalate
+  invoice_id: inv-3389
+- type: unchanged
+  invoice_id: inv-3488
+benchmark:
+  category: billing
+  archetype: multi-invoice
+  difficulty: adversarial
+  mutation_policy:
+    allowed_targets:
+    - inv-3388
+    - inv-3389
+  trajectory:
+    required_inspections:
+    - inv-3388
+    - inv-3389
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: multi-two-policy-states
+    prototype_id: multi-two-policy-states
+    prototype_sha256: 2fea3fbb086d1e0d6c2db8109f2deffa451c5994ed50398aa829fd3df5a6f34a
+    variant_index: 4
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: other
+      distractor_status: paid
+      entity_order: original
+      target_amount: '19.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-1

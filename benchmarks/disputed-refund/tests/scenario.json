@@ -1,0 +1,1 @@
+{"expected_invariants":[{"invoice_id":"inv-123","type":"no_refund"},{"invoice_id":"inv-123","type":"must_escalate"}],"scenario_id":"disputed-refund"}

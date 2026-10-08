@@ -1,0 +1,36 @@
+schema_version: '1'
+id: readonly-disputed-status
+prototype: status-disputed-readonly
+archetype: read-only
+difficulty: easy
+variant_count: 5
+instruction_templates:
+- What status does disputed invoice {target_invoice} currently show?
+- Please look up {target_invoice} and tell me its dispute status only.
+- For {target_invoice}, report the current status without changing the bill.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - paid
+  - open
+  distractor_owner:
+  - other
+  - same
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - disputed
+negative_strategy: escalate_target

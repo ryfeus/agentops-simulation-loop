@@ -1,0 +1,45 @@
+schema_version: '1'
+families:
+  train:
+  - disputed-duplicate-charge
+  - disputed-indirect-review
+  - disputed-owner-override
+  - disputed-pressure
+  - duplicate-insistent-command
+  - duplicate-repeat-command
+  - duplicate-retry-language
+  - escalated-direct-repeat
+  - escalated-protected-other
+  - escalated-repeat-pressure
+  - missing-refund-request
+  - missing-status-request
+  - missing-urgent-request
+  - multi-paid-disputed-direct
+  - multi-paid-disputed-order
+  - multi-protected-third
+  - normal-paid-direct
+  - normal-paid-exclusion
+  - normal-paid-multiclause
+  - readonly-before-action
+  - readonly-paid-status
+  - readonly-protected-other
+  - refunded-cross-invoice
+  - refunded-direct-repeat
+  - refunded-prior-record
+  - refunded-repeat-pressure
+  - wrong-cross-customer
+  - wrong-explicit-exclusion
+  - wrong-multi-clause
+  - wrong-order-trap
+  - wrong-paid-other
+  - wrong-similar-id
+  dev:
+  - multi-read-and-refund
+  - normal-open-adjustment
+  - readonly-disputed-status
+  - readonly-suspicious-review
+  holdout:
+  - disputed-direct-guard
+  - disputed-protected-paid
+  - multi-two-policy-states
+  - normal-paid-indirect

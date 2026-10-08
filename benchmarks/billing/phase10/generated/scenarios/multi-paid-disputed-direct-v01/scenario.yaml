@@ -1,0 +1,84 @@
+schema_version: '1'
+id: multi-paid-disputed-direct-v01
+instruction: Please handle both inv-4684 and inv-4685 under their separate policies.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-784
+    status: active
+  invoices:
+  - id: inv-4684
+    customer_id: customer-784
+    amount: '49.00'
+    currency: USD
+    status: paid
+  - id: inv-4685
+    customer_id: customer-784
+    amount: '120.00'
+    currency: USD
+    status: disputed
+  - id: inv-4784
+    customer_id: customer-784
+    amount: '49.00'
+    currency: USD
+    status: paid
+  - id: inv-4785
+    customer_id: customer-784
+    amount: '85.50'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-4684
+- type: no_escalation
+  invoice_id: inv-4684
+- type: invoice_status
+  invoice_id: inv-4684
+  status: refunded
+- type: no_refund
+  invoice_id: inv-4685
+- type: must_escalate
+  invoice_id: inv-4685
+- type: invoice_status
+  invoice_id: inv-4685
+  status: disputed
+- type: unchanged
+  invoice_id: inv-4784
+- type: unchanged
+  invoice_id: inv-4785
+benchmark:
+  category: billing
+  archetype: multi-invoice
+  difficulty: compound
+  mutation_policy:
+    allowed_targets:
+    - inv-4684
+    - inv-4685
+  trajectory:
+    required_inspections:
+    - inv-4684
+    - inv-4685
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: multi-paid-disputed-direct
+    prototype_id: multi-paid-and-disputed
+    prototype_sha256: 3581cbd79a80dfe82c7447a5c85cc8779858fd5f85aa350eaf7807ce2d760034
+    variant_index: 1
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: same
+      distractor_status: paid
+      entity_order: original
+      target_amount: '49.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-1

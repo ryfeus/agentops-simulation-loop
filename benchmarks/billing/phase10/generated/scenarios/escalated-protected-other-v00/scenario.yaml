@@ -1,0 +1,60 @@
+schema_version: '1'
+id: escalated-protected-other-v00
+instruction: The escalation concerns inv-2140, not disputed inv-2240.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-640
+    status: active
+  invoices:
+  - id: inv-2140
+    customer_id: customer-640
+    amount: '19.00'
+    currency: USD
+    status: disputed
+  - id: inv-2240
+    customer_id: customer-640
+    amount: '19.00'
+    currency: USD
+    status: disputed
+  refunds: []
+  escalations:
+  - id: escalation-2140
+    invoice_id: inv-2140
+    reason: prior review
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-2140
+- type: unchanged
+  invoice_id: inv-2240
+benchmark:
+  category: billing
+  archetype: already-escalated
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-2140
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: escalated-protected-other
+    prototype_id: already-escalated-direct
+    prototype_sha256: 4f4639a51ee783fa17acc3049923b93f09c5ec80f4c582275a881f6125dd3df8
+    variant_index: 0
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: disputed
+      entity_order: original
+      target_amount: '19.00'
+      target_invoice_style: numeric
+      instruction_template: template-0

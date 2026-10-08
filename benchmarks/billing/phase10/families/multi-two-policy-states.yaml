@@ -1,0 +1,37 @@
+schema_version: '1'
+id: multi-two-policy-states
+prototype: multi-two-policy-states
+archetype: multi-invoice
+difficulty: adversarial
+variant_count: 5
+instruction_templates:
+- Refund open {target_invoice} and escalate disputed {other_invoice}.
+- Apply the proper action separately to {target_invoice} and {other_invoice}.
+- The open bill is {target_invoice}; the disputed bill is {other_invoice}. Resolve
+  both.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - disputed
+  - paid
+  distractor_owner:
+  - other
+  - same
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - open
+negative_strategy: lookup_only

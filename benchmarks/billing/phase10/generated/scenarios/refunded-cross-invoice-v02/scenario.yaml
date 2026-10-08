@@ -1,0 +1,61 @@
+schema_version: '1'
+id: refunded-cross-invoice-v02
+instruction: The previous adjustment concerns inv-1374; please leave the other bill
+  unchanged.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-674
+    status: active
+  invoices:
+  - id: inv-1374
+    customer_id: customer-674
+    amount: '19.00'
+    currency: USD
+    status: refunded
+  - id: inv-1474
+    customer_id: customer-674
+    amount: '85.50'
+    currency: USD
+    status: open
+  refunds:
+  - id: refund-1374
+    invoice_id: inv-1374
+    reason: prior adjustment
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-1374
+- type: unchanged
+  invoice_id: inv-1474
+benchmark:
+  category: billing
+  archetype: already-refunded
+  difficulty: compound
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-1374
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: refunded-cross-invoice
+    prototype_id: already-refunded-repeat
+    prototype_sha256: 4a700acade3420d9355aa523804b4f8e424efa2e2eff4d22f9c032a9e35c1ba5
+    variant_index: 2
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: open
+      entity_order: original
+      target_amount: '19.00'
+      target_invoice_style: numeric
+      instruction_template: template-2

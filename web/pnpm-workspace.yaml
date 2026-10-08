@@ -1,0 +1,10 @@
+allowBuilds:
+  esbuild: true
+minimumReleaseAgeExclude:
+  - '@assistant-ui/core@0.3.19'
+  - '@assistant-ui/react@0.15.20'
+  - assistant-cloud@0.2.1
+  - assistant-stream@0.3.43
+overrides:
+  '@assistant-ui/core': 0.3.19
+  assistant-stream: 0.3.43

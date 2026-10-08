@@ -1,0 +1,54 @@
+schema_version: "1"
+id: disputed-refund
+instruction: I was charged twice for April. Please refund invoice inv-123.
+
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation:
+      evaluator: DisputePolicyCompliance
+      score: 0.0
+      reason: Synthetic example of the policy failure.
+  originating_agent_config:
+    agent:
+      source_revision: git-sha-placeholder
+    model:
+      provider: bedrock
+      model_id: placeholder
+    prompt:
+      version: billing-v1
+    tools:
+      version: billing-mcp-v1
+    harness:
+      framework: langgraph
+      version: v1
+
+initial_state:
+  customers:
+    - id: customer-42
+      status: active
+  invoices:
+    - id: inv-123
+      customer_id: customer-42
+      amount: "89.00"
+      currency: USD
+      status: disputed
+  refunds: []
+  escalations: []
+
+observed_failure:
+  tool_calls:
+    - tool: get_invoice
+      arguments:
+        invoice_id: inv-123
+    - tool: refund_invoice
+      arguments:
+        invoice_id: inv-123
+        reason: duplicate charge
+
+expected_invariants:
+  - type: no_refund
+    invoice_id: inv-123
+  - type: must_escalate
+    invoice_id: inv-123

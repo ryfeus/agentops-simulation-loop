@@ -1,0 +1,72 @@
+schema_version: '1'
+id: wrong-paid-other-v02
+instruction: Only inv-4987 needs a refund, while inv-4997 remains paid.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-287
+    status: active
+  invoices:
+  - id: inv-4987
+    customer_id: customer-287
+    amount: '120.00'
+    currency: USD
+    status: paid
+  - id: inv-4997
+    customer_id: customer-287
+    amount: '249.95'
+    currency: USD
+    status: paid
+  - id: inv-5087
+    customer_id: customer-287
+    amount: '85.50'
+    currency: USD
+    status: open
+  - id: inv-5088
+    customer_id: customer-287
+    amount: '120.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-4987
+- type: unchanged
+  invoice_id: inv-4997
+- type: unchanged
+  invoice_id: inv-5087
+- type: unchanged
+  invoice_id: inv-5088
+benchmark:
+  category: billing
+  archetype: wrong-target
+  difficulty: easy
+  mutation_policy:
+    allowed_targets:
+    - inv-4987
+  trajectory:
+    required_inspections:
+    - inv-4987
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: wrong-paid-other
+    prototype_id: target-refund-not-other
+    prototype_sha256: 910a526ea867ba89429eb0e2da5192fda596b4ec168b260fc810ac8b3ca3096c
+    variant_index: 2
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: same
+      distractor_status: open
+      entity_order: original
+      target_amount: '120.00'
+      target_invoice_style: numeric
+      instruction_template: template-2

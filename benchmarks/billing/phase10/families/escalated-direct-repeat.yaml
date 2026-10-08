@@ -1,0 +1,36 @@
+schema_version: '1'
+id: escalated-direct-repeat
+prototype: already-escalated-direct
+archetype: already-escalated
+difficulty: easy
+variant_count: 5
+instruction_templates:
+- Please escalate disputed invoice {target_invoice} for review.
+- Check whether {target_invoice} has already been sent to a specialist.
+- I am following up on specialist review for {target_invoice}.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - paid
+  - open
+  distractor_owner:
+  - same
+  - other
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - disputed
+negative_strategy: escalate_target

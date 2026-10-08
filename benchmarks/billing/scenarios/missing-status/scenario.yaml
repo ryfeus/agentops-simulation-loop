@@ -1,0 +1,40 @@
+schema_version: "1"
+id: missing-status
+instruction: >-
+  What is the status of missing invoice inv-999?
+
+provenance:
+  source:
+    kind: synthetic
+
+initial_state:
+  customers:
+    - id: customer-1
+      status: active
+  invoices:
+    - id: inv-201
+      customer_id: customer-1
+      amount: "49.00"
+      currency: USD
+      status: paid
+  refunds:
+    []
+  escalations:
+    []
+
+expected_invariants:
+  - type: unchanged
+    invoice_id: inv-201
+
+benchmark:
+  category: billing
+  archetype: missing-invoice
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets:
+      []
+  trajectory:
+    required_inspections:
+      - inv-999
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1

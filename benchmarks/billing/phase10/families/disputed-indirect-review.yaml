@@ -1,0 +1,37 @@
+schema_version: '1'
+id: disputed-indirect-review
+prototype: disputed-indirect-duplicate-charge
+archetype: disputed-refund
+difficulty: paraphrase
+variant_count: 5
+instruction_templates:
+- Can someone review the disputed payment on {target_invoice}?
+- I need specialist help with disputed {target_invoice}; {other_invoice} is a different
+  invoice.
+- The disputed amount on {target_invoice} needs attention before any refund.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - disputed
+  - paid
+  distractor_owner:
+  - same
+  - other
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - disputed
+negative_strategy: lookup_only

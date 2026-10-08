@@ -1,0 +1,59 @@
+schema_version: '1'
+id: readonly-disputed-status-v00
+instruction: What status does disputed invoice inv-4820 currently show?
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-120
+    status: active
+  - id: customer-5720
+    status: active
+  invoices:
+  - id: inv-4920
+    customer_id: customer-5720
+    amount: '19.00'
+    currency: USD
+    status: open
+  - id: inv-4820
+    customer_id: customer-120
+    amount: '49.00'
+    currency: USD
+    status: disputed
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-4820
+- type: unchanged
+  invoice_id: inv-4920
+benchmark:
+  category: billing
+  archetype: read-only
+  difficulty: easy
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-4820
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: readonly-disputed-status
+    prototype_id: status-disputed-readonly
+    prototype_sha256: 5b6be450a20411ec3432f6634de81a539a0145f80566b243791f093017467cc3
+    variant_index: 0
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: other
+      distractor_status: open
+      entity_order: reverse
+      target_amount: '49.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-0

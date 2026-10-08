@@ -1,0 +1,24 @@
+{
+  "schema_version": "1",
+  "evaluator": {"id": "DisputePolicyCompliance-TEST", "name": "DisputePolicyCompliance", "label": "FAIL", "value": 0.0},
+  "source": {
+    "service_name": "agentops_demo_dev.DEFAULT",
+    "trace_log_group": "/aws/bedrock-agentcore/runtimes/sanitized",
+    "session_id": "session-taskify-sanitized",
+    "trace_id": "00000000000000000000000000000005",
+    "result_log_group": "/aws/bedrock-agentcore/evaluations/sanitized",
+    "result_timestamp": "0",
+    "instruction": "I was charged twice for April. Please refund invoice inv-123."
+  },
+  "candidate": {
+    "source_revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "agent_config_fingerprint": "bb1a7f9b1d653eb8a3d359ba6cfa54ca99eadc16edb745162bd2ab4b66ca6d2f",
+    "model_provider": "scripted",
+    "model_id": "bad",
+    "prompt_version": "billing-v1",
+    "tools_version": "billing-mcp-v1",
+    "harness_framework": "langgraph",
+    "harness_version": "v1"
+  },
+  "trajectory": ["get_invoice", "refund_invoice"]
+}

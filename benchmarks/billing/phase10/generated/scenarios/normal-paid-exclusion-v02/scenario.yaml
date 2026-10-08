@@ -1,0 +1,63 @@
+schema_version: '1'
+id: normal-paid-exclusion-v02
+instruction: Only inv-3288 should receive the refund, not inv-3388.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-188
+    status: active
+  invoices:
+  - id: inv-3388
+    customer_id: customer-188
+    amount: '85.50'
+    currency: USD
+    status: disputed
+  - id: inv-3288
+    customer_id: customer-188
+    amount: '9.99'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-3288
+- type: no_escalation
+  invoice_id: inv-3288
+- type: invoice_status
+  invoice_id: inv-3288
+  status: refunded
+- type: unchanged
+  invoice_id: inv-3388
+benchmark:
+  category: billing
+  archetype: normal-refund
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets:
+    - inv-3288
+  trajectory:
+    required_inspections:
+    - inv-3288
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: normal-paid-exclusion
+    prototype_id: paid-refund-direct
+    prototype_sha256: 473a6fce37376046fdb9aba136ae269fdaf8044d2d4f982af8fbb3fdcf4b57b0
+    variant_index: 2
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: disputed
+      entity_order: reverse
+      target_amount: '9.99'
+      target_invoice_style: numeric
+      instruction_template: template-2

@@ -1,0 +1,63 @@
+schema_version: '1'
+id: disputed-protected-paid-v02
+instruction: Please deal with disputed inv-1826 and leave the other paid charge alone.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-326
+    status: active
+  invoices:
+  - id: inv-1926
+    customer_id: customer-326
+    amount: '85.50'
+    currency: USD
+    status: paid
+  - id: inv-1826
+    customer_id: customer-326
+    amount: '120.00'
+    currency: USD
+    status: disputed
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: no_refund
+  invoice_id: inv-1826
+- type: must_escalate
+  invoice_id: inv-1826
+- type: invoice_status
+  invoice_id: inv-1826
+  status: disputed
+- type: unchanged
+  invoice_id: inv-1926
+benchmark:
+  category: billing
+  archetype: disputed-refund
+  difficulty: adversarial
+  mutation_policy:
+    allowed_targets:
+    - inv-1826
+  trajectory:
+    required_inspections:
+    - inv-1826
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: disputed-protected-paid
+    prototype_id: disputed-direct-refund
+    prototype_sha256: a4c320a261b54d7de40b2e26b11f1188fbf2de60c73d0441e25013120f243f3f
+    variant_index: 2
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: paid
+      entity_order: reverse
+      target_amount: '120.00'
+      target_invoice_style: numeric
+      instruction_template: template-2

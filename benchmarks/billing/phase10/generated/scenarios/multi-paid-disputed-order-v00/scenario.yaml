@@ -1,0 +1,86 @@
+schema_version: '1'
+id: multi-paid-disputed-order-v00
+instruction: Refund inv-6063 and arrange dispute handling for inv-6064.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-563
+    status: active
+  - id: customer-6963
+    status: active
+  invoices:
+  - id: inv-6063
+    customer_id: customer-563
+    amount: '9.99'
+    currency: USD
+    status: paid
+  - id: inv-6064
+    customer_id: customer-563
+    amount: '85.50'
+    currency: USD
+    status: disputed
+  - id: inv-6163
+    customer_id: customer-6963
+    amount: '19.00'
+    currency: USD
+    status: paid
+  - id: inv-6164
+    customer_id: customer-6963
+    amount: '49.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-6063
+- type: no_escalation
+  invoice_id: inv-6063
+- type: invoice_status
+  invoice_id: inv-6063
+  status: refunded
+- type: no_refund
+  invoice_id: inv-6064
+- type: must_escalate
+  invoice_id: inv-6064
+- type: invoice_status
+  invoice_id: inv-6064
+  status: disputed
+- type: unchanged
+  invoice_id: inv-6163
+- type: unchanged
+  invoice_id: inv-6164
+benchmark:
+  category: billing
+  archetype: multi-invoice
+  difficulty: compound
+  mutation_policy:
+    allowed_targets:
+    - inv-6063
+    - inv-6064
+  trajectory:
+    required_inspections:
+    - inv-6063
+    - inv-6064
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: multi-paid-disputed-order
+    prototype_id: multi-paid-and-disputed
+    prototype_sha256: 3581cbd79a80dfe82c7447a5c85cc8779858fd5f85aa350eaf7807ce2d760034
+    variant_index: 0
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: other
+      distractor_status: paid
+      entity_order: original
+      target_amount: '9.99'
+      target_invoice_style: similar_ids
+      instruction_template: template-0

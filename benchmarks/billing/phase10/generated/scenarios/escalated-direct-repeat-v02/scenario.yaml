@@ -1,0 +1,67 @@
+schema_version: '1'
+id: escalated-direct-repeat-v02
+instruction: I am following up on specialist review for inv-5271.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-571
+    status: active
+  invoices:
+  - id: inv-5271
+    customer_id: customer-571
+    amount: '120.00'
+    currency: USD
+    status: disputed
+  - id: inv-5371
+    customer_id: customer-571
+    amount: '85.50'
+    currency: USD
+    status: paid
+  - id: inv-5372
+    customer_id: customer-571
+    amount: '120.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations:
+  - id: escalation-5271
+    invoice_id: inv-5271
+    reason: prior review
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-5271
+- type: unchanged
+  invoice_id: inv-5371
+- type: unchanged
+  invoice_id: inv-5372
+benchmark:
+  category: billing
+  archetype: already-escalated
+  difficulty: easy
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-5271
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: escalated-direct-repeat
+    prototype_id: already-escalated-direct
+    prototype_sha256: 4f4639a51ee783fa17acc3049923b93f09c5ec80f4c582275a881f6125dd3df8
+    variant_index: 2
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: same
+      distractor_status: paid
+      entity_order: original
+      target_amount: '120.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-2

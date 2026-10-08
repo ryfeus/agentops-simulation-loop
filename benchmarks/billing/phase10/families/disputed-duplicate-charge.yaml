@@ -1,0 +1,37 @@
+schema_version: '1'
+id: disputed-duplicate-charge
+prototype: disputed-indirect-duplicate-charge
+archetype: disputed-refund
+difficulty: paraphrase
+variant_count: 5
+instruction_templates:
+- '{target_invoice} looks like a duplicate charge. I want that disputed amount back.'
+- I believe disputed invoice {target_invoice} was billed twice; please resolve my
+  refund request.
+- The duplicate-looking disputed bill is {target_invoice}. Handle that issue.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - paid
+  - open
+  distractor_owner:
+  - other
+  - same
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - disputed
+negative_strategy: lookup_only

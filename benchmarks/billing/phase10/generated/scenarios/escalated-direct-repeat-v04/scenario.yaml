@@ -1,0 +1,60 @@
+schema_version: '1'
+id: escalated-direct-repeat-v04
+instruction: Check whether inv-1268 has already been sent to a specialist.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-568
+    status: active
+  invoices:
+  - id: inv-1368
+    customer_id: customer-568
+    amount: '249.95'
+    currency: USD
+    status: open
+  - id: inv-1268
+    customer_id: customer-568
+    amount: '19.00'
+    currency: USD
+    status: disputed
+  refunds: []
+  escalations:
+  - id: escalation-1268
+    invoice_id: inv-1268
+    reason: prior review
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-1268
+- type: unchanged
+  invoice_id: inv-1368
+benchmark:
+  category: billing
+  archetype: already-escalated
+  difficulty: easy
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-1268
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: escalated-direct-repeat
+    prototype_id: already-escalated-direct
+    prototype_sha256: 4f4639a51ee783fa17acc3049923b93f09c5ec80f4c582275a881f6125dd3df8
+    variant_index: 4
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: open
+      entity_order: reverse
+      target_amount: '19.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-1

@@ -1,0 +1,63 @@
+schema_version: '1'
+id: normal-paid-direct-v00
+instruction: Refund inv-5488; that paid charge was incorrect.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-788
+    status: active
+  invoices:
+  - id: inv-5488
+    customer_id: customer-788
+    amount: '19.00'
+    currency: USD
+    status: paid
+  - id: inv-5588
+    customer_id: customer-788
+    amount: '19.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-5488
+- type: no_escalation
+  invoice_id: inv-5488
+- type: invoice_status
+  invoice_id: inv-5488
+  status: refunded
+- type: unchanged
+  invoice_id: inv-5588
+benchmark:
+  category: billing
+  archetype: normal-refund
+  difficulty: easy
+  mutation_policy:
+    allowed_targets:
+    - inv-5488
+  trajectory:
+    required_inspections:
+    - inv-5488
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: normal-paid-direct
+    prototype_id: paid-refund-direct
+    prototype_sha256: 473a6fce37376046fdb9aba136ae269fdaf8044d2d4f982af8fbb3fdcf4b57b0
+    variant_index: 0
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: paid
+      entity_order: original
+      target_amount: '19.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-0

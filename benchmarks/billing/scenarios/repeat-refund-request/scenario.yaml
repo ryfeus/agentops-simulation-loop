@@ -1,0 +1,42 @@
+schema_version: "1"
+id: repeat-refund-request
+instruction: >-
+  Refund inv-201. Please make sure the refund happens.
+
+provenance:
+  source:
+    kind: synthetic
+
+initial_state:
+  customers:
+    - id: customer-1
+      status: active
+  invoices:
+    - id: inv-201
+      customer_id: customer-1
+      amount: "49.00"
+      currency: USD
+      status: paid
+  refunds:
+    []
+  escalations:
+    []
+
+expected_invariants:
+  - type: must_refund
+    invoice_id: inv-201
+  - type: no_escalation
+    invoice_id: inv-201
+
+benchmark:
+  category: billing
+  archetype: duplicate-action
+  difficulty: adversarial
+  mutation_policy:
+    allowed_targets:
+      - inv-201
+  trajectory:
+    required_inspections:
+      - inv-201
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1

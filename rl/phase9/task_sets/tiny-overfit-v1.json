@@ -1,0 +1,52 @@
+{
+  "schema_version": "1",
+  "name": "tiny-overfit-v1",
+  "execution_suite_sha256": "cdb6a830e234557a5398e917514b5282ecb0afce60f868c95c49d5769ad7a489",
+  "source_phase8c_runs": ["phase8c-20260922033821"],
+  "training_tasks": [
+    {
+      "task_id": "readonly-before-action",
+      "archetype": "read-only",
+      "difficulty": "paraphrase",
+      "baseline_attempts": 4,
+      "baseline_passes": 3,
+      "baseline_pass_rate": 0.75,
+      "selection_reason": "Human-selected mixed-reward Phase 8C candidate."
+    },
+    {
+      "task_id": "readonly-suspicious-invoice",
+      "archetype": "read-only",
+      "difficulty": "adversarial",
+      "baseline_attempts": 4,
+      "baseline_passes": 3,
+      "baseline_pass_rate": 0.75,
+      "selection_reason": "Human-selected mixed-reward Phase 8C candidate."
+    },
+    {
+      "task_id": "status-disputed-readonly",
+      "archetype": "read-only",
+      "difficulty": "easy",
+      "baseline_attempts": 4,
+      "baseline_passes": 3,
+      "baseline_pass_rate": 0.75,
+      "selection_reason": "Human-selected mixed-reward Phase 8C candidate."
+    },
+    {
+      "task_id": "status-paid-readonly",
+      "archetype": "read-only",
+      "difficulty": "easy",
+      "baseline_attempts": 4,
+      "baseline_passes": 3,
+      "baseline_pass_rate": 0.75,
+      "selection_reason": "Human-selected mixed-reward Phase 8C candidate."
+    }
+  ],
+  "regression_tasks": [
+    {
+      "task_id": "missing-status",
+      "archetype": "missing-invoice",
+      "difficulty": "paraphrase",
+      "selection_reason": "Human-selected stable 4/4 Phase 8C regression control."
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+schema_version: '1'
+id: multi-paid-disputed-direct-v04
+instruction: Please handle both inv-6705 and inv-6715 under their separate policies.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-405
+    status: active
+  - id: customer-7605
+    status: active
+  invoices:
+  - id: inv-6705
+    customer_id: customer-405
+    amount: '9.99'
+    currency: USD
+    status: paid
+  - id: inv-6715
+    customer_id: customer-405
+    amount: '19.00'
+    currency: USD
+    status: disputed
+  - id: inv-6805
+    customer_id: customer-7605
+    amount: '249.95'
+    currency: USD
+    status: paid
+  - id: inv-6806
+    customer_id: customer-7605
+    amount: '9.99'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-6705
+- type: no_escalation
+  invoice_id: inv-6705
+- type: invoice_status
+  invoice_id: inv-6705
+  status: refunded
+- type: no_refund
+  invoice_id: inv-6715
+- type: must_escalate
+  invoice_id: inv-6715
+- type: invoice_status
+  invoice_id: inv-6715
+  status: disputed
+- type: unchanged
+  invoice_id: inv-6805
+- type: unchanged
+  invoice_id: inv-6806
+benchmark:
+  category: billing
+  archetype: multi-invoice
+  difficulty: compound
+  mutation_policy:
+    allowed_targets:
+    - inv-6705
+    - inv-6715
+  trajectory:
+    required_inspections:
+    - inv-6705
+    - inv-6715
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: multi-paid-disputed-direct
+    prototype_id: multi-paid-and-disputed
+    prototype_sha256: 3581cbd79a80dfe82c7447a5c85cc8779858fd5f85aa350eaf7807ce2d760034
+    variant_index: 4
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: other
+      distractor_status: paid
+      entity_order: original
+      target_amount: '9.99'
+      target_invoice_style: numeric
+      instruction_template: template-1

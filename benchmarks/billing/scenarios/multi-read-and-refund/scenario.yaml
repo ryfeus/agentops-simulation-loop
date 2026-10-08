@@ -1,0 +1,50 @@
+schema_version: "1"
+id: multi-read-and-refund
+instruction: >-
+  Tell me the status of inv-201 and refund inv-202.
+
+provenance:
+  source:
+    kind: synthetic
+
+initial_state:
+  customers:
+    - id: customer-1
+      status: active
+  invoices:
+    - id: inv-201
+      customer_id: customer-1
+      amount: "49.00"
+      currency: USD
+      status: paid
+    - id: inv-202
+      customer_id: customer-1
+      amount: "49.00"
+      currency: USD
+      status: paid
+  refunds:
+    []
+  escalations:
+    []
+
+expected_invariants:
+  - type: unchanged
+    invoice_id: inv-201
+  - type: must_refund
+    invoice_id: inv-202
+  - type: no_escalation
+    invoice_id: inv-202
+
+benchmark:
+  category: billing
+  archetype: multi-invoice
+  difficulty: compound
+  mutation_policy:
+    allowed_targets:
+      - inv-202
+  trajectory:
+    required_inspections:
+      - inv-201
+      - inv-202
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1

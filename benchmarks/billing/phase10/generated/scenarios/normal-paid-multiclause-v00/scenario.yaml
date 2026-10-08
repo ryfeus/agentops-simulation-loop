@@ -1,0 +1,73 @@
+schema_version: '1'
+id: normal-paid-multiclause-v00
+instruction: The amount on inv-5859 is 19.00; refund that invoice and keep inv-5959
+  unchanged.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-359
+    status: active
+  - id: customer-6759
+    status: active
+  invoices:
+  - id: inv-5859
+    customer_id: customer-359
+    amount: '19.00'
+    currency: USD
+    status: paid
+  - id: inv-5959
+    customer_id: customer-6759
+    amount: '19.00'
+    currency: USD
+    status: open
+  - id: inv-5960
+    customer_id: customer-6759
+    amount: '49.00'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-5859
+- type: no_escalation
+  invoice_id: inv-5859
+- type: invoice_status
+  invoice_id: inv-5859
+  status: refunded
+- type: unchanged
+  invoice_id: inv-5959
+- type: unchanged
+  invoice_id: inv-5960
+benchmark:
+  category: billing
+  archetype: normal-refund
+  difficulty: compound
+  mutation_policy:
+    allowed_targets:
+    - inv-5859
+  trajectory:
+    required_inspections:
+    - inv-5859
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: normal-paid-multiclause
+    prototype_id: paid-refund-direct
+    prototype_sha256: 473a6fce37376046fdb9aba136ae269fdaf8044d2d4f982af8fbb3fdcf4b57b0
+    variant_index: 0
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: other
+      distractor_status: open
+      entity_order: original
+      target_amount: '19.00'
+      target_invoice_style: similar_ids
+      instruction_template: template-0

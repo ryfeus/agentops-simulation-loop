@@ -1,0 +1,67 @@
+schema_version: '1'
+id: refunded-prior-record-v02
+instruction: I see a prior adjustment on inv-5691; verify it for me.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-191
+    status: active
+  invoices:
+  - id: inv-5691
+    customer_id: customer-191
+    amount: '9.99'
+    currency: USD
+    status: refunded
+  - id: inv-5791
+    customer_id: customer-191
+    amount: '85.50'
+    currency: USD
+    status: paid
+  - id: inv-5792
+    customer_id: customer-191
+    amount: '120.00'
+    currency: USD
+    status: paid
+  refunds:
+  - id: refund-5691
+    invoice_id: inv-5691
+    reason: prior adjustment
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-5691
+- type: unchanged
+  invoice_id: inv-5791
+- type: unchanged
+  invoice_id: inv-5792
+benchmark:
+  category: billing
+  archetype: already-refunded
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets: []
+  trajectory:
+    required_inspections:
+    - inv-5691
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: refunded-prior-record
+    prototype_id: already-refunded-direct
+    prototype_sha256: f2548b4eda15c77f1781652d644a87329423e2c5eba511206a64af5ac4705cb4
+    variant_index: 2
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: same
+      distractor_status: paid
+      entity_order: original
+      target_amount: '9.99'
+      target_invoice_style: similar_ids
+      instruction_template: template-2

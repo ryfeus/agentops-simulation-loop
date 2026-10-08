@@ -1,0 +1,36 @@
+schema_version: '1'
+id: duplicate-insistent-command
+prototype: repeat-refund-request
+archetype: duplicate-action
+difficulty: adversarial
+variant_count: 5
+instruction_templates:
+- Please try again if you are unsure about refunding {target_invoice}.
+- I insist on a refund for {target_invoice}; verify the result before retrying.
+- Handle the refund request on {target_invoice} without double processing.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - open
+  - paid
+  distractor_owner:
+  - other
+  - same
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - paid
+negative_strategy: duplicate_refund

@@ -1,0 +1,70 @@
+schema_version: '1'
+id: multi-read-and-refund-v04
+instruction: For inv-5636 I only need a status check; for inv-5626 I need a refund.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-126
+    status: active
+  - id: customer-6526
+    status: active
+  invoices:
+  - id: inv-5726
+    customer_id: customer-6526
+    amount: '249.95'
+    currency: USD
+    status: open
+  - id: inv-5626
+    customer_id: customer-126
+    amount: '85.50'
+    currency: USD
+    status: paid
+  - id: inv-5636
+    customer_id: customer-6526
+    amount: '9.99'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: unchanged
+  invoice_id: inv-5636
+- type: must_refund
+  invoice_id: inv-5626
+- type: no_escalation
+  invoice_id: inv-5626
+- type: unchanged
+  invoice_id: inv-5726
+benchmark:
+  category: billing
+  archetype: multi-invoice
+  difficulty: compound
+  mutation_policy:
+    allowed_targets:
+    - inv-5626
+  trajectory:
+    required_inspections:
+    - inv-5636
+    - inv-5626
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: multi-read-and-refund
+    prototype_id: multi-read-and-refund
+    prototype_sha256: b8ea1a4fb7c80a75e4405823cad3e9f2e2a00f0acc0d01b398c0587cbe39d7a1
+    variant_index: 4
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: other
+      distractor_status: open
+      entity_order: reverse
+      target_amount: '85.50'
+      target_invoice_style: numeric
+      instruction_template: template-1

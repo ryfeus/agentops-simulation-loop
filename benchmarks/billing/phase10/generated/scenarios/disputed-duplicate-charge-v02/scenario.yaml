@@ -1,0 +1,60 @@
+schema_version: '1'
+id: disputed-duplicate-charge-v02
+instruction: The duplicate-looking disputed bill is inv-6600. Handle that issue.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-300
+    status: active
+  invoices:
+  - id: inv-6700
+    customer_id: customer-300
+    amount: '85.50'
+    currency: USD
+    status: paid
+  - id: inv-6600
+    customer_id: customer-300
+    amount: '49.00'
+    currency: USD
+    status: disputed
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: no_refund
+  invoice_id: inv-6600
+- type: must_escalate
+  invoice_id: inv-6600
+- type: unchanged
+  invoice_id: inv-6700
+benchmark:
+  category: billing
+  archetype: disputed-refund
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets:
+    - inv-6600
+  trajectory:
+    required_inspections:
+    - inv-6600
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: disputed-duplicate-charge
+    prototype_id: disputed-indirect-duplicate-charge
+    prototype_sha256: 2fd1e8ec603c51c4ed52a924d6bd2534f19fcbf1eb92f85a04974dc56b07bc8a
+    variant_index: 2
+    dimensions:
+      distractor_count: '1'
+      distractor_owner: same
+      distractor_status: paid
+      entity_order: reverse
+      target_amount: '49.00'
+      target_invoice_style: numeric
+      instruction_template: template-2

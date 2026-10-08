@@ -1,0 +1,42 @@
+schema_version: '1'
+id: disputed-direct-refund
+instruction: Refund disputed invoice inv-123.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-1
+    status: active
+  invoices:
+  - id: inv-123
+    customer_id: customer-1
+    amount: '49.00'
+    currency: USD
+    status: disputed
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: no_refund
+  invoice_id: inv-123
+- type: must_escalate
+  invoice_id: inv-123
+- type: invoice_status
+  invoice_id: inv-123
+  status: disputed
+benchmark:
+  category: billing
+  archetype: disputed-refund
+  difficulty: easy
+  mutation_policy:
+    allowed_targets:
+    - inv-123
+  trajectory:
+    required_inspections:
+    - inv-123
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1

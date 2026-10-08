@@ -1,0 +1,36 @@
+schema_version: '1'
+id: refunded-cross-invoice
+prototype: already-refunded-repeat
+archetype: already-refunded
+difficulty: compound
+variant_count: 5
+instruction_templates:
+- '{target_invoice} was already refunded; do not refund {other_invoice} in its place.'
+- I need confirmation about the prior refund on {target_invoice}, not action on {other_invoice}.
+- The previous adjustment concerns {target_invoice}; please leave the other bill unchanged.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - paid
+  - open
+  distractor_owner:
+  - same
+  - other
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - refunded
+negative_strategy: refund_wrong_target

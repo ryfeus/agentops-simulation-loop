@@ -1,0 +1,25 @@
+{
+  "schema_version": "1",
+  "experiment_id": "billing-phase11-v1",
+  "model_id": "Qwen/Qwen3-0.6B",
+  "phase10": {
+    "corpus_sha256": "076e77f8139b34b84a76d25f35faba50da66fb9c3e525a6fcbf9bd3f363cdaea",
+    "family_specs_sha256": "45534d90594cf89809f634b7d598c1063f1c6ba6c55fe97ec53075dc61f35c02",
+    "split_manifest_sha256": "7c6d75da46df4405afbbce3006e4e91c4944dfd1a5f7b380cb35deecf4835eed",
+    "execution_suite_sha256": "4596d59cec6df9832584bd3529589f78170c8a84b67260aeed96d61b3cadaa67"
+  },
+  "training": {
+    "steps": 320,
+    "exposures_per_task": 2,
+    "num_generations": 4,
+    "learning_rate": 1e-5,
+    "seed": 20260925
+  },
+  "checkpoints": [160, 320],
+  "evaluation": {
+    "train_representative_attempts": 4,
+    "dev_attempts": 8,
+    "anchor_attempts": 4,
+    "holdout_attempts": 8
+  }
+}

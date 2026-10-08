@@ -1,0 +1,35 @@
+schema_version: '1'
+id: wrong-order-trap
+prototype: target-similar-invoice-ids
+archetype: wrong-target
+difficulty: adversarial
+variant_count: 5
+instruction_templates:
+- Although {other_invoice} appears first, refund {target_invoice} only.
+- Compare {other_invoice} with {target_invoice}; the latter is my target.
+- 'Do not let the invoice order mislead you: {target_invoice} gets the refund.'
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - disputed
+  - paid
+  distractor_owner:
+  - same
+  - other
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - reverse
+constraints:
+  target_status:
+  - paid
+negative_strategy: refund_wrong_target

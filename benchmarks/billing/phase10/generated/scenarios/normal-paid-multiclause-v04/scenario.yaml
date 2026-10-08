@@ -1,0 +1,71 @@
+schema_version: '1'
+id: normal-paid-multiclause-v04
+instruction: After checking inv-2097, reverse its incorrect charge. inv-2197 is a
+  separate bill.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-597
+    status: active
+  invoices:
+  - id: inv-2198
+    customer_id: customer-597
+    amount: '9.99'
+    currency: USD
+    status: paid
+  - id: inv-2197
+    customer_id: customer-597
+    amount: '249.95'
+    currency: USD
+    status: paid
+  - id: inv-2097
+    customer_id: customer-597
+    amount: '9.99'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-2097
+- type: no_escalation
+  invoice_id: inv-2097
+- type: invoice_status
+  invoice_id: inv-2097
+  status: refunded
+- type: unchanged
+  invoice_id: inv-2197
+- type: unchanged
+  invoice_id: inv-2198
+benchmark:
+  category: billing
+  archetype: normal-refund
+  difficulty: compound
+  mutation_policy:
+    allowed_targets:
+    - inv-2097
+  trajectory:
+    required_inspections:
+    - inv-2097
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: normal-paid-multiclause
+    prototype_id: paid-refund-direct
+    prototype_sha256: 473a6fce37376046fdb9aba136ae269fdaf8044d2d4f982af8fbb3fdcf4b57b0
+    variant_index: 4
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: same
+      distractor_status: paid
+      entity_order: reverse
+      target_amount: '9.99'
+      target_invoice_style: similar_ids
+      instruction_template: template-1

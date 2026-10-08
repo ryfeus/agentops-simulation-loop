@@ -1,0 +1,70 @@
+schema_version: '1'
+id: disputed-indirect-review-v04
+instruction: I need specialist help with disputed inv-5293; inv-5393 is a different
+  invoice.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-593
+    status: active
+  - id: customer-6193
+    status: active
+  invoices:
+  - id: inv-5394
+    customer_id: customer-6193
+    amount: '9.99'
+    currency: USD
+    status: paid
+  - id: inv-5393
+    customer_id: customer-6193
+    amount: '249.95'
+    currency: USD
+    status: disputed
+  - id: inv-5293
+    customer_id: customer-593
+    amount: '85.50'
+    currency: USD
+    status: disputed
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: no_refund
+  invoice_id: inv-5293
+- type: must_escalate
+  invoice_id: inv-5293
+- type: unchanged
+  invoice_id: inv-5393
+- type: unchanged
+  invoice_id: inv-5394
+benchmark:
+  category: billing
+  archetype: disputed-refund
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets:
+    - inv-5293
+  trajectory:
+    required_inspections:
+    - inv-5293
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: disputed-indirect-review
+    prototype_id: disputed-indirect-duplicate-charge
+    prototype_sha256: 2fd1e8ec603c51c4ed52a924d6bd2534f19fcbf1eb92f85a04974dc56b07bc8a
+    variant_index: 4
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: other
+      distractor_status: disputed
+      entity_order: reverse
+      target_amount: '85.50'
+      target_invoice_style: numeric
+      instruction_template: template-1

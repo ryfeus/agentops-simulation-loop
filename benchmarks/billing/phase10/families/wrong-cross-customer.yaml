@@ -1,0 +1,36 @@
+schema_version: '1'
+id: wrong-cross-customer
+prototype: target-refund-not-other
+archetype: wrong-target
+difficulty: compound
+variant_count: 5
+instruction_templates:
+- For customer {customer_id}, refund {target_invoice}; {other_invoice} is not the
+  requested charge.
+- Please identify the right account before refunding {target_invoice}; ignore {other_invoice}.
+- The refund must go to {target_invoice} on my account, not the other invoice.
+dimensions:
+  target_amount:
+  - '9.99'
+  - '19.00'
+  - '49.00'
+  - '85.50'
+  - '120.00'
+  distractor_count:
+  - '1'
+  - '2'
+  distractor_status:
+  - paid
+  - open
+  distractor_owner:
+  - other
+  target_invoice_style:
+  - numeric
+  - similar_ids
+  entity_order:
+  - original
+  - reverse
+constraints:
+  target_status:
+  - paid
+negative_strategy: refund_wrong_target

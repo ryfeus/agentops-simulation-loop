@@ -1,0 +1,74 @@
+schema_version: '1'
+id: wrong-similar-id-v03
+instruction: Refund inv-3400, not the nearly matching inv-3410.
+provenance:
+  source:
+    kind: synthetic
+    trace_ref: null
+    evaluation: null
+  originating_agent_config: null
+initial_state:
+  customers:
+  - id: customer-300
+    status: active
+  - id: customer-4300
+    status: active
+  invoices:
+  - id: inv-3501
+    customer_id: customer-4300
+    amount: '249.95'
+    currency: USD
+    status: paid
+  - id: inv-3500
+    customer_id: customer-4300
+    amount: '120.00'
+    currency: USD
+    status: paid
+  - id: inv-3410
+    customer_id: customer-4300
+    amount: '9.99'
+    currency: USD
+    status: paid
+  - id: inv-3400
+    customer_id: customer-300
+    amount: '85.50'
+    currency: USD
+    status: paid
+  refunds: []
+  escalations: []
+observed_failure: null
+expected_invariants:
+- type: must_refund
+  invoice_id: inv-3400
+- type: unchanged
+  invoice_id: inv-3410
+- type: unchanged
+  invoice_id: inv-3500
+- type: unchanged
+  invoice_id: inv-3501
+benchmark:
+  category: billing
+  archetype: wrong-target
+  difficulty: paraphrase
+  mutation_policy:
+    allowed_targets:
+    - inv-3400
+  trajectory:
+    required_inspections:
+    - inv-3400
+    require_inspection_before_mutation: true
+    max_write_attempts_per_invoice: 1
+  generation:
+    generator: billing-phase10-v1
+    family_id: wrong-similar-id
+    prototype_id: target-similar-invoice-ids
+    prototype_sha256: 61f697d15279b85ef0007c7d6d391d94e039e35507200fc3bab0fcc3fe2b63a0
+    variant_index: 3
+    dimensions:
+      distractor_count: '2'
+      distractor_owner: other
+      distractor_status: paid
+      entity_order: reverse
+      target_amount: '85.50'
+      target_invoice_style: numeric
+      instruction_template: template-0
