@@ -48,3 +48,19 @@ def test_operational_report_receipts_are_not_portable_metrics(tmp_path):
     assert result["findings"] == [
         {"path": "reports/result.json", "category": "operational_report_receipt"}
     ]
+
+
+def test_signed_urls_and_private_endpoints_are_rejected_without_values(tmp_path):
+    path = tmp_path / "metadata.txt"
+    path.write_text(
+        "https://example.org/artifact?X-Amz-"
+        + "Signature=synthetic-marker\n"
+        + "a" * 26
+        + ".dsql.us-west-2.on.aws"
+    )
+    result = inspect(tmp_path, [path.name])
+    assert {item["category"] for item in result["findings"]} == {
+        "signed_cloud_url",
+        "private_service_endpoint",
+    }
+    assert "synthetic-marker" not in str(result)

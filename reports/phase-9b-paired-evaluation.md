@@ -29,7 +29,7 @@ Across all five tasks, the micro pass rate was 68/80 (85.0%) for baseline and 71
 
 ## Runtime fix and validation
 
-An earlier attempt, `private run identifier omitted`, stopped after 40 baseline rollouts because successive colocated-vLLM trainers retained GPU memory in one Python process. Revision `98dddbe` runs each native `GRPOTrainer.evaluate()` pass in a separate short-lived process, preserving the fixed seeds and evaluation configuration while releasing CUDA memory between passes. The retry completed all eight passes. Local lint, 345 CPU unit tests, and the locked Phase 9b source/config check passed before the retry.
+An earlier attempt, `private run identifier omitted`, stopped after 40 baseline rollouts because successive colocated-vLLM trainers retained GPU memory in one Python process. The corrected runner runs each native `GRPOTrainer.evaluate()` pass in a separate short-lived process, preserving the fixed seeds and evaluation configuration while releasing CUDA memory between passes. The retry completed all eight passes. Local lint, 345 CPU unit tests, and the locked Phase 9b source/config check passed before the retry.
 
 The controller-fetched summary reports `status: PASS`, 80/80 policy coverage, a clean worktree, and `human_review_required: true`. Its `canonical_acceptance` field remains `false` by Phase 9b controller design; Phase 9b acceptance is represented by the validated `status: PASS` rather than that Phase 8C-style flag. Terraform destroyed all 10 managed resources, its state is empty, and EC2 reported the G6 instance `terminated`.
 

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import shutil
 from pathlib import Path
+from typing import Literal
 
 from agentops_demo.harbor.execution_profile import HarborExecutionProfile
 from agentops_demo.taskify.integrity import harbor_task_sha256
@@ -11,7 +12,12 @@ from agentops_demo.taskify.integrity import harbor_task_sha256
 _ALLOWED_CHANGED = {"task.toml", "environment/requirements.txt", "execution-profile.json"}
 
 
-def derive_bedrock_task(base: Path, output: Path) -> HarborExecutionProfile:
+def derive_bedrock_task(
+    base: Path,
+    output: Path,
+    *,
+    credential_mode: Literal["sts-assume-role", "bedrock-bearer-token"] = "sts-assume-role",
+) -> HarborExecutionProfile:
     if output.exists():
         raise FileExistsError(f"derived task already exists: {output}")
     shutil.copytree(base, output, symlinks=False)
@@ -26,7 +32,7 @@ def derive_bedrock_task(base: Path, output: Path) -> HarborExecutionProfile:
         execution_task_sha256=harbor_task_sha256(output),
         agent_network_mode="public",
         verifier_network_mode="no-network",
-        credential_mode="sts-assume-role",
+        credential_mode=credential_mode,
     )
     (output / "execution-profile.json").write_text(profile.model_dump_json(indent=2) + "\n")
     return profile

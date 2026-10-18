@@ -40,6 +40,7 @@ web = [
 ]
 
 [dependency-groups]
+demo = ["aws-bedrock-token-generator>=1.1,<2"]
 dev = [
   "pytest>=8.3,<9",
   "pytest-asyncio>=1.4,<2",

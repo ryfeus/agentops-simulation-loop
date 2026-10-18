@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import asyncio
+import hashlib
+import json
 import os
 import socket
 import subprocess
@@ -135,3 +137,66 @@ async def _wait_until_ready(
             last_error = str(exc)
         await asyncio.sleep(0.05)
     raise RuntimeError(f"MCP server was not ready after {timeout}s: {last_error}")
+
+
+@pytest.fixture(scope="session")
+def authored_prior_root(tmp_path_factory):
+    from agentops_demo.taskify.integrity import scenario_sha256
+    from experiments.decision_model import focused_data, generalization_v3_holdout, next_data
+    from rl.phase12.corpus import scenarios
+
+    repository = REPOSITORY_ROOT
+    root = tmp_path_factory.mktemp("synthetic-prior-corpora")
+    for name in ("experiments", "benchmarks", "src", "rl"):
+        (root / name).symlink_to(repository / name, target_is_directory=True)
+
+    def corpus(relative, tasks):
+        folder = root / relative
+        folder.mkdir(parents=True)
+        metadata = {}
+        for task, split in tasks:
+            path = folder / task.id
+            path.mkdir()
+            scenario = path / "scenario.yaml"
+            scenario.write_text(json.dumps(task.model_dump(mode="json")))
+            metadata[task.id] = {
+                "task_path": str(path),
+                "scenario_sha256": scenario_sha256(task),
+                "scenario_raw_sha256": hashlib.sha256(scenario.read_bytes()).hexdigest(),
+                "split": split,
+            }
+        (folder / "cohort-manifest.json").write_text(
+            json.dumps(
+                {
+                    "tasks": metadata,
+                    "split_task_counts": dict.fromkeys(
+                        sorted({m["split"] for m in metadata.values()}), 1
+                    ),
+                }
+            )
+        )
+
+    corpus(
+        ".artifacts/decision-model/next-v1/corpus",
+        [(task, split) for task, split, *_ in next_data.planned_tasks()],
+    )
+    corpus(
+        ".artifacts/decision-model-focused/corpus",
+        [(task, prototype["split"]) for prototype, task, _ in focused_data.plans()],
+    )
+    corpus(
+        ".artifacts/decision-model-generalization-v3/corpus",
+        [(task, "test") for task in generalization_v3_holdout.scenarios().values()],
+    )
+    # Synthetic acceptance flags test freeze's metadata validation. They are not
+    # teacher trajectories and are never exported or claimed as observed results.
+    demonstrations = root / next_data.data.SOURCE_DIR / "demonstrations/demonstrations.jsonl"
+    demonstrations.parent.mkdir(parents=True)
+    demonstrations.write_text(
+        "".join(
+            json.dumps({"task_id": task.id, "reward": 1, "complete": True, "truncated": False})
+            + "\n"
+            for task in scenarios()["train"].values()
+        )
+    )
+    return root

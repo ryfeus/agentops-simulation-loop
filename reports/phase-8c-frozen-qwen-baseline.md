@@ -33,7 +33,7 @@ The mixed tasks were `readonly-before-action`, `readonly-suspicious-invoice`, `s
 
 ## Initial attempt and correction
 
-The first G6 attempt loaded the isolated runtime and Qwen weights but stopped before rollouts because TRL 1.13 requires a positive `GRPOConfig.max_steps` when prompts come from an environment reset. Commit `856e51f` added the fixed 25-task evaluation horizon and a unit assertion. The retry passed 320 CPU unit tests, the locked configuration check, the Oracle gate, and canonical G6 evaluation.
+The first G6 attempt loaded the isolated runtime and Qwen weights but stopped before rollouts because TRL 1.13 requires a positive `GRPOConfig.max_steps` when prompts come from an environment reset. The runtime correction added the fixed 25-task evaluation horizon and a unit assertion. The retry passed 320 CPU unit tests, the locked configuration check, the Oracle gate, and canonical G6 evaluation.
 
 ## Evidence
 

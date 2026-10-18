@@ -55,3 +55,9 @@ The default chat uses a scripted candidate without credentials. Bedrock is delib
 - [Contributing](CONTRIBUTING.md) and [MIT license](LICENSE)
 
 This is a demo/reference implementation using synthetic billing data. Scripted candidates demonstrate pipeline behavior, not model quality. Taskify supports the included billing trace contract, not arbitrary agents. There is no automatic candidate promotion. The registered Phase 11 and Phase 12 learning gates did not establish generalization or production readiness. AWS deployment is intentionally limited to `us-west-2`.
+
+## Optional decision-model research and local Harbor demos
+
+The [decision-model experiment](experiments/decision_model/README.md) includes an offline terminal demo, synthetic contract tests, and optional model training/evaluation tooling. [Research results](docs/research-results.md) preserve negative findings and distinguish replay accuracy from task completion.
+
+Recent Harbor tooling adds bounded inference settings, trajectory diagnostics, configurable policy enforcement, and benchmark result aggregation. `make aws-harbor-demo-prepare` creates opt-in Bedrock before/after demo inputs; it requires Docker, explicit AWS account configuration, and the optional `demo` dependency group. `make harbor-demo-before`, `make harbor-demo-after`, and `make harbor-demo-clean` use the prepared local run. Preparation generates a short-lived token in ignored local storage; cleanup removes it. These commands invoke paid inference and are excluded from normal tests.

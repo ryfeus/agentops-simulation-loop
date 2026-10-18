@@ -24,3 +24,7 @@ Synthetic billing tasks derive from the checked-in generators and family specifi
 - Gitleaks' sole rule-specific exception matches the exact public Qwen tokenizer revision line in the canonical experiment manifest. Other secrets remain scanned with default rules. CI also seeds a synthetic credential in that same file and requires detection.
 
 The release checker reports only paths and categories. The local confidential denylist and original export/source revision mapping remain outside this repository. Gitleaks is an additional gate against real secrets in the exported tree and history.
+
+## Optional decision-model dependencies
+
+The isolated decision-model project pins Strands Decider source and released model/base revisions in `experiments/decision_model/sources.json`. The locally inspected pinned Strands Decider source LICENSE, released checkpoint model-card metadata, and installed `aws-bedrock-token-generator` package metadata declare Apache-2.0. Source and model downloads happen only when explicitly requested; no upstream checkout, weights, adapters, or datasets are bundled. Consult the pinned upstream source license and model cards before obtaining or redistributing those artifacts. The optional demo dependency `aws-bedrock-token-generator` is fetched as a package rather than vendored. Existing MIT attribution applies to this repository's own source and synthetic examples, not automatically to dependencies or model artifacts.

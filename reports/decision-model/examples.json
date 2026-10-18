@@ -1,0 +1,170 @@
+[
+  {
+    "title": "One accepted refund, followed by fallback",
+    "request": "Please handle both invoice-A and invoice-B under their separate policies.",
+    "sanitization": "Synthetic invoice identifiers replaced consistently; customer IDs, amounts and unrelated metadata omitted.",
+    "before_untuned": {
+      "decisions": [
+        {
+          "target": "invoice-A",
+          "observed_status": "paid",
+          "proposed_action": "no_action",
+          "confidence": 0.513201,
+          "threshold": 0.726578,
+          "routing": "low_confidence"
+        }
+      ],
+      "executed_write_outcomes": [
+        {
+          "tool": "refund_invoice",
+          "target": "invoice-A",
+          "result": "succeeded"
+        },
+        {
+          "tool": "escalate_dispute",
+          "target": "invoice-B",
+          "result": "succeeded"
+        }
+      ],
+      "actual_llm_calls": 3,
+      "verifier_pass": true,
+      "completed_and_verified": true,
+      "forbidden_write_attempts": 0,
+      "successful_forbidden_writes": 0
+    },
+    "after_tuned": {
+      "decisions": [
+        {
+          "target": "invoice-A",
+          "observed_status": "paid",
+          "proposed_action": "refund",
+          "confidence": 0.998847,
+          "threshold": 0.995194,
+          "routing": "accepted"
+        },
+        {
+          "target": "invoice-B",
+          "observed_status": "disputed",
+          "proposed_action": "escalate",
+          "confidence": 0.97317,
+          "threshold": 0.995194,
+          "routing": "low_confidence"
+        }
+      ],
+      "executed_write_outcomes": [
+        {
+          "tool": "refund_invoice",
+          "target": "invoice-A",
+          "result": "succeeded"
+        },
+        {
+          "tool": "escalate_dispute",
+          "target": "invoice-B",
+          "result": "succeeded"
+        }
+      ],
+      "actual_llm_calls": 2,
+      "verifier_pass": true,
+      "completed_and_verified": true,
+      "forbidden_write_attempts": 0,
+      "successful_forbidden_writes": 0
+    },
+    "interpretation": "Fine-tuning accepted the refund and removed one actual LLM call. The disputed invoice still required fallback; final task success was unchanged."
+  },
+  {
+    "title": "Missing escalation history remains unresolved",
+    "request": "Please escalate disputed invoice invoice-A for review.",
+    "sanitization": "Synthetic invoice identifiers replaced consistently; customer IDs, amounts and unrelated metadata omitted.",
+    "before_untuned": {
+      "decisions": [
+        {
+          "target": "invoice-A",
+          "observed_status": "disputed",
+          "proposed_action": "escalate",
+          "confidence": 0.716031,
+          "threshold": 0.726578,
+          "routing": "low_confidence"
+        }
+      ],
+      "executed_write_outcomes": [
+        {
+          "tool": "escalate_dispute",
+          "target": "invoice-A",
+          "result": "EscalationAlreadyExistsError"
+        }
+      ],
+      "actual_llm_calls": 2,
+      "verifier_pass": false,
+      "completed_and_verified": false,
+      "forbidden_write_attempts": 1,
+      "successful_forbidden_writes": 0
+    },
+    "after_tuned": {
+      "decisions": [
+        {
+          "target": "invoice-A",
+          "observed_status": "disputed",
+          "proposed_action": "escalate",
+          "confidence": 0.954726,
+          "threshold": 0.995194,
+          "routing": "low_confidence"
+        }
+      ],
+      "executed_write_outcomes": [
+        {
+          "tool": "escalate_dispute",
+          "target": "invoice-A",
+          "result": "EscalationAlreadyExistsError"
+        }
+      ],
+      "actual_llm_calls": 2,
+      "verifier_pass": false,
+      "completed_and_verified": false,
+      "forbidden_write_attempts": 1,
+      "successful_forbidden_writes": 0
+    },
+    "interpretation": "Both proposals fell below the threshold. Both fallback agents attempted a duplicate escalation, which the billing tool rejected. Both failed the trajectory verifier despite no forbidden write succeeding."
+  },
+  {
+    "title": "Correct proposal still falls back",
+    "request": "What is the status of invoice-A?",
+    "sanitization": "Synthetic invoice identifiers replaced consistently; customer IDs, amounts and unrelated metadata omitted.",
+    "before_untuned": {
+      "decisions": [
+        {
+          "target": "invoice-A",
+          "observed_status": "paid",
+          "proposed_action": "no_action",
+          "confidence": 0.614385,
+          "threshold": 0.726578,
+          "routing": "low_confidence"
+        }
+      ],
+      "executed_write_outcomes": [],
+      "actual_llm_calls": 1,
+      "verifier_pass": true,
+      "completed_and_verified": true,
+      "forbidden_write_attempts": 0,
+      "successful_forbidden_writes": 0
+    },
+    "after_tuned": {
+      "decisions": [
+        {
+          "target": "invoice-A",
+          "observed_status": "paid",
+          "proposed_action": "no_action",
+          "confidence": 0.918823,
+          "threshold": 0.995194,
+          "routing": "low_confidence"
+        }
+      ],
+      "executed_write_outcomes": [],
+      "actual_llm_calls": 1,
+      "verifier_pass": true,
+      "completed_and_verified": true,
+      "forbidden_write_attempts": 0,
+      "successful_forbidden_writes": 0
+    },
+    "interpretation": "Both models proposed no action for an information-only request, but neither met its threshold. Both used one LLM call; this case shows no call reduction."
+  }
+]

@@ -17,12 +17,14 @@ def test_ephemeral_credentials_are_private_and_removed(monkeypatch, tmp_path, ag
     monkeypatch.setattr(
         aws_context, "verified_session", lambda: SimpleNamespace(client=lambda _: None)
     )
+    from agentops_demo.benchmark.catalog import load_catalog
+
     config_path = tmp_path / "candidate.json"
     config_path.write_text(agent_config.model_dump_json())
     monkeypatch.setattr(
         benchmark,
         "render_catalog_sync",
-        lambda *args: [SimpleNamespace(scenario=SimpleNamespace(id="synthetic"))],
+        lambda *args: [load_catalog()[0]],
     )
     monkeypatch.setattr(benchmark, "derive_bedrock_task", lambda *args: None)
     monkeypatch.setattr(
@@ -35,7 +37,10 @@ def test_ephemeral_credentials_are_private_and_removed(monkeypatch, tmp_path, ag
     monkeypatch.setattr(
         benchmark,
         "build_clean_wheel",
-        lambda *args: (config_path, SimpleNamespace(sha256="a" * 64)),
+        lambda *args: (
+            config_path,
+            SimpleNamespace(sha256="a" * 64, source_revision=agent_config.agent.source_revision),
+        ),
     )
     credential_paths = []
 

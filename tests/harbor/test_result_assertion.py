@@ -18,7 +18,7 @@ def write_job(
     exception: object = None,
     trial_count: int = 1,
     fingerprint: str | None = None,
-    provenance: dict[str, str] | None = None,
+    provenance: dict[str, object] | None = None,
 ) -> None:
     path.mkdir(parents=True, exist_ok=True)
     (path / "result.json").write_text(json.dumps({"n_total_trials": trial_count}))
@@ -136,3 +136,33 @@ def test_mismatched_candidate_provenance_is_rejected(tmp_path: Path) -> None:
 
     with pytest.raises(AssertionError, match="expected agent provenance"):
         assert_result(job_dir, 0.0, provenance_manifest=manifest_path, candidate="bad")
+
+
+def test_candidate_execution_metadata_matches_declared_defaults(tmp_path: Path) -> None:
+    manifest_path, provenance = provenance_fixture(tmp_path)
+    provenance.update(billing_policy_mode="permissive", inference_environment={})
+    job = tmp_path / "job"
+    write_job(
+        job, reward=0.0, fingerprint=provenance["agent_config_fingerprint"], provenance=provenance
+    )
+    assert_result(job, 0.0, provenance_manifest=manifest_path, candidate="bad")
+
+
+@pytest.mark.parametrize(
+    "settings",
+    [
+        {"billing_policy_mode": "enforced", "inference_environment": {}},
+        {"billing_policy_mode": "permissive", "inference_environment": {"unexpected": "value"}},
+        {"billing_policy_mode": "permissive"},
+        {"billing_policy_mode": "permissive", "inference_environment": {}, "unexpected": "value"},
+    ],
+)
+def test_undeclared_or_partial_execution_metadata_is_rejected(tmp_path: Path, settings) -> None:
+    manifest_path, provenance = provenance_fixture(tmp_path)
+    provenance.update(settings)
+    job = tmp_path / "job"
+    write_job(
+        job, reward=0.0, fingerprint=provenance["agent_config_fingerprint"], provenance=provenance
+    )
+    with pytest.raises(AssertionError, match="expected agent provenance"):
+        assert_result(job, 0.0, provenance_manifest=manifest_path, candidate="bad")

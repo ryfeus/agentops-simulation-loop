@@ -10,6 +10,7 @@ from agentops_demo.agent.graph import build_agent_with_tools, validate_runtime_c
 from agentops_demo.agent.prompt import (
     BASELINE_SYSTEM_PROMPT,
     IMPROVED_SYSTEM_PROMPT,
+    REFUND_FIRST_SYSTEM_PROMPT,
     get_system_prompt,
 )
 from agentops_demo.agent.scripted import create_scripted_model
@@ -76,6 +77,7 @@ def test_agent_factory_rejects_tool_contract_drift(agent_config: AgentConfig) ->
     [
         ("billing-v1", BASELINE_SYSTEM_PROMPT),
         ("billing-v2", IMPROVED_SYSTEM_PROMPT),
+        ("billing-refund-v1", REFUND_FIRST_SYSTEM_PROMPT),
     ],
 )
 def test_agent_factory_uses_configured_prompt(

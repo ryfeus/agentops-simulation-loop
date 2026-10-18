@@ -14,6 +14,7 @@ from agentops_demo.agent.runtime import AgentSessionRuntime
 from agentops_demo.agent.runtime import create_session_runtime as _create_session_runtime
 from agentops_demo.agent.runtime import invoke_once as _invoke_once
 from agentops_demo.contracts.agent_config import AgentConfig
+from agentops_demo.harbor.trajectory import write_trajectory
 
 create_model = _create_model
 build_agent = _build_agent
@@ -30,8 +31,16 @@ async def create_session_runtime(*, config: AgentConfig, mcp_url: str) -> AgentS
     )
 
 
-async def invoke_once(*, config: AgentConfig, instruction: str, mcp_url: str) -> dict[str, Any]:
+async def invoke_once(
+    *, config: AgentConfig, instruction: str, mcp_url: str, trajectory_path: Path | None = None
+) -> dict[str, Any]:
     """Compatibility wrapper around the reusable one-shot invocation helper."""
+
+    def record_state(state: dict[str, Any]) -> None:
+        if trajectory_path is not None:
+            write_trajectory(
+                trajectory_path, config=config, instruction=instruction, messages=state["messages"]
+            )
 
     return await _invoke_once(
         config=config,
@@ -39,6 +48,7 @@ async def invoke_once(*, config: AgentConfig, instruction: str, mcp_url: str) ->
         mcp_url=mcp_url,
         model_factory=create_model,
         graph_factory=build_agent,
+        state_observer=record_state if trajectory_path is not None else None,
     )
 
 
@@ -48,13 +58,21 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--instruction-file", type=Path, required=True)
     parser.add_argument("--mcp-url", required=True)
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--trajectory", type=Path, help="Write the actual interaction as ATIF JSON")
     args = parser.parse_args(argv)
 
     config = AgentConfig.model_validate_json(args.config.read_text())
     instruction = args.instruction_file.read_text().strip()
     if not instruction:
         parser.error("instruction file must not be blank")
-    result = asyncio.run(invoke_once(config=config, instruction=instruction, mcp_url=args.mcp_url))
+    result = asyncio.run(
+        invoke_once(
+            config=config,
+            instruction=instruction,
+            mcp_url=args.mcp_url,
+            trajectory_path=args.trajectory,
+        )
+    )
     serialized = json.dumps(result, sort_keys=True)
     if args.output is not None:
         args.output.parent.mkdir(parents=True, exist_ok=True)

@@ -1,0 +1,1833 @@
+{
+  "schema_version": "public-results-only-v1",
+  "evidence_note": "Historical aggregate measurements; private execution evidence omitted. This is not the original integrity manifest.",
+  "metrics": {
+    "test_rows": 150,
+    "test_families": 4,
+    "test_tasks": 40,
+    "test_boundaries": {
+      "after_inspection": 60,
+      "missing_observation": 60,
+      "after_completed_action": 30
+    },
+    "arms": {
+      "rule": {
+        "coverage": {
+          "expected": 150,
+          "available": 150,
+          "missing": 0
+        },
+        "latency_scope": "Local Python function only; Apple M1 Max",
+        "slices": {
+          "all": {
+            "rows": 150,
+            "tasks": 40,
+            "families": 4,
+            "correct": 144,
+            "accuracy": 0.96,
+            "macro_f1": 0.9272260273972602,
+            "per_class": {
+              "refund": {
+                "support": 15,
+                "precision": 1.0,
+                "recall": 0.6,
+                "f1": 0.75
+              },
+              "escalate": {
+                "support": 15,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "no_action": {
+                "support": 50,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "defer": {
+                "support": 70,
+                "precision": 0.9210526315789473,
+                "recall": 1.0,
+                "f1": 0.958904109589041
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 9,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 6,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 15,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 50,
+                "defer": 0,
+                "error": 0
+              },
+              "defer": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 70,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 0,
+            "prohibited_rate": 0.0,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 76,
+            "defer_rate": 0.5066666666666667,
+            "fallback_needed_rate": 0.5066666666666667,
+            "non_defer_count": 74,
+            "non_defer_coverage": 0.49333333333333335,
+            "non_defer_accuracy": 1.0,
+            "gold_defer_count": 70,
+            "latency_count": 150,
+            "latency_p50_ms": 0.00047939829528331757,
+            "latency_p95_ms": 0.005290971603244543,
+            "input_tokens_count": 0,
+            "input_tokens_sum": null,
+            "input_tokens_p50": null,
+            "input_tokens_p95": null,
+            "output_tokens_count": 0,
+            "output_tokens_sum": null,
+            "calibration_count": 150,
+            "ece_10_bins": 0.040000000000000036,
+            "brier_score": 0.08,
+            "calibration_bins": []
+          },
+          "observed": {
+            "rows": 90,
+            "tasks": 40,
+            "families": 4,
+            "correct": 84,
+            "accuracy": 0.9333333333333333,
+            "macro_f1": 0.8798076923076923,
+            "per_class": {
+              "refund": {
+                "support": 15,
+                "precision": 1.0,
+                "recall": 0.6,
+                "f1": 0.75
+              },
+              "escalate": {
+                "support": 15,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "no_action": {
+                "support": 50,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "defer": {
+                "support": 10,
+                "precision": 0.625,
+                "recall": 1.0,
+                "f1": 0.7692307692307693
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 9,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 6,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 15,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 50,
+                "defer": 0,
+                "error": 0
+              },
+              "defer": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 10,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 0,
+            "prohibited_rate": 0.0,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 16,
+            "defer_rate": 0.17777777777777778,
+            "fallback_needed_rate": 0.17777777777777778,
+            "non_defer_count": 74,
+            "non_defer_coverage": 0.8222222222222222,
+            "non_defer_accuracy": 1.0,
+            "gold_defer_count": 10,
+            "latency_count": 90,
+            "latency_p50_ms": 0.0015210825949907303,
+            "latency_p95_ms": 0.005504244472831488,
+            "input_tokens_count": 0,
+            "input_tokens_sum": null,
+            "input_tokens_p50": null,
+            "input_tokens_p95": null,
+            "output_tokens_count": 0,
+            "output_tokens_sum": null,
+            "calibration_count": 90,
+            "ece_10_bins": 0.06666666666666665,
+            "brier_score": 0.13333333333333333,
+            "calibration_bins": []
+          },
+          "inspection": {
+            "rows": 60,
+            "tasks": 40,
+            "families": 4,
+            "correct": 54,
+            "accuracy": 0.9,
+            "macro_f1": 0.8798076923076923,
+            "per_class": {
+              "refund": {
+                "support": 15,
+                "precision": 1.0,
+                "recall": 0.6,
+                "f1": 0.75
+              },
+              "escalate": {
+                "support": 15,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "no_action": {
+                "support": 20,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "defer": {
+                "support": 10,
+                "precision": 0.625,
+                "recall": 1.0,
+                "f1": 0.7692307692307693
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 9,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 6,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 15,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 20,
+                "defer": 0,
+                "error": 0
+              },
+              "defer": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 10,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 0,
+            "prohibited_rate": 0.0,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 16,
+            "defer_rate": 0.26666666666666666,
+            "fallback_needed_rate": 0.26666666666666666,
+            "non_defer_count": 44,
+            "non_defer_coverage": 0.7333333333333333,
+            "non_defer_accuracy": 1.0,
+            "gold_defer_count": 10,
+            "latency_count": 60,
+            "latency_p50_ms": 0.004229019396007061,
+            "latency_p95_ms": 0.005585141479969025,
+            "input_tokens_count": 0,
+            "input_tokens_sum": null,
+            "input_tokens_p50": null,
+            "input_tokens_p95": null,
+            "output_tokens_count": 0,
+            "output_tokens_sum": null,
+            "calibration_count": 60,
+            "ece_10_bins": 0.09999999999999996,
+            "brier_score": 0.2,
+            "calibration_bins": []
+          },
+          "completed_action": {
+            "rows": 30,
+            "tasks": 15,
+            "families": 1,
+            "correct": 30,
+            "accuracy": 1.0,
+            "macro_f1": 0.25,
+            "per_class": {
+              "refund": {
+                "support": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "escalate": {
+                "support": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "no_action": {
+                "support": 30,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "defer": {
+                "support": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 30,
+                "defer": 0,
+                "error": 0
+              },
+              "defer": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 0,
+            "prohibited_rate": 0.0,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 0,
+            "defer_rate": 0.0,
+            "fallback_needed_rate": 0.0,
+            "non_defer_count": 30,
+            "non_defer_coverage": 1.0,
+            "non_defer_accuracy": 1.0,
+            "gold_defer_count": 0,
+            "latency_count": 30,
+            "latency_p50_ms": 0.0005420297384262085,
+            "latency_p95_ms": 0.0006250455044209957,
+            "input_tokens_count": 0,
+            "input_tokens_sum": null,
+            "input_tokens_p50": null,
+            "input_tokens_p95": null,
+            "output_tokens_count": 0,
+            "output_tokens_sum": null,
+            "calibration_count": 30,
+            "ece_10_bins": 0.0,
+            "brier_score": 0.0,
+            "calibration_bins": []
+          },
+          "missing_observation": {
+            "rows": 60,
+            "tasks": 40,
+            "families": 4,
+            "correct": 60,
+            "accuracy": 1.0,
+            "macro_f1": 0.25,
+            "per_class": {
+              "refund": {
+                "support": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "escalate": {
+                "support": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "no_action": {
+                "support": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "defer": {
+                "support": 60,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "defer": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 60,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 0,
+            "prohibited_rate": 0.0,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 60,
+            "defer_rate": 1.0,
+            "fallback_needed_rate": 1.0,
+            "non_defer_count": 0,
+            "non_defer_coverage": 0.0,
+            "non_defer_accuracy": null,
+            "gold_defer_count": 60,
+            "latency_count": 60,
+            "latency_p50_ms": 0.00020791776478290558,
+            "latency_p95_ms": 0.00020908191800117493,
+            "input_tokens_count": 0,
+            "input_tokens_sum": null,
+            "input_tokens_p50": null,
+            "input_tokens_p95": null,
+            "output_tokens_count": 0,
+            "output_tokens_sum": null,
+            "calibration_count": 60,
+            "ece_10_bins": 0.0,
+            "brier_score": 0.0,
+            "calibration_bins": []
+          }
+        }
+      },
+      "untuned": {
+        "coverage": {
+          "expected": 150,
+          "available": 150,
+          "missing": 0
+        },
+        "latency_scope": "L4 forward pass only, batch 1",
+        "slices": {
+          "all": {
+            "rows": 150,
+            "tasks": 40,
+            "families": 4,
+            "correct": 66,
+            "accuracy": 0.44,
+            "macro_f1": 0.43153999810536936,
+            "per_class": {
+              "refund": {
+                "support": 15,
+                "precision": 0.3076923076923077,
+                "recall": 0.5333333333333333,
+                "f1": 0.3902439024390244
+              },
+              "escalate": {
+                "support": 15,
+                "precision": 0.29411764705882354,
+                "recall": 1.0,
+                "f1": 0.45454545454545453
+              },
+              "no_action": {
+                "support": 50,
+                "precision": 0.4642857142857143,
+                "recall": 0.52,
+                "f1": 0.49056603773584906
+              },
+              "defer": {
+                "support": 70,
+                "precision": 1.0,
+                "recall": 0.24285714285714285,
+                "f1": 0.39080459770114945
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 8,
+                "escalate": 0,
+                "no_action": 7,
+                "defer": 0,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 15,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 9,
+                "escalate": 15,
+                "no_action": 26,
+                "defer": 0,
+                "error": 0
+              },
+              "defer": {
+                "refund": 9,
+                "escalate": 21,
+                "no_action": 23,
+                "defer": 17,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 24,
+            "prohibited_rate": 0.16,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 17,
+            "defer_rate": 0.11333333333333333,
+            "fallback_needed_rate": 0.11333333333333333,
+            "non_defer_count": 133,
+            "non_defer_coverage": 0.8866666666666667,
+            "non_defer_accuracy": 0.3684210526315789,
+            "gold_defer_count": 70,
+            "latency_count": 150,
+            "latency_p50_ms": 66.81428049998317,
+            "latency_p95_ms": 68.6208845000067,
+            "input_tokens_count": 150,
+            "input_tokens_sum": 49757,
+            "input_tokens_p50": 328.0,
+            "input_tokens_p95": 446.0,
+            "output_tokens_count": 0,
+            "output_tokens_sum": null,
+            "calibration_count": 150,
+            "ece_10_bins": 0.21995046059290568,
+            "brier_score": 0.7195875657368926,
+            "calibration_bins": []
+          },
+          "observed": {
+            "rows": 90,
+            "tasks": 40,
+            "families": 4,
+            "correct": 49,
+            "accuracy": 0.5444444444444444,
+            "macro_f1": 0.41799014238773274,
+            "per_class": {
+              "refund": {
+                "support": 15,
+                "precision": 0.47058823529411764,
+                "recall": 0.5333333333333333,
+                "f1": 0.5
+              },
+              "escalate": {
+                "support": 15,
+                "precision": 0.375,
+                "recall": 1.0,
+                "f1": 0.5454545454545454
+              },
+              "no_action": {
+                "support": 50,
+                "precision": 0.7878787878787878,
+                "recall": 0.52,
+                "f1": 0.6265060240963856
+              },
+              "defer": {
+                "support": 10,
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 8,
+                "escalate": 0,
+                "no_action": 7,
+                "defer": 0,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 15,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 9,
+                "escalate": 15,
+                "no_action": 26,
+                "defer": 0,
+                "error": 0
+              },
+              "defer": {
+                "refund": 0,
+                "escalate": 10,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 24,
+            "prohibited_rate": 0.26666666666666666,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 0,
+            "defer_rate": 0.0,
+            "fallback_needed_rate": 0.0,
+            "non_defer_count": 90,
+            "non_defer_coverage": 1.0,
+            "non_defer_accuracy": 0.5444444444444444,
+            "gold_defer_count": 10,
+            "latency_count": 90,
+            "latency_p50_ms": 66.98662050001758,
+            "latency_p95_ms": 68.6208845000067,
+            "input_tokens_count": 90,
+            "input_tokens_sum": 32218,
+            "input_tokens_p50": 334.0,
+            "input_tokens_p95": 447.0,
+            "output_tokens_count": 0,
+            "output_tokens_sum": null,
+            "calibration_count": 90,
+            "ece_10_bins": 0.30300298465622794,
+            "brier_score": 0.6884959402228112,
+            "calibration_bins": []
+          },
+          "inspection": {
+            "rows": 60,
+            "tasks": 40,
+            "families": 4,
+            "correct": 43,
+            "accuracy": 0.7166666666666667,
+            "macro_f1": 0.5741790009250693,
+            "per_class": {
+              "refund": {
+                "support": 15,
+                "precision": 1.0,
+                "recall": 0.5333333333333333,
+                "f1": 0.6956521739130435
+              },
+              "escalate": {
+                "support": 15,
+                "precision": 0.6,
+                "recall": 1.0,
+                "f1": 0.75
+              },
+              "no_action": {
+                "support": 20,
+                "precision": 0.7407407407407407,
+                "recall": 1.0,
+                "f1": 0.851063829787234
+              },
+              "defer": {
+                "support": 10,
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 8,
+                "escalate": 0,
+                "no_action": 7,
+                "defer": 0,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 15,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 20,
+                "defer": 0,
+                "error": 0
+              },
+              "defer": {
+                "refund": 0,
+                "escalate": 10,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 0,
+            "prohibited_rate": 0.0,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 0,
+            "defer_rate": 0.0,
+            "fallback_needed_rate": 0.0,
+            "non_defer_count": 60,
+            "non_defer_coverage": 1.0,
+            "non_defer_accuracy": 0.7166666666666667,
+            "gold_defer_count": 10,
+            "latency_count": 60,
+            "latency_p50_ms": 66.82090999998991,
+            "latency_p95_ms": 68.51432225003578,
+            "input_tokens_count": 60,
+            "input_tokens_sum": 19777,
+            "input_tokens_p50": 332.0,
+            "input_tokens_p95": 336.05,
+            "output_tokens_count": 0,
+            "output_tokens_sum": null,
+            "calibration_count": 60,
+            "ece_10_bins": 0.23338360041379932,
+            "brier_score": 0.5202830148504279,
+            "calibration_bins": []
+          },
+          "completed_action": {
+            "rows": 30,
+            "tasks": 15,
+            "families": 1,
+            "correct": 6,
+            "accuracy": 0.2,
+            "macro_f1": 0.08333333333333333,
+            "per_class": {
+              "refund": {
+                "support": 0,
+                "precision": 0.0,
+                "recall": null,
+                "f1": 0.0
+              },
+              "escalate": {
+                "support": 0,
+                "precision": 0.0,
+                "recall": null,
+                "f1": 0.0
+              },
+              "no_action": {
+                "support": 30,
+                "precision": 1.0,
+                "recall": 0.2,
+                "f1": 0.3333333333333333
+              },
+              "defer": {
+                "support": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 9,
+                "escalate": 15,
+                "no_action": 6,
+                "defer": 0,
+                "error": 0
+              },
+              "defer": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 24,
+            "prohibited_rate": 0.8,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 0,
+            "defer_rate": 0.0,
+            "fallback_needed_rate": 0.0,
+            "non_defer_count": 30,
+            "non_defer_coverage": 1.0,
+            "non_defer_accuracy": 0.2,
+            "gold_defer_count": 0,
+            "latency_count": 30,
+            "latency_p50_ms": 67.56335649998846,
+            "latency_p95_ms": 68.76105970000594,
+            "input_tokens_count": 30,
+            "input_tokens_sum": 12441,
+            "input_tokens_p50": 414.5,
+            "input_tokens_p95": 450.55,
+            "output_tokens_count": 0,
+            "output_tokens_sum": null,
+            "calibration_count": 30,
+            "ece_10_bins": 0.5676228731870652,
+            "brier_score": 1.0249217909675779,
+            "calibration_bins": []
+          },
+          "missing_observation": {
+            "rows": 60,
+            "tasks": 40,
+            "families": 4,
+            "correct": 17,
+            "accuracy": 0.2833333333333333,
+            "macro_f1": 0.11038961038961038,
+            "per_class": {
+              "refund": {
+                "support": 0,
+                "precision": 0.0,
+                "recall": null,
+                "f1": 0.0
+              },
+              "escalate": {
+                "support": 0,
+                "precision": 0.0,
+                "recall": null,
+                "f1": 0.0
+              },
+              "no_action": {
+                "support": 0,
+                "precision": 0.0,
+                "recall": null,
+                "f1": 0.0
+              },
+              "defer": {
+                "support": 60,
+                "precision": 1.0,
+                "recall": 0.2833333333333333,
+                "f1": 0.44155844155844154
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "defer": {
+                "refund": 9,
+                "escalate": 11,
+                "no_action": 23,
+                "defer": 17,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 0,
+            "prohibited_rate": 0.0,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 17,
+            "defer_rate": 0.2833333333333333,
+            "fallback_needed_rate": 0.2833333333333333,
+            "non_defer_count": 43,
+            "non_defer_coverage": 0.7166666666666667,
+            "non_defer_accuracy": 0.0,
+            "gold_defer_count": 60,
+            "latency_count": 60,
+            "latency_p50_ms": 66.55872400003204,
+            "latency_p95_ms": 68.61574265001877,
+            "input_tokens_count": 60,
+            "input_tokens_sum": 17539,
+            "input_tokens_p50": 293.5,
+            "input_tokens_p95": 298.0,
+            "output_tokens_count": 0,
+            "output_tokens_sum": null,
+            "calibration_count": 60,
+            "ece_10_bins": 0.16051404575506847,
+            "brier_score": 0.7662250040080146,
+            "calibration_bins": []
+          }
+        }
+      },
+      "tuned": {
+        "coverage": {
+          "expected": 150,
+          "available": 150,
+          "missing": 0
+        },
+        "latency_scope": "L4 forward pass only, batch 1",
+        "slices": {
+          "all": {
+            "rows": 150,
+            "tasks": 40,
+            "families": 4,
+            "correct": 137,
+            "accuracy": 0.9133333333333333,
+            "macro_f1": 0.8927771521521521,
+            "per_class": {
+              "refund": {
+                "support": 15,
+                "precision": 0.8823529411764706,
+                "recall": 1.0,
+                "f1": 0.9375
+              },
+              "escalate": {
+                "support": 15,
+                "precision": 0.6363636363636364,
+                "recall": 0.9333333333333333,
+                "f1": 0.7567567567567568
+              },
+              "no_action": {
+                "support": 50,
+                "precision": 1.0,
+                "recall": 0.92,
+                "f1": 0.9583333333333334
+              },
+              "defer": {
+                "support": 70,
+                "precision": 0.9538461538461539,
+                "recall": 0.8857142857142857,
+                "f1": 0.9185185185185185
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 15,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 14,
+                "no_action": 0,
+                "defer": 1,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 2,
+                "escalate": 0,
+                "no_action": 46,
+                "defer": 2,
+                "error": 0
+              },
+              "defer": {
+                "refund": 0,
+                "escalate": 8,
+                "no_action": 0,
+                "defer": 62,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 2,
+            "prohibited_rate": 0.013333333333333334,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 65,
+            "defer_rate": 0.43333333333333335,
+            "fallback_needed_rate": 0.43333333333333335,
+            "non_defer_count": 85,
+            "non_defer_coverage": 0.5666666666666667,
+            "non_defer_accuracy": 0.8823529411764706,
+            "gold_defer_count": 70,
+            "latency_count": 150,
+            "latency_p50_ms": 65.5517944999815,
+            "latency_p95_ms": 67.58266150006307,
+            "input_tokens_count": 150,
+            "input_tokens_sum": 49757,
+            "input_tokens_p50": 328.0,
+            "input_tokens_p95": 446.0,
+            "output_tokens_count": 0,
+            "output_tokens_sum": null,
+            "calibration_count": 150,
+            "ece_10_bins": 0.061518067916234334,
+            "brier_score": 0.12015328819598456,
+            "calibration_bins": []
+          },
+          "observed": {
+            "rows": 90,
+            "tasks": 40,
+            "families": 4,
+            "correct": 77,
+            "accuracy": 0.8555555555555555,
+            "macro_f1": 0.7298141891891892,
+            "per_class": {
+              "refund": {
+                "support": 15,
+                "precision": 0.8823529411764706,
+                "recall": 1.0,
+                "f1": 0.9375
+              },
+              "escalate": {
+                "support": 15,
+                "precision": 0.6363636363636364,
+                "recall": 0.9333333333333333,
+                "f1": 0.7567567567567568
+              },
+              "no_action": {
+                "support": 50,
+                "precision": 1.0,
+                "recall": 0.92,
+                "f1": 0.9583333333333334
+              },
+              "defer": {
+                "support": 10,
+                "precision": 0.4,
+                "recall": 0.2,
+                "f1": 0.26666666666666666
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 15,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 14,
+                "no_action": 0,
+                "defer": 1,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 2,
+                "escalate": 0,
+                "no_action": 46,
+                "defer": 2,
+                "error": 0
+              },
+              "defer": {
+                "refund": 0,
+                "escalate": 8,
+                "no_action": 0,
+                "defer": 2,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 2,
+            "prohibited_rate": 0.022222222222222223,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 5,
+            "defer_rate": 0.05555555555555555,
+            "fallback_needed_rate": 0.05555555555555555,
+            "non_defer_count": 85,
+            "non_defer_coverage": 0.9444444444444444,
+            "non_defer_accuracy": 0.8823529411764706,
+            "gold_defer_count": 10,
+            "latency_count": 90,
+            "latency_p50_ms": 65.78321550006194,
+            "latency_p95_ms": 67.67950914997982,
+            "input_tokens_count": 90,
+            "input_tokens_sum": 32218,
+            "input_tokens_p50": 334.0,
+            "input_tokens_p95": 447.0,
+            "output_tokens_count": 0,
+            "output_tokens_sum": null,
+            "calibration_count": 90,
+            "ece_10_bins": 0.10259986784723066,
+            "brier_score": 0.20025546212643547,
+            "calibration_bins": []
+          },
+          "inspection": {
+            "rows": 60,
+            "tasks": 40,
+            "families": 4,
+            "correct": 47,
+            "accuracy": 0.7833333333333333,
+            "macro_f1": 0.7124530780780781,
+            "per_class": {
+              "refund": {
+                "support": 15,
+                "precision": 0.8823529411764706,
+                "recall": 1.0,
+                "f1": 0.9375
+              },
+              "escalate": {
+                "support": 15,
+                "precision": 0.6363636363636364,
+                "recall": 0.9333333333333333,
+                "f1": 0.7567567567567568
+              },
+              "no_action": {
+                "support": 20,
+                "precision": 1.0,
+                "recall": 0.8,
+                "f1": 0.8888888888888888
+              },
+              "defer": {
+                "support": 10,
+                "precision": 0.4,
+                "recall": 0.2,
+                "f1": 0.26666666666666666
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 15,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 14,
+                "no_action": 0,
+                "defer": 1,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 2,
+                "escalate": 0,
+                "no_action": 16,
+                "defer": 2,
+                "error": 0
+              },
+              "defer": {
+                "refund": 0,
+                "escalate": 8,
+                "no_action": 0,
+                "defer": 2,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 2,
+            "prohibited_rate": 0.03333333333333333,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 5,
+            "defer_rate": 0.08333333333333333,
+            "fallback_needed_rate": 0.08333333333333333,
+            "non_defer_count": 55,
+            "non_defer_coverage": 0.9166666666666666,
+            "non_defer_accuracy": 0.8181818181818182,
+            "gold_defer_count": 10,
+            "latency_count": 60,
+            "latency_p50_ms": 65.47327300000916,
+            "latency_p95_ms": 67.56756650002558,
+            "input_tokens_count": 60,
+            "input_tokens_sum": 19777,
+            "input_tokens_p50": 332.0,
+            "input_tokens_p95": 336.05,
+            "output_tokens_count": 0,
+            "output_tokens_sum": null,
+            "calibration_count": 60,
+            "ece_10_bins": 0.15473917126655576,
+            "brier_score": 0.300379883661142,
+            "calibration_bins": []
+          },
+          "completed_action": {
+            "rows": 30,
+            "tasks": 15,
+            "families": 1,
+            "correct": 30,
+            "accuracy": 1.0,
+            "macro_f1": 0.25,
+            "per_class": {
+              "refund": {
+                "support": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "escalate": {
+                "support": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "no_action": {
+                "support": 30,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "defer": {
+                "support": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 30,
+                "defer": 0,
+                "error": 0
+              },
+              "defer": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 0,
+            "prohibited_rate": 0.0,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 0,
+            "defer_rate": 0.0,
+            "fallback_needed_rate": 0.0,
+            "non_defer_count": 30,
+            "non_defer_coverage": 1.0,
+            "non_defer_accuracy": 1.0,
+            "gold_defer_count": 0,
+            "latency_count": 30,
+            "latency_p50_ms": 66.48635250002144,
+            "latency_p95_ms": 68.45546609999928,
+            "input_tokens_count": 30,
+            "input_tokens_sum": 12441,
+            "input_tokens_p50": 414.5,
+            "input_tokens_p95": 450.55,
+            "output_tokens_count": 0,
+            "output_tokens_sum": null,
+            "calibration_count": 30,
+            "ece_10_bins": 0.0016787389914194595,
+            "brier_score": 6.619057022461776e-06,
+            "calibration_bins": []
+          },
+          "missing_observation": {
+            "rows": 60,
+            "tasks": 40,
+            "families": 4,
+            "correct": 60,
+            "accuracy": 1.0,
+            "macro_f1": 0.25,
+            "per_class": {
+              "refund": {
+                "support": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "escalate": {
+                "support": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "no_action": {
+                "support": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "defer": {
+                "support": 60,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "defer": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 60,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 0,
+            "prohibited_rate": 0.0,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 60,
+            "defer_rate": 1.0,
+            "fallback_needed_rate": 1.0,
+            "non_defer_count": 0,
+            "non_defer_coverage": 0.0,
+            "non_defer_accuracy": null,
+            "gold_defer_count": 60,
+            "latency_count": 60,
+            "latency_p50_ms": 65.07797149998851,
+            "latency_p95_ms": 67.26066884999113,
+            "input_tokens_count": 60,
+            "input_tokens_sum": 17539,
+            "input_tokens_p50": 293.5,
+            "input_tokens_p95": 298.0,
+            "output_tokens_count": 0,
+            "output_tokens_sum": null,
+            "calibration_count": 60,
+            "ece_10_bins": 0.00010463198026022802,
+            "brier_score": 2.7300308174226265e-08,
+            "calibration_bins": []
+          }
+        }
+      },
+      "llm": {
+        "coverage": {
+          "expected": 150,
+          "available": 150,
+          "missing": 0
+        },
+        "latency_scope": "Bedrock request including transport; Sonnet 4.6",
+        "slices": {
+          "all": {
+            "rows": 150,
+            "tasks": 40,
+            "families": 4,
+            "correct": 102,
+            "accuracy": 0.68,
+            "macro_f1": 0.6524465585607284,
+            "per_class": {
+              "refund": {
+                "support": 15,
+                "precision": 0.5555555555555556,
+                "recall": 0.6666666666666666,
+                "f1": 0.6060606060606061
+              },
+              "escalate": {
+                "support": 15,
+                "precision": 0.4411764705882353,
+                "recall": 1.0,
+                "f1": 0.6122448979591837
+              },
+              "no_action": {
+                "support": 50,
+                "precision": 0.7575757575757576,
+                "recall": 1.0,
+                "f1": 0.8620689655172413
+              },
+              "defer": {
+                "support": 70,
+                "precision": 0.84375,
+                "recall": 0.38571428571428573,
+                "f1": 0.5294117647058824
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 10,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 5,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 15,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 50,
+                "defer": 0,
+                "error": 0
+              },
+              "defer": {
+                "refund": 8,
+                "escalate": 19,
+                "no_action": 16,
+                "defer": 27,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 0,
+            "prohibited_rate": 0.0,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 32,
+            "defer_rate": 0.21333333333333335,
+            "fallback_needed_rate": 0.21333333333333335,
+            "non_defer_count": 118,
+            "non_defer_coverage": 0.7866666666666666,
+            "non_defer_accuracy": 0.635593220338983,
+            "gold_defer_count": 70,
+            "latency_count": 150,
+            "latency_p50_ms": 809.5402498729527,
+            "latency_p95_ms": 897.0809750142506,
+            "input_tokens_count": 150,
+            "input_tokens_sum": 150471,
+            "input_tokens_p50": 996.5,
+            "input_tokens_p95": 1125.0,
+            "output_tokens_count": 150,
+            "output_tokens_sum": 5134,
+            "calibration_count": 0,
+            "ece_10_bins": null,
+            "brier_score": null,
+            "calibration_bins": []
+          },
+          "observed": {
+            "rows": 90,
+            "tasks": 40,
+            "families": 4,
+            "correct": 76,
+            "accuracy": 0.8444444444444444,
+            "macro_f1": 0.6735576923076924,
+            "per_class": {
+              "refund": {
+                "support": 15,
+                "precision": 1.0,
+                "recall": 0.6666666666666666,
+                "f1": 0.8
+              },
+              "escalate": {
+                "support": 15,
+                "precision": 0.625,
+                "recall": 1.0,
+                "f1": 0.7692307692307693
+              },
+              "no_action": {
+                "support": 50,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "defer": {
+                "support": 10,
+                "precision": 0.16666666666666666,
+                "recall": 0.1,
+                "f1": 0.125
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 10,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 5,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 15,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 50,
+                "defer": 0,
+                "error": 0
+              },
+              "defer": {
+                "refund": 0,
+                "escalate": 9,
+                "no_action": 0,
+                "defer": 1,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 0,
+            "prohibited_rate": 0.0,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 6,
+            "defer_rate": 0.06666666666666667,
+            "fallback_needed_rate": 0.06666666666666667,
+            "non_defer_count": 84,
+            "non_defer_coverage": 0.9333333333333333,
+            "non_defer_accuracy": 0.8928571428571429,
+            "gold_defer_count": 10,
+            "latency_count": 90,
+            "latency_p50_ms": 805.4915624670684,
+            "latency_p95_ms": 894.2289938335307,
+            "input_tokens_count": 90,
+            "input_tokens_sum": 92720,
+            "input_tokens_p50": 1002.0,
+            "input_tokens_p95": 1126.55,
+            "output_tokens_count": 90,
+            "output_tokens_sum": 3104,
+            "calibration_count": 0,
+            "ece_10_bins": null,
+            "brier_score": null,
+            "calibration_bins": []
+          },
+          "inspection": {
+            "rows": 60,
+            "tasks": 40,
+            "families": 4,
+            "correct": 46,
+            "accuracy": 0.7666666666666667,
+            "macro_f1": 0.6735576923076924,
+            "per_class": {
+              "refund": {
+                "support": 15,
+                "precision": 1.0,
+                "recall": 0.6666666666666666,
+                "f1": 0.8
+              },
+              "escalate": {
+                "support": 15,
+                "precision": 0.625,
+                "recall": 1.0,
+                "f1": 0.7692307692307693
+              },
+              "no_action": {
+                "support": 20,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "defer": {
+                "support": 10,
+                "precision": 0.16666666666666666,
+                "recall": 0.1,
+                "f1": 0.125
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 10,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 5,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 15,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 20,
+                "defer": 0,
+                "error": 0
+              },
+              "defer": {
+                "refund": 0,
+                "escalate": 9,
+                "no_action": 0,
+                "defer": 1,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 0,
+            "prohibited_rate": 0.0,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 6,
+            "defer_rate": 0.1,
+            "fallback_needed_rate": 0.1,
+            "non_defer_count": 54,
+            "non_defer_coverage": 0.9,
+            "non_defer_accuracy": 0.8333333333333334,
+            "gold_defer_count": 10,
+            "latency_count": 60,
+            "latency_p50_ms": 807.5933748623356,
+            "latency_p95_ms": 894.6514980285428,
+            "input_tokens_count": 60,
+            "input_tokens_sum": 59934,
+            "input_tokens_p50": 1000.0,
+            "input_tokens_p95": 1006.0,
+            "output_tokens_count": 60,
+            "output_tokens_sum": 2054,
+            "calibration_count": 0,
+            "ece_10_bins": null,
+            "brier_score": null,
+            "calibration_bins": []
+          },
+          "completed_action": {
+            "rows": 30,
+            "tasks": 15,
+            "families": 1,
+            "correct": 30,
+            "accuracy": 1.0,
+            "macro_f1": 0.25,
+            "per_class": {
+              "refund": {
+                "support": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "escalate": {
+                "support": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              },
+              "no_action": {
+                "support": 30,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              },
+              "defer": {
+                "support": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 30,
+                "defer": 0,
+                "error": 0
+              },
+              "defer": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 0,
+            "prohibited_rate": 0.0,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 0,
+            "defer_rate": 0.0,
+            "fallback_needed_rate": 0.0,
+            "non_defer_count": 30,
+            "non_defer_coverage": 1.0,
+            "non_defer_accuracy": 1.0,
+            "gold_defer_count": 0,
+            "latency_count": 30,
+            "latency_p50_ms": 801.9868335686624,
+            "latency_p95_ms": 880.0687312963418,
+            "input_tokens_count": 30,
+            "input_tokens_sum": 32786,
+            "input_tokens_p50": 1093.5,
+            "input_tokens_p95": 1129.55,
+            "output_tokens_count": 30,
+            "output_tokens_sum": 1050,
+            "calibration_count": 0,
+            "ece_10_bins": null,
+            "brier_score": null,
+            "calibration_bins": []
+          },
+          "missing_observation": {
+            "rows": 60,
+            "tasks": 40,
+            "families": 4,
+            "correct": 26,
+            "accuracy": 0.43333333333333335,
+            "macro_f1": 0.1511627906976744,
+            "per_class": {
+              "refund": {
+                "support": 0,
+                "precision": 0.0,
+                "recall": null,
+                "f1": 0.0
+              },
+              "escalate": {
+                "support": 0,
+                "precision": 0.0,
+                "recall": null,
+                "f1": 0.0
+              },
+              "no_action": {
+                "support": 0,
+                "precision": 0.0,
+                "recall": null,
+                "f1": 0.0
+              },
+              "defer": {
+                "support": 60,
+                "precision": 1.0,
+                "recall": 0.43333333333333335,
+                "f1": 0.6046511627906976
+              }
+            },
+            "confusion_matrix": {
+              "refund": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "escalate": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "no_action": {
+                "refund": 0,
+                "escalate": 0,
+                "no_action": 0,
+                "defer": 0,
+                "error": 0
+              },
+              "defer": {
+                "refund": 8,
+                "escalate": 10,
+                "no_action": 16,
+                "defer": 26,
+                "error": 0
+              }
+            },
+            "prohibited_proposals": 0,
+            "prohibited_rate": 0.0,
+            "errors": 0,
+            "error_rate": 0.0,
+            "defer_count": 26,
+            "defer_rate": 0.43333333333333335,
+            "fallback_needed_rate": 0.43333333333333335,
+            "non_defer_count": 34,
+            "non_defer_coverage": 0.5666666666666667,
+            "non_defer_accuracy": 0.0,
+            "gold_defer_count": 60,
+            "latency_count": 60,
+            "latency_p50_ms": 814.7687504533678,
+            "latency_p95_ms": 907.6117192977107,
+            "input_tokens_count": 60,
+            "input_tokens_sum": 57751,
+            "input_tokens_p50": 963.0,
+            "input_tokens_p95": 969.0,
+            "output_tokens_count": 60,
+            "output_tokens_sum": 2030,
+            "calibration_count": 0,
+            "ece_10_bins": null,
+            "brier_score": null,
+            "calibration_bins": []
+          }
+        }
+      }
+    },
+    "paired_differences": [],
+    "definitions": {
+      "accuracy": "Correct action / all rows, including gold defer; errors count incorrect.",
+      "defer": "Abstention, not task completion. Fallback-needed rate includes errors too.",
+      "non_defer_accuracy": "Correct among successful non-defer decisions only.",
+      "observed": "Actual inspection and post-action snapshots; masked rows excluded.",
+      "macro_f1": "Mean over four action classes; absent class contributes zero.",
+      "calibration": "Valid four-action probabilities only. Ten equal-width ECE bins. Multiclass Brier sums squared class errors.",
+      "rule_probabilities": "One-hot deterministic scores; uncertainty uncalibrated.",
+      "latency": "Arm-specific prediction timing. Small-sample p95 is descriptive. Initialization excluded when source excluded it.",
+      "sampling": "One prediction per example; related snapshots are correlated. Paired intervals resample prototype families, not rows."
+    },
+    "limitations": [
+      "Replay-only metrics do not establish Harbor task success or actual LLM-call savings.",
+      "One-seed exploratory experiment; sparse family counts and calibration samples.",
+      "Historical training families form a new diagnostic; not an out-of-distribution test."
+    ]
+  }
+}
