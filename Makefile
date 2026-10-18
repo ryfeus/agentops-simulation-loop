@@ -35,6 +35,9 @@ HARBOR_TASK := benchmarks/disputed-refund
 HARBOR_JOBS := .harbor/jobs
 HARBOR_MANIFEST := .harbor/package/manifest.json
 HARBOR_AGENT := agentops_demo.harbor.agent:LangGraphBillingAgent
+HARBOR_DEMO_TASK ?= $(HARBOR_TASK)
+HARBOR_DEMO_BUILD_ARGS ?=
+HARBOR_DEMO_BEFORE_PROMPT ?= billing-v1
 TF_DIR := infra/terraform
 AWS_RUN := scripts/with_aws_credentials.sh
 AGENTCORE_TFVARS := $(abspath .agentcore/deployment.auto.tfvars.json)
@@ -71,6 +74,20 @@ test-harbor:
 
 smoke-real:
 	RUN_REAL_MODEL_TESTS=1 uv run --extra bedrock pytest -m real_model tests/smoke
+
+.PHONY: aws-harbor-demo-prepare harbor-demo-before harbor-demo-after harbor-demo-clean
+aws-harbor-demo-prepare:
+	$(AWS_RUN) uv run --group harbor --group demo --extra bedrock --extra aws python -m scripts.local_harbor_demo \
+		prepare --task "$(HARBOR_DEMO_TASK)" --before-prompt "$(HARBOR_DEMO_BEFORE_PROMPT)" $(HARBOR_DEMO_BUILD_ARGS)
+
+harbor-demo-before:
+	uv run --group harbor --extra bedrock python -m scripts.local_harbor_demo run before
+
+harbor-demo-after:
+	uv run --group harbor --extra bedrock python -m scripts.local_harbor_demo run after
+
+harbor-demo-clean:
+	uv run --group harbor --extra bedrock python -m scripts.local_harbor_demo cleanup
 
 lint:
 	uv run ruff check .

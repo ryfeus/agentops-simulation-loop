@@ -114,10 +114,13 @@ async def invoke_once(
     mcp_url: str,
     model_factory: ModelFactory = create_model,
     graph_factory: GraphFactory = build_agent,
+    state_observer: Callable[[dict[str, Any]], None] | None = None,
 ) -> dict[str, Any]:
     """Invoke the configured graph once without retaining conversation state."""
 
     model = model_factory(config)
     graph = await graph_factory(config=config, model=model, mcp_url=mcp_url)
     state = await graph.ainvoke({"messages": [{"role": "user", "content": instruction}]})
+    if state_observer is not None:
+        state_observer(state)
     return serialize_result(config=config, state=state)

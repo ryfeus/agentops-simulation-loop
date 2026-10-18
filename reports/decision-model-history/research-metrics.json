@@ -1,0 +1,202 @@
+{
+  "schema_version": "public-results-only-v1",
+  "evidence_note": "Historical aggregate measurements; private execution evidence omitted. This is not the original integrity manifest.",
+  "metrics": {
+    "arms": {
+      "off": {
+        "tasks": 24,
+        "verifier_passes": 8,
+        "completed_and_verified": 7,
+        "verifier_pass_rate": 0.3333333333333333,
+        "completed_rate": 0.2916666666666667,
+        "terminal_state_invariants_passes": 21,
+        "terminal_state_invariants_observed_tasks": 24,
+        "failed_or_unresolved": 17,
+        "execution_errors": 0,
+        "fallback_errors": 1,
+        "cleanup_failures": 0,
+        "llm_calls": 48,
+        "llm_calls_observed_tasks": 24,
+        "llm_input_tokens": 61678,
+        "llm_input_tokens_observed_tasks": 24,
+        "llm_output_tokens": 9155,
+        "llm_output_tokens_observed_tasks": 24,
+        "tool_call_count": 128,
+        "tool_call_count_observed_tasks": 24,
+        "tool_errors": 15,
+        "tool_errors_observed_tasks": 24,
+        "fallback_count": 18,
+        "fallback_count_observed_tasks": 24,
+        "forbidden_write_attempts": 18,
+        "forbidden_write_attempts_observed_tasks": 24,
+        "successful_forbidden_writes": 6,
+        "successful_forbidden_writes_observed_tasks": 24,
+        "policy_latency": {
+          "observed_tasks": 24,
+          "p50_ms": 6536.6244374308735,
+          "p95_ms": 11386.715760722289,
+          "total_ms": 196589.83833366074,
+          "scope": "Decision, tools and LLM continuation; excludes setup, verifier and cleanup.",
+          "completed_tasks_per_minute": 2.1364278212954115
+        },
+        "task_latency": {
+          "observed_tasks": 24,
+          "p50_ms": 11693.531895871274,
+          "p95_ms": 16234.097224974537,
+          "total_ms": 316770.5073757097,
+          "scope": "Sandbox setup, policy, verifier and cleanup; excludes one-time process/model startup.",
+          "completed_tasks_per_minute": 1.3258810091870505
+        },
+        "process_wall_ms": null,
+        "completed_tasks_per_process_minute": null,
+        "model_load_ms": null,
+        "fallback_load_ms": null
+      },
+      "on": {
+        "tasks": 24,
+        "verifier_passes": 21,
+        "completed_and_verified": 21,
+        "verifier_pass_rate": 0.875,
+        "completed_rate": 0.875,
+        "terminal_state_invariants_passes": 21,
+        "terminal_state_invariants_observed_tasks": 24,
+        "failed_or_unresolved": 3,
+        "execution_errors": 0,
+        "fallback_errors": 0,
+        "cleanup_failures": 0,
+        "llm_calls": 49,
+        "llm_calls_observed_tasks": 24,
+        "llm_input_tokens": 68160,
+        "llm_input_tokens_observed_tasks": 24,
+        "llm_output_tokens": 8858,
+        "llm_output_tokens_observed_tasks": 24,
+        "tool_call_count": 117,
+        "tool_call_count_observed_tasks": 24,
+        "tool_errors": 3,
+        "tool_errors_observed_tasks": 24,
+        "fallback_count": 18,
+        "fallback_count_observed_tasks": 24,
+        "forbidden_write_attempts": 6,
+        "forbidden_write_attempts_observed_tasks": 24,
+        "successful_forbidden_writes": 6,
+        "successful_forbidden_writes_observed_tasks": 24,
+        "policy_latency": {
+          "observed_tasks": 24,
+          "p50_ms": 6588.641458074562,
+          "p95_ms": 9549.522066977806,
+          "total_ms": 137035.4116235394,
+          "scope": "Decision, tools and LLM continuation; excludes setup, verifier and cleanup.",
+          "completed_tasks_per_minute": 9.194703654128785
+        },
+        "task_latency": {
+          "observed_tasks": 24,
+          "p50_ms": 11542.576687410474,
+          "p95_ms": 14592.485087527893,
+          "total_ms": 257200.32462710515,
+          "scope": "Sandbox setup, policy, verifier and cleanup; excludes one-time process/model startup.",
+          "completed_tasks_per_minute": 4.898905169839021
+        },
+        "process_wall_ms": null,
+        "completed_tasks_per_process_minute": null,
+        "model_load_ms": null,
+        "fallback_load_ms": null
+      }
+    },
+    "paired_differences": {
+      "definition": "ON minus OFF; negative call, error and latency deltas are reductions",
+      "improved_tasks": 14,
+      "regressed_tasks": 0,
+      "both_completed": 7,
+      "neither_completed": 3,
+      "completed_rate_delta": 0.5833333333333333,
+      "llm_calls": {
+        "paired_tasks": 24,
+        "sum_delta": 1,
+        "mean_delta": 0.041666666666666664,
+        "median_delta": 0.0
+      },
+      "llm_input_tokens": {
+        "paired_tasks": 24,
+        "sum_delta": 6482,
+        "mean_delta": 270.0833333333333,
+        "median_delta": 157.5
+      },
+      "llm_output_tokens": {
+        "paired_tasks": 24,
+        "sum_delta": -297,
+        "mean_delta": -12.375,
+        "median_delta": -7.5
+      },
+      "tool_call_count": {
+        "paired_tasks": 24,
+        "sum_delta": -11,
+        "mean_delta": -0.4583333333333333,
+        "median_delta": -0.5
+      },
+      "tool_errors": {
+        "paired_tasks": 24,
+        "sum_delta": -12,
+        "mean_delta": -0.5,
+        "median_delta": -0.5
+      },
+      "fallback_count": {
+        "paired_tasks": 24,
+        "sum_delta": 0,
+        "mean_delta": 0,
+        "median_delta": 0.0
+      },
+      "forbidden_write_attempts": {
+        "paired_tasks": 24,
+        "sum_delta": -12,
+        "mean_delta": -0.5,
+        "median_delta": -0.5
+      },
+      "successful_forbidden_writes": {
+        "paired_tasks": 24,
+        "sum_delta": 0,
+        "mean_delta": 0,
+        "median_delta": 0.0
+      },
+      "end_to_end_policy_ms": {
+        "paired_tasks": 24,
+        "sum_delta": -59554.42671012133,
+        "mean_delta": -2481.4344462550557,
+        "median_delta": -245.22747902665287
+      },
+      "total_wall_including_cleanup_ms": {
+        "paired_tasks": 24,
+        "sum_delta": -59570.182748604566,
+        "mean_delta": -2482.0909478585236,
+        "median_delta": 44.87483366392553
+      }
+    },
+    "limitations": [
+      "New authored scenario families are an exploratory targeted diagnostic, not an independent blind benchmark or a population sample.",
+      "Related task variants are not independent evidence; report per-family outcomes.",
+      "No training, GPU inference or comparison with the initial fine-tuning run is implied.",
+      "The feature combines visible escalation history with a minimal history-aware duplicate guard. It does not change the original intent parser.",
+      "The refund-history control slice also contains a separate pre-escalated dispute. Whole-task success may improve by avoiding that duplicate escalation; it does not demonstrate observation or resolution of the still-hidden refund history. The requested read-only handling already avoids refunding the drifted invoice.",
+      "Deferral, graph termination and verifier pass are distinct; success requires explicit policy completion plus native verifier pass.",
+      "Terminal-state-invariant passes exclude aggregate reward and trajectory. They are a separate diagnostic: rejected duplicate writes can fail trajectory checks even when the final database already satisfies every state invariant.",
+      "Missing usage/timing measurements remain null. Token totals are provider-reported; no dollar cost is inferred.",
+      "Runtime forbidden-write metrics cover observed-policy violations and disallowed targets, but do not fully enforce expected operation type on an allowed target. The separate expected-operation diagnostic uses evaluator-only cohort metadata.",
+      "Small-sample p95 and single-run latency changes are descriptive estimates."
+    ],
+    "task_count": 24,
+    "prototype_count": 8,
+    "attempts_per_task_per_arm": 1,
+    "cohort_limitations": [
+      "Author-constructed after the first experiment; not an external benchmark.",
+      "Eight compositions with three variants each; not 24 independent families.",
+      "Generation uses no training, calibration, or outcome-based scenario editing.",
+      "Refund-ledger drift is a negative control: escalation history cannot reveal refunds.",
+      "Held authorization checks inspections and writes; clarification prose is unscored.",
+      "Harness fixes target resolution; entity discovery is outside this cohort."
+    ],
+    "latency_scopes": {
+      "policy": "Decision, tools and LLM continuation; excludes setup, verifier and cleanup.",
+      "task": "Sandbox setup, policy, verifier and cleanup; excludes one-time process/model startup.",
+      "process": "Process wall including one-time startup; unavailable values are not imputed."
+    }
+  }
+}

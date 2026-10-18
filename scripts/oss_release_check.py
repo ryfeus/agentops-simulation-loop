@@ -17,6 +17,8 @@ PATTERNS = {
     "github_token": re.compile(r"\b(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,})\b"),
     "private_key": re.compile(r"-----BEGIN (?:[A-Z]+ )?PRIVATE KEY-----"),
     "cloud_instance": re.compile(r"\bi-[0-9a-f]{8,17}\b"),
+    "signed_cloud_url": re.compile(r"[?&]X-Amz-(?:Signature|Credential|Security-Token)=", re.I),
+    "private_service_endpoint": re.compile(r"\b[a-z0-9]{20,}\.dsql\.[a-z0-9-]+\.on\.aws\b"),
     "cloud_bucket": re.compile(r"\bs3://[^/\s`\"\']+"),
 }
 ACCOUNT = re.compile(r"(?<![A-Za-z0-9.])[0-9]{12}(?![A-Za-z0-9])")

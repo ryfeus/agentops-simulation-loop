@@ -15,13 +15,16 @@ class HarborExecutionProfile(ContractModel):
     execution_task_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
     agent_network_mode: Literal["no-network", "public"]
     verifier_network_mode: Literal["no-network"]
-    credential_mode: Literal["sts-assume-role"] | None = None
+    credential_mode: Literal["sts-assume-role", "bedrock-bearer-token"] | None = None
 
     @model_validator(mode="after")
     def validate_security_boundary(self) -> HarborExecutionProfile:
         if self.name == "isolated":
             if self.agent_network_mode != "no-network" or self.credential_mode is not None:
                 raise ValueError("isolated profile must remain no-network and credential-free")
-        elif self.agent_network_mode != "public" or self.credential_mode != "sts-assume-role":
-            raise ValueError("Bedrock profile requires public agent egress and STS credentials")
+        elif self.agent_network_mode != "public" or self.credential_mode not in {
+            "sts-assume-role",
+            "bedrock-bearer-token",
+        }:
+            raise ValueError("Bedrock profile requires public agent egress and Bedrock credentials")
         return self

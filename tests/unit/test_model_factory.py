@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 import sys
+from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import Mock
 
 import pytest
 from langchain_core.messages import HumanMessage
@@ -70,3 +73,35 @@ def test_production_config_allows_only_explicit_bad_scripted_calibration() -> No
         production_config("a" * 40, "correct", "scripted")
     with pytest.raises(ValueError, match="unsupported production model provider"):
         production_config("a" * 40, "model", "other")
+
+
+def test_bedrock_token_file_is_passed_as_redacted_secret(
+    tmp_path: Path, agent_config: AgentConfig, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    token_path = tmp_path / "token"
+    token_path.write_text("test-bearer-token\n")
+    monkeypatch.setenv("AWS_BEARER_TOKEN_BEDROCK_FILE", str(token_path))
+    constructor = Mock()
+    monkeypatch.setitem(
+        sys.modules, "langchain_aws", SimpleNamespace(ChatBedrockConverse=constructor)
+    )
+
+    create_model(agent_config, region_name="us-west-2")
+
+    kwargs = constructor.call_args.kwargs
+    assert kwargs["bedrock_api_key"].get_secret_value() == "test-bearer-token"
+    assert "test-bearer-token" not in repr(kwargs)
+    assert kwargs["region_name"] == "us-west-2"
+    assert "test-bearer-token" not in agent_config.model_dump_json()
+
+
+@pytest.mark.parametrize("contents", ["", "  \n", "token\nother-token"])
+def test_invalid_token_file_fails_without_echoing_contents(
+    tmp_path: Path, agent_config: AgentConfig, monkeypatch: pytest.MonkeyPatch, contents: str
+) -> None:
+    token_path = tmp_path / "token"
+    token_path.write_text(contents)
+    monkeypatch.setenv("AWS_BEARER_TOKEN_BEDROCK_FILE", str(token_path))
+    monkeypatch.setitem(sys.modules, "langchain_aws", SimpleNamespace(ChatBedrockConverse=Mock()))
+    with pytest.raises(ValueError, match="one nonempty token"):
+        create_model(agent_config)

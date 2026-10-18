@@ -1,0 +1,15 @@
+{
+  "upstream_repository": "https://github.com/strands-labs/strands-decider.git",
+  "upstream_commit": "6039cf8b64c6074e75804000c07ac3d4cce795f7",
+  "checkpoint_repo": "StrandsAgents/strands-decider-2B-qwen3.5-v1-2610",
+  "checkpoint_revision": "216d1ccb46a9e9b036eb9187b248db98480f77d4",
+  "base_model": "Qwen/Qwen3.5-2B-Base",
+  "base_revision": "b1485b2fa6dfa1287294f269f5fb618e03d52d7c",
+  "base_revision_note": "Pinned to released provenance; upstream describes its training revision as inferred, not originally pinned.",
+  "expected_lora_rank": 48,
+  "expected_pointer_dim": 768,
+  "seed": 42,
+  "max_epochs": 3,
+  "max_optimizer_steps": 200,
+  "max_worker_seconds": 14400
+}

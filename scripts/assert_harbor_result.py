@@ -221,6 +221,13 @@ def _assert_provenance(
         "package_sha256": package_sha256,
         "model": expected_model,
     }
+    # Legacy evidence has only identity fields. New runners also bind the
+    # execution settings; compare both together, retaining strict key equality.
+    if "billing_policy_mode" in provenance or "inference_environment" in provenance:
+        expected_provenance.update(
+            billing_policy_mode=expected.get("billing_policy_mode", "permissive"),
+            inference_environment=expected.get("inference_environment", {}),
+        )
     if provenance != expected_provenance:
         raise AssertionError(
             f"expected agent provenance {expected_provenance}, received {provenance}"
